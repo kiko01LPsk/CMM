@@ -84,7 +84,7 @@ public class MannequinSettings {
         r.small = s.isSmall();
         r.crouching = s.isMannequinCrouching();
         r.slimArms = s.slimArms();
-        r.parts = s.getParts();
+        r.parts = s.getPartsMask();
         return r;
     }
 
@@ -111,9 +111,9 @@ public class MannequinSettings {
         s.setTiltZ(angle(tiltZ));
         s.setShowArms(showArms);
         s.setNoBasePlate(noBasePlate);
-        s.setSmall(small);
+        s.setMannequinSmall(small);
         s.setMannequinCrouching(crouching);
         s.setSlimArms(slimArms);
-        s.setParts(parts);
+        s.setPartsMask(parts);
     }
 }

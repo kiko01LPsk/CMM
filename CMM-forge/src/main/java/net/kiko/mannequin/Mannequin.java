@@ -53,6 +53,8 @@ public class Mannequin extends ArmorStand {
     private static final EntityDataAccessor<Float> DATA_TILT_Z =
             SynchedEntityData.defineId(Mannequin.class, EntityDataSerializers.FLOAT);
 
+    private static final EntityDataAccessor<Boolean> DATA_SMALL =
+            SynchedEntityData.defineId(Mannequin.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<String> DATA_SKIN =
             SynchedEntityData.defineId(Mannequin.class, EntityDataSerializers.STRING);
 
@@ -87,6 +89,7 @@ public class Mannequin extends ArmorStand {
         entityData.define(DATA_TILT_X, 0.0F);
         entityData.define(DATA_TILT_Z, 0.0F);
         entityData.define(DATA_SKIN, "");
+        entityData.define(DATA_SMALL, false);
     }
 
     @Override
@@ -94,7 +97,7 @@ public class Mannequin extends ArmorStand {
         super.addAdditionalSaveData(tag);
         tag.putBoolean("MannequinSlimArms", slimArms());
         tag.putBoolean("MannequinCrouching", isMannequinCrouching());
-        tag.putByte("MannequinParts", getParts());
+        tag.putByte("MannequinParts", getPartsMask());
         tag.putFloat("MannequinScale", getEntityScale());
         tag.putFloat("MannequinTiltX", getTiltX());
         tag.putFloat("MannequinTiltZ", getTiltZ());
@@ -106,11 +109,12 @@ public class Mannequin extends ArmorStand {
         super.readAdditionalSaveData(tag);
         if (tag.contains("MannequinSlimArms")) setSlimArms(tag.getBoolean("MannequinSlimArms"));
         if (tag.contains("MannequinCrouching")) setMannequinCrouching(tag.getBoolean("MannequinCrouching"));
-        if (tag.contains("MannequinParts")) setParts(tag.getByte("MannequinParts"));
+        if (tag.contains("MannequinParts")) setPartsMask(tag.getByte("MannequinParts"));
         if (tag.contains("MannequinScale")) setEntityScale(tag.getFloat("MannequinScale"));
         if (tag.contains("MannequinTiltX")) setTiltX(tag.getFloat("MannequinTiltX"));
         if (tag.contains("MannequinTiltZ")) setTiltZ(tag.getFloat("MannequinTiltZ"));
         if (tag.contains("MannequinSkin")) setSkin(tag.getString("MannequinSkin"));
+        if (tag.contains("Small")) setMannequinSmall(tag.getBoolean("Small"));
     }
 
     // ── Values ────────────────────────────────────────────────────────────────
@@ -118,14 +122,19 @@ public class Mannequin extends ArmorStand {
     public boolean slimArms() { return entityData.get(DATA_SLIM); }
     public void setSlimArms(boolean value) { entityData.set(DATA_SLIM, value); }
 
+    /** The vanilla "small" setter is private, so the mannequin keeps its own flag (used for the baby proportions and hitbox). */
+    @Override
+    public boolean isSmall() { return entityData.get(DATA_SMALL); }
+    public void setMannequinSmall(boolean value) { entityData.set(DATA_SMALL, value); }
+
     public boolean isMannequinCrouching() { return entityData.get(DATA_CROUCHING); }
     public void setMannequinCrouching(boolean value) { entityData.set(DATA_CROUCHING, value); }
 
-    public byte getParts() { return entityData.get(DATA_PARTS); }
-    public void setParts(byte parts) { entityData.set(DATA_PARTS, parts); }
+    public byte getPartsMask() { return entityData.get(DATA_PARTS); }
+    public void setPartsMask(byte parts) { entityData.set(DATA_PARTS, parts); }
 
     public boolean isPartShown(PlayerModelPart part) {
-        return (getParts() & part.getMask()) == part.getMask();
+        return (getPartsMask() & part.getMask()) == part.getMask();
     }
 
     /** A custom skin: a base64 encoded 64x64 or 64x32 PNG, or "" for the plain white mannequin. */
@@ -155,7 +164,7 @@ public class Mannequin extends ArmorStand {
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         super.onSyncedDataUpdated(key);
-        if (DATA_SCALE.equals(key)) {
+        if (DATA_SCALE.equals(key) || DATA_SMALL.equals(key)) {
             refreshDimensions();
         }
     }
