@@ -1,0 +1,20 @@
+{
+  "rubber_chicken_squeak": {
+    "subtitle": "subtitles.kiko.rubber_chicken_squeak",
+    "sounds": [
+      "kiko:rubber_chicken_squeak"
+    ]
+  },
+  "sonic_screwdriver_use": {
+    "subtitle": "subtitles.kiko.sonic_screwdriver_use",
+    "sounds": [
+      "kiko:sonic_screwdriver_use"
+    ]
+  },
+  "sonic_screwdriver_switch": {
+    "subtitle": "subtitles.kiko.sonic_screwdriver_switch",
+    "sounds": [
+      "kiko:sonic_screwdriver_switch"
+    ]
+  }
+}
