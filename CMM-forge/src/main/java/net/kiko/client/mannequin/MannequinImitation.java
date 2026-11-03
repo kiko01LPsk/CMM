@@ -14,6 +14,7 @@ import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.core.Rotations;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -95,7 +96,6 @@ public final class MannequinImitation {
         Mannequin m = dummy.mannequin;
 
         if (dummy.applied != mode) {
-            m.setHeadPose(mode.rotation(0));
             m.setBodyPose(mode.rotation(1));
             m.setLeftArmPose(mode.rotation(2));
             m.setRightArmPose(mode.rotation(3));
@@ -107,8 +107,16 @@ public final class MannequinImitation {
             dummy.applied = mode;
         }
 
+        // The head is the one part the player still controls: it follows where they look, on top of the saved pose.
+        float bodyYaw = Mth.rotLerp(partialTick, player.yBodyRotO, player.yBodyRot);
+        float headYaw = Mth.rotLerp(partialTick, player.yHeadRotO, player.yHeadRot);
+        float lookYaw = Mth.clamp(Mth.wrapDegrees(headYaw - bodyYaw), -85.0F, 85.0F);
+        float lookPitch = Mth.lerp(partialTick, player.xRotO, player.getXRot());
+        Rotations head = mode.rotation(0);
+        m.setHeadPose(new Rotations(head.getX() + lookPitch, head.getY() + lookYaw, head.getZ()));
+
         m.setPos(player.getX(), player.getY(), player.getZ());
-        float yaw = Mth.rotLerp(partialTick, player.yBodyRotO, player.yBodyRot);
+        float yaw = bodyYaw;
         m.setYRot(yaw);
         m.yRotO = yaw;
         m.setInvisible(player.isInvisible());

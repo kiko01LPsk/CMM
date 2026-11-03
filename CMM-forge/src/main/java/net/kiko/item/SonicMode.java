@@ -3,8 +3,8 @@ package net.kiko.item;
 /** The modes of the sonic screwdriver. The order is the order sneak + right-click cycles through. */
 public enum SonicMode {
     DISABLED("disabled"),
-    REDSTONE("redstone"),     // red
-    SCANNER("scanner"),       // green
+    SCANNER("scanner"),       // red
+    REDSTONE("redstone"),     // green
     ANALYZER("analyzer"),     // teal
     HIGHLIGHT("highlight"),   // magenta
     ENVIRONMENT("environment"), // yellow

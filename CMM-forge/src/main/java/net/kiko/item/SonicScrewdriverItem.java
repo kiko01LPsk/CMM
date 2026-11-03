@@ -56,7 +56,7 @@ import java.util.List;
 
 /**
  * One sonic screwdriver with several modes (shown by its colour). Sneak + right-click changes the mode.
- * Disabled: does nothing. Red: redstone. Green: scans mobs and players. Teal: scans blocks.
+ * Disabled: does nothing. Red: scans mobs and players. Green: redstone. Teal: scans blocks.
  * Magenta: highlights a mob or player. Yellow: reads the surroundings (biome, light, time ...). White: lights up the surroundings while held.
  */
 public class SonicScrewdriverItem extends Item {

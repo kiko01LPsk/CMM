@@ -57,7 +57,7 @@ public class ModItems {
             () -> new RifleItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> PISTOL = ITEMS.register("pistol",
-            () -> new Item(new Item.Properties().stacksTo(1)));
+            () -> new RifleItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> GUITAR = ITEMS.register("guitar",
             () -> new Item(new Item.Properties().stacksTo(1)));
@@ -81,7 +81,7 @@ public class ModItems {
 
     // Items from the SCP pack (3D models, held like tools/weapons)
     public static final RegistryObject<Item> FN_P90 = ITEMS.register("fn_p90",
-            () -> new Item(new Item.Properties().stacksTo(1)));
+            () -> new RifleItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> BATON = ITEMS.register("baton",
             () -> new Item(new Item.Properties().stacksTo(1)));
