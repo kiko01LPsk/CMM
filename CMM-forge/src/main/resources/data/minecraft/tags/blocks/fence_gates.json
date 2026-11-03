@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "kiko:scp_camera",
+    "kiko:sawtooth_camera"
+  ]
+}

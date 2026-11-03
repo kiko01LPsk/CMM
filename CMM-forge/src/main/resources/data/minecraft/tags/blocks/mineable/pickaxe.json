@@ -1,0 +1,27 @@
+{
+  "replace": false,
+  "values": [
+    "kiko:scp_andesite",
+    "kiko:scp_polished_andesite",
+    "kiko:scp_diorite",
+    "kiko:scp_polished_diorite",
+    "kiko:scp_polished_granite",
+    "kiko:scp_nether_brick",
+    "kiko:scp_quartz_block",
+    "kiko:scp_quartz_slab",
+    "kiko:scp_quartz_stairs",
+    "kiko:scp_nether_brick_slab",
+    "kiko:scp_nether_brick_stairs",
+    "kiko:scp_nether_brick_fence",
+    "kiko:scp_iron_bars",
+    "kiko:scp_drawers",
+    "kiko:scp_bunk",
+    "kiko:scp_sink",
+    "kiko:scp_toilet",
+    "kiko:sawtooth_beartrap",
+    "kiko:sawtooth_deer",
+    "kiko:sawtooth_corpse",
+    "kiko:sawtooth_sign",
+    "kiko:sawtooth_tv"
+  ]
+}

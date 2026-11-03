@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "kiko:scp_door_1",
+    "kiko:scp_door_2",
+    "kiko:scp_trapdoor",
+    "kiko:scp_camera",
+    "kiko:sawtooth_camera"
+  ]
+}
