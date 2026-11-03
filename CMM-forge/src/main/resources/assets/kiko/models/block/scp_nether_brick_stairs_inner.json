@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "kiko:block/scp_nether_brick",
+    "top": "kiko:block/scp_nether_brick",
+    "side": "kiko:block/scp_nether_brick"
+  }
+}

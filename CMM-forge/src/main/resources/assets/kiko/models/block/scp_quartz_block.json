@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "kiko:block/scp_quartz_top",
+    "bottom": "kiko:block/scp_quartz_top",
+    "side": "kiko:block/scp_quartz_side"
+  }
+}

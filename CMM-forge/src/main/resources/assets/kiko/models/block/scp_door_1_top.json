@@ -1,0 +1,66 @@
+{
+	"credit": "Made by 0ptima, totally cool guy from Frostburn",
+	"ambientocclusion": false,
+	"textures": {
+		"1": "kiko:block/scp_door_1"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [2, 16, 16],
+			"faces": {
+				"north": {"uv": [1.312, 10.5, 1.811, 14.936], "texture": "#1", "cullface": "west"},
+				"east": {"uv": [8, 0, 15.999, 8], "texture": "#1", "cullface": "west"},
+				"south": {"uv": [1.312, 10.5, 1.811, 14.936], "texture": "#1", "cullface": "west"},
+				"west": {"uv": [0, 0, 8, 8], "texture": "#1", "cullface": "west"},
+				"up": {"uv": [0.625, 0.875, 1.812, 7.063], "texture": "#1", "cullface": "down"}
+			}
+		},
+		{
+			"from": [2, 0, 15.125],
+			"to": [3, 16, 16],
+			"faces": {
+				"north": {"uv": [8.437, 8, 8, 16], "texture": "#1", "cullface": "west"},
+				"east": {"uv": [8, 0, 8.436, 8], "texture": "#1", "cullface": "west"},
+				"south": {"uv": [1.312, 10.5, 1.562, 14.936], "texture": "#1", "cullface": "west"},
+				"up": {"uv": [2.5, 7.938, 2.999, 8.437], "texture": "#1", "cullface": "down"}
+			}
+		},
+		{
+			"from": [2, 0, 0],
+			"to": [3, 16, 0.875],
+			"faces": {
+				"north": {"uv": [3.375, 8.688, 3.625, 13.123], "texture": "#1", "cullface": "west"},
+				"east": {"uv": [15.626, 0, 15.998, 8], "texture": "#1", "cullface": "west"},
+				"south": {"uv": [15.999, 8, 15.626, 16], "texture": "#1", "cullface": "west"},
+				"up": {"uv": [2.5, 7.938, 2.999, 8.437], "texture": "#1", "cullface": "down"}
+			}
+		},
+		{
+			"from": [2, 0, 0.875],
+			"to": [3, 0.25, 15.125],
+			"faces": {
+				"east": {"uv": [8.375, 8, 15.622, 8.1], "texture": "#1", "cullface": "west"},
+				"up": {"uv": [8.501, 15.688, 15.624, 16], "rotation": 270, "texture": "#1", "cullface": "west"}
+			}
+		},
+		{
+			"from": [2, 15.25, 0.875],
+			"to": [3, 16, 15.125],
+			"faces": {
+				"east": {"uv": [8.5, 0, 15.621, 0.312], "texture": "#1", "cullface": "west"},
+				"up": {"uv": [0.562, 1.5, 7.683, 1.811], "rotation": 90, "texture": "#1", "cullface": "west"},
+				"down": {"uv": [8.438, 12.875, 15.559, 13.187], "rotation": 90, "texture": "#1", "cullface": "west"}
+			}
+		},
+		{
+			"from": [2, 10, 0.875],
+			"to": [3, 10.875, 15.125],
+			"faces": {
+				"east": {"uv": [8.5, 2.625, 15.621, 2.937], "texture": "#1", "cullface": "west"},
+				"up": {"uv": [8.5, 2.625, 15.621, 2.937], "rotation": 90, "texture": "#1", "cullface": "west"},
+				"down": {"uv": [8.5, 2.625, 15.621, 2.937], "rotation": 270, "texture": "#1", "cullface": "west"}
+			}
+		}
+	]
+}

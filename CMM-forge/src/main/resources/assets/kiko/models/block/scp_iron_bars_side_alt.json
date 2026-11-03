@@ -1,0 +1,42 @@
+{
+  "credit": "Made by 0ptima, totally cool guy from Frostburn",
+  "ambientocclusion": false,
+  "textures": {
+    "bars": "kiko:block/scp_iron_bars"
+  },
+  "elements": [
+    {
+      "from": [
+        8,
+        0,
+        8
+      ],
+      "to": [
+        8,
+        16,
+        16
+      ],
+      "faces": {
+        "east": {
+          "uv": [
+            0,
+            0,
+            8,
+            16
+          ],
+          "texture": "#bars"
+        },
+        "west": {
+          "uv": [
+            8,
+            0,
+            0,
+            16
+          ],
+          "texture": "#bars"
+        }
+      }
+    }
+  ],
+  "render_type": "minecraft:cutout_mipped"
+}

@@ -1,0 +1,80 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "kiko:item/clock_00"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "kiko:time": 0.0416667
+      },
+      "model": "kiko:item/clock_01"
+    },
+    {
+      "predicate": {
+        "kiko:time": 0.125
+      },
+      "model": "kiko:item/clock_02"
+    },
+    {
+      "predicate": {
+        "kiko:time": 0.2083333
+      },
+      "model": "kiko:item/clock_03"
+    },
+    {
+      "predicate": {
+        "kiko:time": 0.2916667
+      },
+      "model": "kiko:item/clock_04"
+    },
+    {
+      "predicate": {
+        "kiko:time": 0.375
+      },
+      "model": "kiko:item/clock_05"
+    },
+    {
+      "predicate": {
+        "kiko:time": 0.4583333
+      },
+      "model": "kiko:item/clock_06"
+    },
+    {
+      "predicate": {
+        "kiko:time": 0.5416667
+      },
+      "model": "kiko:item/clock_07"
+    },
+    {
+      "predicate": {
+        "kiko:time": 0.625
+      },
+      "model": "kiko:item/clock_08"
+    },
+    {
+      "predicate": {
+        "kiko:time": 0.7083333
+      },
+      "model": "kiko:item/clock_09"
+    },
+    {
+      "predicate": {
+        "kiko:time": 0.7916667
+      },
+      "model": "kiko:item/clock_10"
+    },
+    {
+      "predicate": {
+        "kiko:time": 0.875
+      },
+      "model": "kiko:item/clock_11"
+    },
+    {
+      "predicate": {
+        "kiko:time": 0.9583333
+      },
+      "model": "kiko:item/clock_00"
+    }
+  ]
+}

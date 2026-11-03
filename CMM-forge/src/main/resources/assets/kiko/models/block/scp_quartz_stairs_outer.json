@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "kiko:block/scp_quartz_top",
+    "top": "kiko:block/scp_quartz_top",
+    "side": "kiko:block/scp_quartz_side"
+  }
+}
