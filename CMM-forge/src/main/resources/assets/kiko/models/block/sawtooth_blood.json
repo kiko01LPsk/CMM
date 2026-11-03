@@ -1,0 +1,130 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:translucent",
+  "credit": "Made by 0ptima, totally cool guy from Frostburn",
+  "textures": {
+    "0": "kiko:block/sawtooth_bloodhd",
+    "1": "kiko:block/sawtooth_blood2hd",
+    "particle": "kiko:block/sawtooth_bloodhd"
+  },
+  "elements": [
+    {
+      "from": [
+        3,
+        0.125,
+        -5
+      ],
+      "to": [
+        19,
+        0.125,
+        11
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          11,
+          8.125,
+          3
+        ]
+      },
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "from": [
+        3,
+        0.25,
+        3.375
+      ],
+      "to": [
+        19,
+        0.25,
+        19.375
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          11,
+          8.25,
+          11.375
+        ]
+      },
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#1"
+        }
+      }
+    },
+    {
+      "from": [
+        -5,
+        0.1875,
+        4
+      ],
+      "to": [
+        11,
+        0.1875,
+        20
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          3,
+          8.1875,
+          12
+        ]
+      },
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "rotation": 90,
+          "texture": "#0"
+        }
+      }
+    }
+  ],
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "scale": [
+        0.476,
+        0.476,
+        0.476
+      ]
+    },
+    "ground": {
+      "scale": [
+        0.28,
+        0.28,
+        0.28
+      ]
+    }
+  }
+}

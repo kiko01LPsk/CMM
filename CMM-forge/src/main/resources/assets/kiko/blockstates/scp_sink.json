@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "kiko:block/scp_sink"
+    },
+    "facing=east": {
+      "model": "kiko:block/scp_sink",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "kiko:block/scp_sink",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "kiko:block/scp_sink",
+      "y": 270
+    }
+  }
+}

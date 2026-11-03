@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "kiko:block/scp_drawers"
+    },
+    "facing=east": {
+      "model": "kiko:block/scp_drawers",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "kiko:block/scp_drawers",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "kiko:block/scp_drawers",
+      "y": 270
+    }
+  }
+}

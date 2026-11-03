@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "kiko:block/sawtooth_beartrap"
+    },
+    "facing=east": {
+      "model": "kiko:block/sawtooth_beartrap",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "kiko:block/sawtooth_beartrap",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "kiko:block/sawtooth_beartrap",
+      "y": 270
+    }
+  }
+}

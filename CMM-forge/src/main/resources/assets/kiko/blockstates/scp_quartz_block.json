@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "kiko:block/scp_quartz_block"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "kiko:block/scp_toilet"
+    },
+    "facing=east": {
+      "model": "kiko:block/scp_toilet",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "kiko:block/scp_toilet",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "kiko:block/scp_toilet",
+      "y": 270
+    }
+  }
+}
