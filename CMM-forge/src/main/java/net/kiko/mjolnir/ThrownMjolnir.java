@@ -12,7 +12,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.player.Player;
@@ -142,14 +141,6 @@ public class ThrownMjolnir extends AbstractArrow {
         setDeltaMovement(getDeltaMovement().multiply(-0.01D, -0.1D, -0.01D));
         playSound(SoundEvents.TRIDENT_HIT, 1.0F, 1.0F);
 
-        if (level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
-            LightningBolt bolt = net.minecraft.world.entity.EntityType.LIGHTNING_BOLT.create(serverLevel);
-            if (bolt != null) {
-                bolt.moveTo(target.position());
-                bolt.setVisualOnly(true);
-                serverLevel.addFreshEntity(bolt);
-            }
-        }
     }
 
     @Override
