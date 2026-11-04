@@ -29,10 +29,10 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> DIAMANTOVA_SABLE = ITEMS.register("diamantova_sable",
-            () -> new Item(new Item.Properties()));
+            () -> new MeleeItem(new Item.Properties().stacksTo(1), 6.0, -2.4));
 
     public static final RegistryObject<Item> DYKA = ITEMS.register("dyka",
-            () -> new Item(new Item.Properties()));
+            () -> new MeleeItem(new Item.Properties().stacksTo(1), 3.0, -1.6));
 
     public static final RegistryObject<Item> P_VIRUS = ITEMS.register("p_virus",
             () -> new Item(new Item.Properties()));
@@ -67,7 +67,7 @@ public class ModItems {
 
     // Held like tools/weapons (models use item/handheld)
     public static final RegistryObject<Item> NAIL_BAT = ITEMS.register("nail_bat",
-            () -> new Item(new Item.Properties().stacksTo(1)));
+            () -> new MeleeItem(new Item.Properties().stacksTo(1), 5.0, -2.8));
 
     public static final RegistryObject<Item> RUBBER_CHICKEN = ITEMS.register("rubber_chicken",
             () -> new RubberChickenItem(new Item.Properties().stacksTo(1)));
@@ -84,7 +84,7 @@ public class ModItems {
             () -> new RifleItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> BATON = ITEMS.register("baton",
-            () -> new Item(new Item.Properties().stacksTo(1)));
+            () -> new MeleeItem(new Item.Properties().stacksTo(1), 3.0, -2.0));
 
     public static final RegistryObject<Item> KEYCARD = ITEMS.register("keycard",
             () -> new Item(new Item.Properties()));

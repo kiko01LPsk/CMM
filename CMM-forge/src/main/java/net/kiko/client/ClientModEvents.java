@@ -42,6 +42,7 @@ public final class ClientModEvents {
 
     @SubscribeEvent
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(net.minecraft.world.entity.EntityType.PAINTING, TransparentPaintingRenderer::new);
         event.registerEntityRenderer(ModEntities.MANNEQUIN.get(), MannequinRenderer::new);
         event.registerEntityRenderer(ModEntities.THROWN_MJOLNIR.get(), ThrownMjolnirRenderer::new);
         event.registerBlockEntityRenderer(ModBlocks.MJOLNIR_BLOCK_ENTITY.get(), MjolnirBlockRenderer::new);

@@ -63,6 +63,15 @@ public final class ClientForgeEvents {
         Object model = event.getRenderer().getModel();
         if (!(model instanceof PlayerModel<?> playerModel)) return;
 
+        // Calling Mjolnir: the dominant arm raises in the horn pose until the hammer arrives.
+        if (net.kiko.client.mjolnir.MjolnirClient.isCalling(player)) {
+            if (player.getMainArm() == net.minecraft.world.entity.HumanoidArm.RIGHT) {
+                playerModel.rightArmPose = net.minecraft.client.model.HumanoidModel.ArmPose.TOOT_HORN;
+            } else {
+                playerModel.leftArmPose = net.minecraft.client.model.HumanoidModel.ArmPose.TOOT_HORN;
+            }
+        }
+
         PoseState state = player == Minecraft.getInstance().player
                 ? PoseBindings.localState()
                 : ClientPoseStore.get(player.getUUID());

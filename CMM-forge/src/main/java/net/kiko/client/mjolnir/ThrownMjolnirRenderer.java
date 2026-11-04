@@ -30,8 +30,10 @@ public class ThrownMjolnirRenderer extends EntityRenderer<ThrownMjolnir> {
         poseStack.pushPose();
         poseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(partialTick, entity.yRotO, entity.getYRot()) - 90.0F));
         poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(partialTick, entity.xRotO, entity.getXRot())));
-        poseStack.mulPose(Axis.ZP.rotationDegrees((entity.tickCount + partialTick) * 45.0F));
+        // Flies straight, head first: the hammer's top (+y) points along the flight.
+        poseStack.mulPose(Axis.ZP.rotationDegrees(-90.0F));
         poseStack.scale(0.6F, 0.6F, 0.6F);
+        poseStack.translate(0.0D, -0.156D, 0.0D);
         net.minecraft.client.Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.NONE,
                 light, OverlayTexture.NO_OVERLAY, poseStack, buffer, entity.level(), entity.getId());
         poseStack.popPose();

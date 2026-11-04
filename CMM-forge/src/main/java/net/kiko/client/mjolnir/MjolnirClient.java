@@ -41,7 +41,24 @@ public final class MjolnirClient {
     private static final Set<Integer> LEANING = new HashSet<>();
     private static final java.util.Map<Integer, MjolnirSpinSound> SPIN_SOUNDS = new java.util.HashMap<>();
 
+    private static final Set<java.util.UUID> CALLING = new HashSet<>();
+
     private MjolnirClient() {}
+
+    /** True while a called hammer is still on its way to this player. */
+    public static boolean isCalling(Player player) {
+        return CALLING.contains(player.getUUID());
+    }
+
+    private static void updateCalling(Minecraft mc) {
+        CALLING.clear();
+        if (mc.level == null) return;
+        for (net.minecraft.world.entity.Entity e : mc.level.entitiesForRendering()) {
+            if (e instanceof net.kiko.mjolnir.ThrownMjolnir hammer && hammer.isCalled() && hammer.getOwner() != null) {
+                CALLING.add(hammer.getOwner().getUUID());
+            }
+        }
+    }
 
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
@@ -51,6 +68,7 @@ public final class MjolnirClient {
         if (player == null || mc.isPaused()) return;
 
         updateSpinSounds(mc);
+        updateCalling(mc);
 
         if (startCooldown > 0) startCooldown--;
         if (CALL.consumeClick() && mc.screen == null) {
@@ -87,7 +105,8 @@ public final class MjolnirClient {
 
     private static void flyTick(LocalPlayer player) {
         flightTicks++;
-        boolean end = player.isShiftKeyDown()
+        // Sneak ends the flight, but not in the first moments (you may still be holding it from toggling the spin).
+        boolean end = (flightTicks > 15 && player.isShiftKeyDown())
                 || player.isInWater()
                 || (flightTicks > 3 && player.horizontalCollision)
                 || (flightTicks > 10 && player.onGround());

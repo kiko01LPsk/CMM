@@ -123,12 +123,21 @@ public class MjolnirItem extends Item {
                     if (!spin) setFlying(stack, false);
                     level.playSound(null, player.blockPosition(), SoundEvents.TRIDENT_RIPTIDE_1,
                             SoundSource.PLAYERS, 0.7F, spin ? 1.2F : 0.8F);
+                    if (spin) {
+                        player.displayClientMessage(Component.literal("Spinning: jump or right-click to take off.")
+                                .withStyle(ChatFormatting.AQUA), true);
+                    }
                 }
                 return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
             }
             return InteractionResultHolder.pass(stack);
         }
         if (isFlying(stack)) return InteractionResultHolder.pass(stack);
+        if (isSpinning(stack) && hand == InteractionHand.MAIN_HAND) {
+            // Spinning: a plain right-click lifts you off.
+            if (player instanceof ServerPlayer serverPlayer) MjolnirFlight.start(serverPlayer);
+            return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
+        }
         player.startUsingItem(hand);
         return InteractionResultHolder.consume(stack);
     }

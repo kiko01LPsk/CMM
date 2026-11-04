@@ -31,6 +31,9 @@ public class ThrownMjolnir extends AbstractArrow {
     private static final EntityDataAccessor<Boolean> ID_RETURNING =
             SynchedEntityData.defineId(ThrownMjolnir.class, EntityDataSerializers.BOOLEAN);
 
+    private static final EntityDataAccessor<Boolean> ID_CALLED =
+            SynchedEntityData.defineId(ThrownMjolnir.class, EntityDataSerializers.BOOLEAN);
+
     private static final float DAMAGE = 12.0F;
 
     private boolean dealtDamage;
@@ -49,6 +52,7 @@ public class ThrownMjolnir extends AbstractArrow {
     protected void defineSynchedData() {
         super.defineSynchedData();
         entityData.define(ID_RETURNING, false);
+        entityData.define(ID_CALLED, false);
     }
 
     public void setFromCreative(boolean value) {
@@ -60,6 +64,12 @@ public class ThrownMjolnir extends AbstractArrow {
         dealtDamage = true;
         setNoPhysics(true);
         entityData.set(ID_RETURNING, true);
+        entityData.set(ID_CALLED, true);
+    }
+
+    /** True for a hammer that was called with the key (not one that is just returning from a throw). */
+    public boolean isCalled() {
+        return entityData.get(ID_CALLED);
     }
 
     public boolean isReturning() {
