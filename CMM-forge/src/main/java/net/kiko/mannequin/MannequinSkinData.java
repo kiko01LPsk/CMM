@@ -10,8 +10,23 @@ public final class MannequinSkinData {
 
     private MannequinSkinData() {}
 
-    /** "" (no skin) is valid. Otherwise it must be a PNG of 64x64 or 64x32 pixels that is not too big. */
+    /** Player-shaped skin check (used by the imitation mode). */
     public static boolean isValid(String base64) {
+        return isValid(base64, Mannequin.MODEL_PLAYER);
+    }
+
+    /** Whether a texture of this size fits the model: players 64x64 or 64x32, golem 128x128, villager 64x64, creeper 64x32. */
+    public static boolean sizeFits(int width, int height, int model) {
+        return switch (model) {
+            case Mannequin.MODEL_GOLEM -> width == 128 && height == 128;
+            case Mannequin.MODEL_VILLAGER -> width == 64 && height == 64;
+            case Mannequin.MODEL_CREEPER -> width == 64 && height == 32;
+            default -> width == 64 && (height == 64 || height == 32);
+        };
+    }
+
+    /** "" (no skin) is valid. Otherwise it must be a PNG whose size fits the model and that is not too big. */
+    public static boolean isValid(String base64, int model) {
         if (base64 == null) return false;
         if (base64.isEmpty()) return true;
         if (base64.length() > MAX_LENGTH) return false;
@@ -25,7 +40,7 @@ public final class MannequinSkinData {
             }
             int width = readInt(data, 16);
             int height = readInt(data, 20);
-            return width == 64 && (height == 64 || height == 32);
+            return sizeFits(width, height, model);
         } catch (IllegalArgumentException e) {
             return false;
         }

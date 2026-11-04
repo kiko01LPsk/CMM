@@ -19,6 +19,7 @@ public class MannequinSettings {
     public boolean crouching;
     public boolean slimArms;
     public byte parts = Mannequin.ALL_PARTS;
+    public byte model;
 
     public MannequinSettings() {}
 
@@ -34,6 +35,7 @@ public class MannequinSettings {
         crouching = buf.readBoolean();
         slimArms = buf.readBoolean();
         parts = buf.readByte();
+        model = buf.readByte();
     }
 
     public void write(FriendlyByteBuf buf) {
@@ -48,6 +50,7 @@ public class MannequinSettings {
         buf.writeBoolean(crouching);
         buf.writeBoolean(slimArms);
         buf.writeByte(parts);
+        buf.writeByte(model);
     }
 
     public MannequinSettings copy() {
@@ -63,6 +66,7 @@ public class MannequinSettings {
         c.crouching = crouching;
         c.slimArms = slimArms;
         c.parts = parts;
+        c.model = model;
         return c;
     }
 
@@ -85,6 +89,7 @@ public class MannequinSettings {
         r.crouching = s.isMannequinCrouching();
         r.slimArms = s.slimArms();
         r.parts = s.getPartsMask();
+        r.model = (byte) s.getModelType();
         return r;
     }
 
@@ -115,5 +120,6 @@ public class MannequinSettings {
         s.setMannequinCrouching(crouching);
         s.setSlimArms(slimArms);
         s.setPartsMask(parts);
+        s.setModelType(model);
     }
 }

@@ -34,5 +34,6 @@ public class KikoMod {
 
     private void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(ModNetwork::register);
+        event.enqueueWork(ModBlocks::registerPottedPlants);
     }
 }

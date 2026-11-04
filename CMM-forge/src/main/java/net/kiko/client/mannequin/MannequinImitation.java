@@ -107,6 +107,19 @@ public final class MannequinImitation {
             dummy.applied = mode;
         }
 
+        // Basic (empty) skin: keep the player's own skin, arm width and visible skin layers.
+        if (mode.skin().isEmpty()) {
+            m.overrideTexture = player.getSkinTextureLocation();
+            m.setSlimArms("slim".equals(player.getModelName()));
+            byte mask = 0;
+            for (net.minecraft.world.entity.player.PlayerModelPart part : net.minecraft.world.entity.player.PlayerModelPart.values()) {
+                if (player.isModelPartShown(part)) mask |= part.getMask();
+            }
+            m.setPartsMask(mask);
+        } else {
+            m.overrideTexture = null;
+        }
+
         // The head is the one part the player still controls: it follows where they look, on top of the saved pose.
         float bodyYaw = Mth.rotLerp(partialTick, player.yBodyRotO, player.yBodyRot);
         float headYaw = Mth.rotLerp(partialTick, player.yHeadRotO, player.yHeadRot);

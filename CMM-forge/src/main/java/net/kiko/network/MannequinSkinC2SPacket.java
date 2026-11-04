@@ -32,10 +32,9 @@ public class MannequinSkinC2SPacket {
     public static void handle(MannequinSkinC2SPacket msg, Supplier<NetworkEvent.Context> ctx) {
         ServerPlayer sender = ctx.get().getSender();
         if (sender == null || !sender.getAbilities().mayBuild) return;
-        if (!MannequinSkinData.isValid(msg.skin)) return;
         Entity entity = sender.level().getEntity(msg.entityId);
         if (entity instanceof Mannequin mannequin && sender.distanceToSqr(mannequin) < 144.0D) {
-            mannequin.setSkin(msg.skin);
+            if (MannequinSkinData.isValid(msg.skin, mannequin.getModelType())) mannequin.setSkin(msg.skin);
         }
     }
 }

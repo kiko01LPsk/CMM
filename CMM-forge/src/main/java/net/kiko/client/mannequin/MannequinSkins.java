@@ -21,31 +21,44 @@ public final class MannequinSkins {
 
     /** The texture for this skin, or the fallback when there is no (valid) skin. */
     public static ResourceLocation get(String base64, ResourceLocation fallback) {
+        return get(base64, fallback, true);
+    }
+
+    /** playerLayout: true for the player model (old 64x32 skins are converted, the body is made opaque); false for mob textures. */
+    public static ResourceLocation get(String base64, ResourceLocation fallback, boolean playerLayout) {
         if (base64 == null || base64.isEmpty()) return fallback;
-        ResourceLocation cached = CACHE.get(base64);
+        String key = (playerLayout ? "p" : "m") + base64;
+        ResourceLocation cached = CACHE.get(key);
         if (cached == null) {
-            cached = load(base64);
-            CACHE.put(base64, cached != null ? cached : fallback);
+            cached = load(base64, playerLayout);
+            CACHE.put(key, cached != null ? cached : fallback);
             if (cached == null) cached = fallback;
         }
         return cached;
     }
 
-    private static ResourceLocation load(String base64) {
+    private static ResourceLocation load(String base64, boolean playerLayout) {
         try {
             byte[] data = Base64.getDecoder().decode(base64);
             NativeImage image = NativeImage.read(new ByteArrayInputStream(data));
-            if (image.getWidth() != 64 || (image.getHeight() != 64 && image.getHeight() != 32)) {
+            if (image.getWidth() < 16 || image.getHeight() < 16 || image.getWidth() > 256 || image.getHeight() > 256) {
                 image.close();
                 return null;
             }
-            NativeImage skin = image.getHeight() == 32 ? convertLegacy(image) : image;
-            if (skin != image) image.close();
-            opaque(skin, 0, 0, 32, 16);
-            opaque(skin, 0, 16, 64, 32);
-            opaque(skin, 16, 48, 48, 64);
+            NativeImage skin = image;
+            if (playerLayout) {
+                if (image.getWidth() != 64 || (image.getHeight() != 64 && image.getHeight() != 32)) {
+                    image.close();
+                    return null;
+                }
+                skin = image.getHeight() == 32 ? convertLegacy(image) : image;
+                if (skin != image) image.close();
+                opaque(skin, 0, 0, 32, 16);
+                opaque(skin, 0, 16, 64, 32);
+                opaque(skin, 16, 48, 48, 64);
+            }
             ResourceLocation id = new ResourceLocation(KikoMod.MOD_ID,
-                    "mannequin_skin/" + UUID.nameUUIDFromBytes(data));
+                    "mannequin_skin/" + (playerLayout ? "p" : "m") + UUID.nameUUIDFromBytes(data));
             Minecraft.getInstance().getTextureManager().register(id, new DynamicTexture(skin));
             return id;
         } catch (Exception e) {

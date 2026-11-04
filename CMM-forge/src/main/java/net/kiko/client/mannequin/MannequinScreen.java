@@ -2,6 +2,7 @@ package net.kiko.client.mannequin;
 
 import net.kiko.mannequin.Mannequin;
 import net.kiko.mannequin.MannequinMode;
+import net.kiko.mannequin.MannequinPresets;
 import net.kiko.mannequin.MannequinSettings;
 import net.kiko.network.MannequinEditC2SPacket;
 import net.kiko.network.MannequinSkinC2SPacket;
@@ -16,6 +17,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.PlayerModelPart;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.List;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.DoubleConsumer;
@@ -27,12 +31,12 @@ import java.util.function.DoubleSupplier;
  */
 public class MannequinScreen extends Screen {
 
-    private enum Tab { POSE, BODY, STYLE, SKIN }
+    private enum Tab { POSE, POSES, BODY, STYLE, SKIN }
 
     private static final String[] PART_KEYS =
             {"head", "body", "left_arm", "right_arm", "left_leg", "right_leg"};
     private static final String[] AXES = {"X", "Y", "Z"};
-    private static final int PANEL_WIDTH = 180;
+    private static final int PANEL_WIDTH = 200;
 
     private final Mannequin mannequin;
     private final MannequinSettings settings;
@@ -41,6 +45,11 @@ public class MannequinScreen extends Screen {
     private String pathText = "";
     private Component status = null;
     private int statusColor = 0xFFFFFF;
+    private int hintY = 172;
+    private int presetIndex = 0;
+    private int savedIndex = 0;
+    private String saveName = "my_pose";
+    private List<String> saved = List.of();
 
     public MannequinScreen(Mannequin mannequin) {
         super(Component.translatable("screen.kiko.mannequin.title"));
@@ -62,11 +71,13 @@ public class MannequinScreen extends Screen {
     protected void init() {
         int x = 10;
         int w = PANEL_WIDTH - 20;
-        int tabW = (w - 6) / 4;
+        int tabW = (w - 8) / 5;
         addTab(Tab.POSE, "screen.kiko.mannequin.tab.pose", x, 22, tabW);
-        addTab(Tab.BODY, "screen.kiko.mannequin.tab.body", x + (tabW + 2), 22, tabW);
-        addTab(Tab.STYLE, "screen.kiko.mannequin.tab.style", x + 2 * (tabW + 2), 22, tabW);
-        addTab(Tab.SKIN, "screen.kiko.mannequin.tab.skin", x + 3 * (tabW + 2), 22, tabW);
+        addTab(Tab.POSES, "screen.kiko.mannequin.tab.poses", x + (tabW + 2), 22, tabW);
+        addTab(Tab.BODY, "screen.kiko.mannequin.tab.body", x + 2 * (tabW + 2), 22, tabW);
+        addTab(Tab.STYLE, "screen.kiko.mannequin.tab.style", x + 3 * (tabW + 2), 22, tabW);
+        addTab(Tab.SKIN, "screen.kiko.mannequin.tab.skin", x + 4 * (tabW + 2), 22, tabW);
+        hintY = 172;
 
         int y = 48;
         switch (tab) {
@@ -90,9 +101,50 @@ public class MannequinScreen extends Screen {
                 }).bounds(x, y, w, 20).build());
                 y += 26;
                 addRenderableWidget(Button.builder(Component.translatable("screen.kiko.mannequin.imitate"), b -> {
-                    MannequinImitation.start(MannequinMode.of(settings, mannequin.getSkin()));
+                    MannequinImitation.start(MannequinMode.of(settings,
+                            settings.model == Mannequin.MODEL_PLAYER ? mannequin.getSkin() : ""));
                     onClose();
                 }).bounds(x, y, w, 20).build());
+            }
+            case POSES -> {
+                MannequinPresets.Preset current = MannequinPresets.ALL[presetIndex];
+                addRenderableWidget(Button.builder(Component.literal("<"), b -> applyPreset(-1)).bounds(x, y, 20, 20).build());
+                Button name = Button.builder(Component.translatable("screen.kiko.mannequin.preset." + current.id()), b -> {})
+                        .bounds(x + 22, y, w - 44, 20).build();
+                name.active = false;
+                addRenderableWidget(name);
+                addRenderableWidget(Button.builder(Component.literal(">"), b -> applyPreset(1)).bounds(x + w - 20, y, 20, 20).build());
+                y += 28;
+
+                EditBox nameBox = new EditBox(font, x, y, w, 20, Component.translatable("screen.kiko.mannequin.file.name"));
+                nameBox.setMaxLength(40);
+                nameBox.setHint(Component.translatable("screen.kiko.mannequin.file.name"));
+                nameBox.setValue(saveName);
+                nameBox.setResponder(v -> saveName = v);
+                addRenderableWidget(nameBox);
+                y += 22;
+                addRenderableWidget(Button.builder(Component.translatable("screen.kiko.mannequin.file.save"), b -> savePose())
+                        .bounds(x, y, w, 20).build());
+                y += 28;
+
+                saved = MannequinPoseFiles.list();
+                if (savedIndex >= saved.size()) savedIndex = 0;
+                addRenderableWidget(Button.builder(Component.literal("<"), b -> cycleSaved(-1)).bounds(x, y, 20, 20).build());
+                Button file = Button.builder(saved.isEmpty()
+                        ? Component.translatable("screen.kiko.mannequin.file.none") : Component.literal(saved.get(savedIndex)), b -> {})
+                        .bounds(x + 22, y, w - 44, 20).build();
+                file.active = false;
+                addRenderableWidget(file);
+                addRenderableWidget(Button.builder(Component.literal(">"), b -> cycleSaved(1)).bounds(x + w - 20, y, 20, 20).build());
+                y += 22;
+                int half = (w - 2) / 2;
+                Button load = Button.builder(Component.translatable("screen.kiko.mannequin.file.load"), b -> loadSaved())
+                        .bounds(x, y, half, 20).build();
+                load.active = !saved.isEmpty();
+                addRenderableWidget(load);
+                addRenderableWidget(Button.builder(Component.translatable("screen.kiko.mannequin.file.browse"), b -> browsePose())
+                        .bounds(x + half + 2, y, half, 20).build());
+                hintY = y + 26;
             }
             case BODY -> {
                 addRenderableWidget(new ValueSlider(x, y, w, Component.translatable("screen.kiko.mannequin.rotation"),
@@ -136,23 +188,33 @@ public class MannequinScreen extends Screen {
             }
             case SKIN -> {
                 int half = (w - 2) / 2;
-                // Arm width: the button of the current width is greyed out.
-                Button classic = Button.builder(Component.translatable("screen.kiko.mannequin.arms_classic"), b -> {
-                    settings.slimArms = false;
-                    send();
-                    rebuildWidgets();
-                }).bounds(x, y, w, 20).build();
-                classic.active = settings.slimArms;
-                addRenderableWidget(classic);
+                addRenderableWidget(Button.builder(Component.translatable("screen.kiko.mannequin.model").append(": ")
+                                .append(Component.translatable("screen.kiko.mannequin.model." + settings.model)),
+                        b -> {
+                            settings.model = (byte) ((settings.model + 1) % Mannequin.MODEL_COUNT);
+                            send();
+                            setStatus(null, 0xFFFFFF);
+                            rebuildWidgets();
+                        }).bounds(x, y, w, 20).build());
                 y += 22;
-                Button slim = Button.builder(Component.translatable("screen.kiko.mannequin.arms_slim"), b -> {
-                    settings.slimArms = true;
-                    send();
-                    rebuildWidgets();
-                }).bounds(x, y, w, 20).build();
-                slim.active = !settings.slimArms;
-                addRenderableWidget(slim);
-                y += 30;
+                if (settings.model == Mannequin.MODEL_PLAYER) {
+                    // Arm width: the button of the current width is greyed out.
+                    Button classic = Button.builder(Component.translatable("screen.kiko.mannequin.arms_classic"), b -> {
+                        settings.slimArms = false;
+                        send();
+                        rebuildWidgets();
+                    }).bounds(x, y, half, 20).build();
+                    classic.active = settings.slimArms;
+                    addRenderableWidget(classic);
+                    Button slim = Button.builder(Component.translatable("screen.kiko.mannequin.arms_slim"), b -> {
+                        settings.slimArms = true;
+                        send();
+                        rebuildWidgets();
+                    }).bounds(x + half + 2, y, half, 20).build();
+                    slim.active = !settings.slimArms;
+                    addRenderableWidget(slim);
+                }
+                y += 26;
 
                 EditBox path = new EditBox(font, x, y, w, 20, Component.translatable("screen.kiko.mannequin.skin.path"));
                 path.setMaxLength(500);
@@ -177,6 +239,7 @@ public class MannequinScreen extends Screen {
                     ModNetwork.CHANNEL.sendToServer(new MannequinSkinC2SPacket(mannequin.getId(), ""));
                     setStatus(Component.translatable("screen.kiko.mannequin.skin.cleared"), 0xFFFFFF);
                 }).bounds(x, y, w, 20).build());
+                hintY = y + 26;
             }
         }
 
@@ -185,13 +248,14 @@ public class MannequinScreen extends Screen {
     }
 
     private void setStatus(Component text, int color) {
+        // null clears the message
         this.status = text;
         this.statusColor = color;
     }
 
     private void loadSkin() {
         try {
-            String skin = MannequinSkinLoader.load(pathText);
+            String skin = MannequinSkinLoader.load(pathText, settings.model);
             ModNetwork.CHANNEL.sendToServer(new MannequinSkinC2SPacket(mannequin.getId(), skin));
             setStatus(Component.translatable("screen.kiko.mannequin.skin.loaded"), 0x55FF55);
         } catch (MannequinSkinLoader.SkinException e) {
@@ -199,8 +263,63 @@ public class MannequinScreen extends Screen {
         }
     }
 
+    private void applyPreset(int step) {
+        presetIndex = Math.floorMod(presetIndex + step, MannequinPresets.ALL.length);
+        MannequinPresets.Preset preset = MannequinPresets.ALL[presetIndex];
+        System.arraycopy(preset.pose(), 0, settings.pose, 0, 18);
+        settings.crouching = preset.crouching();
+        send();
+        rebuildWidgets();
+    }
+
+    private void savePose() {
+        try {
+            MannequinPoseFiles.save(saveName, settings);
+            savedIndex = Math.max(0, MannequinPoseFiles.list().indexOf(MannequinPoseFiles.cleanName(saveName)));
+            setStatus(Component.translatable("screen.kiko.mannequin.file.saved", MannequinPoseFiles.cleanName(saveName)), 0x55FF55);
+        } catch (IOException e) {
+            setStatus(Component.translatable("screen.kiko.mannequin.file.save_failed"), 0xFF5555);
+        }
+        rebuildWidgets();
+    }
+
+    private void cycleSaved(int step) {
+        if (saved.isEmpty()) return;
+        savedIndex = Math.floorMod(savedIndex + step, saved.size());
+        rebuildWidgets();
+    }
+
+    private void loadSaved() {
+        if (saved.isEmpty()) return;
+        try {
+            MannequinPoseFiles.loadNamed(saved.get(savedIndex), settings);
+            send();
+            setStatus(Component.translatable("screen.kiko.mannequin.file.loaded", saved.get(savedIndex)), 0x55FF55);
+        } catch (IOException e) {
+            setStatus(Component.translatable("screen.kiko.mannequin.file.load_failed"), 0xFF5555);
+        }
+        rebuildWidgets();
+    }
+
+    private void browsePose() {
+        String chosen = MannequinSkinLoader.browse("Select a pose file", "*.json", "Pose files (.json)");
+        if (chosen == null || chosen.isEmpty()) {
+            setStatus(Component.translatable("screen.kiko.mannequin.skin.browse_failed"), 0xFFAA55);
+            rebuildWidgets();
+            return;
+        }
+        try {
+            MannequinPoseFiles.loadPath(Path.of(chosen), settings);
+            send();
+            setStatus(Component.translatable("screen.kiko.mannequin.file.loaded", Path.of(chosen).getFileName().toString()), 0x55FF55);
+        } catch (IOException | RuntimeException e) {
+            setStatus(Component.translatable("screen.kiko.mannequin.file.load_failed"), 0xFF5555);
+        }
+        rebuildWidgets();
+    }
+
     private void addTab(Tab target, String key, int x, int y, int w) {
-        Button button = Button.builder(Component.translatable(key), b -> { tab = target; rebuildWidgets(); })
+        Button button = Button.builder(Component.translatable(key), b -> { tab = target; status = null; rebuildWidgets(); })
                 .bounds(x, y, w, 20).build();
         button.active = tab != target;
         addRenderableWidget(button);
@@ -236,9 +355,10 @@ public class MannequinScreen extends Screen {
         graphics.fill(0, 0, PANEL_WIDTH, height, 0xB0000000);
         graphics.drawString(font, title, 10, 8, 0xFFFFFF, false);
         super.render(graphics, mouseX, mouseY, partialTick);
-        if (tab == Tab.SKIN) {
-            Component hint = status != null ? status : Component.translatable("screen.kiko.mannequin.skin.hint");
-            graphics.drawWordWrap(font, hint, 10, 168, PANEL_WIDTH - 20, status != null ? statusColor : 0xAAAAAA);
+        if (tab == Tab.SKIN || tab == Tab.POSES) {
+            Component hint = status != null ? status : Component.translatable(tab == Tab.SKIN
+                    ? "screen.kiko.mannequin.skin.hint." + settings.model : "screen.kiko.mannequin.file.hint");
+            graphics.drawWordWrap(font, hint, 10, hintY, PANEL_WIDTH - 20, status != null ? statusColor : 0xAAAAAA);
         }
     }
 

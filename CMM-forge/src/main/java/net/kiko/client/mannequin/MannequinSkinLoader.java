@@ -24,7 +24,7 @@ public final class MannequinSkinLoader {
 
     private MannequinSkinLoader() {}
 
-    public static String load(String pathText) throws SkinException {
+    public static String load(String pathText, int model) throws SkinException {
         String cleaned = pathText == null ? "" : pathText.trim();
         if (cleaned.length() > 1 && cleaned.startsWith("\"") && cleaned.endsWith("\"")) {
             cleaned = cleaned.substring(1, cleaned.length() - 1);
@@ -40,7 +40,7 @@ public final class MannequinSkinLoader {
             throw new SkinException("screen.kiko.mannequin.skin.no_file");
         }
         try (NativeImage image = NativeImage.read(new ByteArrayInputStream(bytes))) {
-            if (image.getWidth() != 64 || (image.getHeight() != 64 && image.getHeight() != 32)) {
+            if (!MannequinSkinData.sizeFits(image.getWidth(), image.getHeight(), model)) {
                 throw new SkinException("screen.kiko.mannequin.skin.invalid_dimensions");
             }
             // Re-encoding makes the PNG as small as the game can make it.
@@ -59,14 +59,18 @@ public final class MannequinSkinLoader {
      * Returns the chosen path, or null when cancelled or when the window is not available.
      */
     public static String browse() {
+        return browse("Select a PNG texture", "*.png", "PNG images");
+    }
+
+    public static String browse(String title, String pattern, String description) {
         try (MemoryStack stack = MemoryStack.stackPush()) {
             PointerBuffer filters = stack.mallocPointer(1);
-            filters.put(stack.UTF8("*.png"));
+            filters.put(stack.UTF8(pattern));
             filters.flip();
             Class<?> dialogs = Class.forName("org.lwjgl.util.tinyfd.TinyFileDialogs");
             Method open = dialogs.getMethod("tinyfd_openFileDialog",
                     CharSequence.class, CharSequence.class, PointerBuffer.class, CharSequence.class, boolean.class);
-            return (String) open.invoke(null, "Select a skin (64x64 or 64x32 PNG)", "", filters, "PNG images", false);
+            return (String) open.invoke(null, title, "", filters, description, false);
         } catch (Throwable t) {
             return null;
         }

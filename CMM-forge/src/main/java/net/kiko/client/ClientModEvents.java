@@ -3,6 +3,13 @@ package net.kiko.client;
 import net.kiko.KikoMod;
 import net.kiko.client.mannequin.MannequinImitation;
 import net.kiko.client.mannequin.MannequinRenderer;
+import net.kiko.client.mjolnir.MjolnirBlockRenderer;
+import net.kiko.client.walkman.WalkmanLayer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.kiko.client.mjolnir.MjolnirClient;
+import net.kiko.client.mjolnir.ThrownMjolnirRenderer;
+import net.kiko.block.ModBlocks;
+import net.kiko.item.MjolnirItem;
 import net.kiko.item.ModItems;
 import net.kiko.item.SonicScrewdriverItem;
 import net.kiko.mannequin.ModEntities;
@@ -30,11 +37,24 @@ public final class ClientModEvents {
             event.register(binding.key());
         }
         event.register(MannequinImitation.TOGGLE);
+        event.register(MjolnirClient.CALL);
     }
 
     @SubscribeEvent
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntities.MANNEQUIN.get(), MannequinRenderer::new);
+        event.registerEntityRenderer(ModEntities.THROWN_MJOLNIR.get(), ThrownMjolnirRenderer::new);
+        event.registerBlockEntityRenderer(ModBlocks.MJOLNIR_BLOCK_ENTITY.get(), MjolnirBlockRenderer::new);
+    }
+
+    /** Adds the worn-walkman layer to both player skins (normal and slim arms). */
+    @SubscribeEvent
+    public static void onAddLayers(EntityRenderersEvent.AddLayers event) {
+        for (String skin : event.getSkins()) {
+            if (event.getSkin(skin) instanceof PlayerRenderer renderer) {
+                renderer.addLayer(new WalkmanLayer(renderer));
+            }
+        }
     }
 
     @SubscribeEvent
@@ -47,6 +67,17 @@ public final class ClientModEvents {
             ItemProperties.register(ModItems.SONIC_SCREWDRIVER.get(),
                     new ResourceLocation(KikoMod.MOD_ID, "mode"),
                     (stack, level, entity, seed) -> (float) SonicScrewdriverItem.getMode(stack).ordinal());
+            // Mjolnir: 12 spin frames while spinning in the hand, one pose while flying (see models/item/mjolnir.json).
+            ItemProperties.register(ModItems.MJOLNIR.get(),
+                    new ResourceLocation(KikoMod.MOD_ID, "spin"),
+                    (stack, level, entity, seed) -> {
+                        if (entity == null || !MjolnirItem.isSpinning(stack) || MjolnirItem.isFlying(stack)) return 0.0F;
+                        int frame = (int) ((net.minecraft.Util.getMillis() / 55L) % 12L);
+                        return (frame + 1) / 12.0F;
+                    });
+            ItemProperties.register(ModItems.MJOLNIR.get(),
+                    new ResourceLocation(KikoMod.MOD_ID, "flying"),
+                    (stack, level, entity, seed) -> entity != null && MjolnirItem.isFlying(stack) ? 1.0F : 0.0F);
         });
     }
 

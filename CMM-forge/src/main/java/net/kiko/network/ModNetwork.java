@@ -49,6 +49,12 @@ public final class ModNetwork {
                 .consumerMainThread(MannequinModeC2SPacket::handle)
                 .add();
 
+        CHANNEL.messageBuilder(MjolnirActionC2SPacket.class, id++, NetworkDirection.PLAY_TO_SERVER)
+                .decoder(MjolnirActionC2SPacket::new)
+                .encoder(MjolnirActionC2SPacket::toBytes)
+                .consumerMainThread(MjolnirActionC2SPacket::handle)
+                .add();
+
         CHANNEL.messageBuilder(MannequinModeS2CPacket.class, id++, NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(MannequinModeS2CPacket::new)
                 .encoder(MannequinModeS2CPacket::toBytes)

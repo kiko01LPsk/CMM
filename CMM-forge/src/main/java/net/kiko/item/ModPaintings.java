@@ -32,6 +32,15 @@ public class ModPaintings {
     public static final RegistryObject<PaintingVariant> OLD_LOGO =
             PAINTINGS.register("old_logo", () -> new PaintingVariant(32, 32)); // 2 x 2 blocks
 
+    public static final RegistryObject<PaintingVariant> MAWHENNA_SYMBOL =
+            PAINTINGS.register("mawhenna_symbol", () -> new PaintingVariant(32, 32));       // 2 x 2 blocks
+
+    public static final RegistryObject<PaintingVariant> MAWHENNA_SYMBOL_SMALL =
+            PAINTINGS.register("mawhenna_symbol_small", () -> new PaintingVariant(16, 16)); // 1 x 1 blocks
+
+    public static final RegistryObject<PaintingVariant> MAWHENNA_LOGO =
+            PAINTINGS.register("mawhenna_logo", () -> new PaintingVariant(32, 32));         // 2 x 2 blocks
+
     public static void register(IEventBus eventBus) {
         PAINTINGS.register(eventBus);
     }

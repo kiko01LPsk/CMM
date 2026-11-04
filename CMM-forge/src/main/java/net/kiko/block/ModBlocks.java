@@ -7,6 +7,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.SlabBlock;
@@ -96,6 +97,13 @@ public class ModBlocks {
             BLOCK_ENTITIES.register("scp_drawers",
                     () -> BlockEntityType.Builder.of(ScpDrawersBlockEntity::new, SCP_DRAWERS.get()).build(null));
 
+    // ── Mjolnir standing in the ground (no item of its own, the Mjolnir item places it) ──
+    public static final RegistryObject<Block> MJOLNIR_BLOCK = BLOCKS.register("mjolnir_block", MjolnirBlock::new);
+
+    public static final RegistryObject<BlockEntityType<MjolnirBlockEntity>> MJOLNIR_BLOCK_ENTITY =
+            BLOCK_ENTITIES.register("mjolnir_block",
+                    () -> BlockEntityType.Builder.of(MjolnirBlockEntity::new, MJOLNIR_BLOCK.get()).build(null));
+
     // ── Doors and trapdoor (behave like their wooden vanilla versions) ────────
     // Doors use DoubleHighBlockItem so both halves are placed properly.
     public static final RegistryObject<Block> SCP_DOOR_1 = block("scp_door_1",
@@ -141,6 +149,20 @@ public class ModBlocks {
             () -> new SawtoothHatBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN)
                     .strength(0.8F).sound(SoundType.WOOL).noOcclusion()),
             b -> new net.kiko.item.HatBlockItem(b, new Item.Properties()));
+
+    // ── Mysterious flower: a placeable flower (never generated) with its flower-pot version ──
+    public static final RegistryObject<Block> MYSTERIOUS_FLOWER = block("mysterious_flower",
+            () -> new MysteriousFlowerBlock(BlockBehaviour.Properties.copy(Blocks.POPPY)));
+
+    /** The pot with the flower in it. Has no item of its own. */
+    public static final RegistryObject<Block> POTTED_MYSTERIOUS_FLOWER = BLOCKS.register("potted_mysterious_flower",
+            () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, MYSTERIOUS_FLOWER,
+                    BlockBehaviour.Properties.copy(Blocks.POTTED_POPPY)));
+
+    /** Lets the vanilla flower pot accept the flower. Call from FMLCommonSetupEvent.enqueueWork. */
+    public static void registerPottedPlants() {
+        ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(MYSTERIOUS_FLOWER.getId(), POTTED_MYSTERIOUS_FLOWER);
+    }
 
     // ── Sawtooth props (decorative, directional, no sounds) ───────────────────
     public static final RegistryObject<Block> SAWTOOTH_BEARTRAP = block("sawtooth_beartrap",

@@ -38,6 +38,13 @@ public class Mannequin extends ArmorStand {
 
     public static final byte ALL_PARTS = 0x7F;
     public static final float MIN_SCALE = 0.25F;
+
+    /** What the mannequin looks like: the player model, or a mob model that takes a custom texture. */
+    public static final int MODEL_PLAYER = 0;
+    public static final int MODEL_GOLEM = 1;
+    public static final int MODEL_VILLAGER = 2;
+    public static final int MODEL_CREEPER = 3;
+    public static final int MODEL_COUNT = 4;
     public static final float MAX_SCALE = 4.0F;
 
     private static final EntityDataAccessor<Boolean> DATA_SLIM =
@@ -57,6 +64,12 @@ public class Mannequin extends ArmorStand {
             SynchedEntityData.defineId(Mannequin.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<String> DATA_SKIN =
             SynchedEntityData.defineId(Mannequin.class, EntityDataSerializers.STRING);
+
+    private static final EntityDataAccessor<Byte> DATA_MODEL =
+            SynchedEntityData.defineId(Mannequin.class, EntityDataSerializers.BYTE);
+
+    /** Client only: the texture the imitation dummy uses when the player kept the basic skin. */
+    public net.minecraft.resources.ResourceLocation overrideTexture;
 
     private long lastHitTick;
 
@@ -90,6 +103,7 @@ public class Mannequin extends ArmorStand {
         entityData.define(DATA_TILT_Z, 0.0F);
         entityData.define(DATA_SKIN, "");
         entityData.define(DATA_SMALL, false);
+        entityData.define(DATA_MODEL, (byte) 0);
     }
 
     @Override
@@ -101,6 +115,7 @@ public class Mannequin extends ArmorStand {
         tag.putFloat("MannequinScale", getEntityScale());
         tag.putFloat("MannequinTiltX", getTiltX());
         tag.putFloat("MannequinTiltZ", getTiltZ());
+        tag.putByte("MannequinModel", (byte) getModelType());
         tag.putString("MannequinSkin", getSkin());
     }
 
@@ -113,6 +128,7 @@ public class Mannequin extends ArmorStand {
         if (tag.contains("MannequinScale")) setEntityScale(tag.getFloat("MannequinScale"));
         if (tag.contains("MannequinTiltX")) setTiltX(tag.getFloat("MannequinTiltX"));
         if (tag.contains("MannequinTiltZ")) setTiltZ(tag.getFloat("MannequinTiltZ"));
+        if (tag.contains("MannequinModel")) setModelType(tag.getByte("MannequinModel"));
         if (tag.contains("MannequinSkin")) setSkin(tag.getString("MannequinSkin"));
         if (tag.contains("Small")) setMannequinSmall(tag.getBoolean("Small"));
     }
@@ -146,7 +162,16 @@ public class Mannequin extends ArmorStand {
     public boolean hasSkin() { return !getSkin().isEmpty(); }
 
     public void setSkin(String base64) {
-        entityData.set(DATA_SKIN, MannequinSkinData.isValid(base64) ? base64 : "");
+        entityData.set(DATA_SKIN, MannequinSkinData.isValid(base64, getModelType()) ? base64 : "");
+    }
+
+    public int getModelType() { return entityData.get(DATA_MODEL); }
+
+    /** Changing the model drops a skin that does not fit the new one. */
+    public void setModelType(int model) {
+        int m = model >= 0 && model < MODEL_COUNT ? model : MODEL_PLAYER;
+        entityData.set(DATA_MODEL, (byte) m);
+        if (!MannequinSkinData.isValid(getSkin(), m)) entityData.set(DATA_SKIN, "");
     }
 
     public float getEntityScale() { return entityData.get(DATA_SCALE); }
@@ -252,7 +277,7 @@ public class Mannequin extends ArmorStand {
         CompoundTag kept = new CompoundTag();
         for (String key : new String[]{"Small", "ShowArms", "NoBasePlate", "Pose", "Invisible",
                 "MannequinSlimArms", "MannequinCrouching", "MannequinParts", "MannequinScale",
-                "MannequinTiltX", "MannequinTiltZ", "MannequinSkin"}) {
+                "MannequinTiltX", "MannequinTiltZ", "MannequinSkin", "MannequinModel"}) {
             if (all.contains(key)) kept.put(key, all.get(key).copy());
         }
         stack.addTagElement("EntityTag", kept);

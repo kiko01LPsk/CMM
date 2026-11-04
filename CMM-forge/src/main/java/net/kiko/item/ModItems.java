@@ -128,6 +128,15 @@ public class ModItems {
     public static final RegistryObject<Item> PAINTING_OLD_LOGO = ITEMS.register("painting_old_logo",
             () -> new KikoPaintingItem(ModPaintings.OLD_LOGO.getId(), new Item.Properties()));
 
+    public static final RegistryObject<Item> PAINTING_MAWHENNA_SYMBOL = ITEMS.register("painting_mawhenna_symbol",
+            () -> new KikoPaintingItem(ModPaintings.MAWHENNA_SYMBOL.getId(), new Item.Properties()));
+
+    public static final RegistryObject<Item> PAINTING_MAWHENNA_SYMBOL_SMALL = ITEMS.register("painting_mawhenna_symbol_small",
+            () -> new KikoPaintingItem(ModPaintings.MAWHENNA_SYMBOL_SMALL.getId(), new Item.Properties()));
+
+    public static final RegistryObject<Item> PAINTING_MAWHENNA_LOGO = ITEMS.register("painting_mawhenna_logo",
+            () -> new KikoPaintingItem(ModPaintings.MAWHENNA_LOGO.getId(), new Item.Properties()));
+
     // ── Sonic Screwdriver (one item, modes shown by colour) ────────────────────────────────────────────────────
 
     public static final RegistryObject<Item> SONIC_SCREWDRIVER =ITEMS.register("sonic_screwdriver",
@@ -161,6 +170,52 @@ public class ModItems {
 
     // ── Creative tab ──────────────────────────────────────────────────────────
 
+    // ── Warfare pack guns (props: hold right-click to aim, they fire nothing) ──
+    public static final RegistryObject<Item> M870 = ITEMS.register("m870",
+            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> M16 = ITEMS.register("m16",
+            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> RPG_7 = ITEMS.register("rpg_7",
+            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> AKS_74U = ITEMS.register("aks_74u",
+            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> UMP = ITEMS.register("ump",
+            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> SNIPER_RIFLE = ITEMS.register("sniper_rifle",
+            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> GLOCK_17 = ITEMS.register("glock_17",
+            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> AK_47 = ITEMS.register("ak_47",
+            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> DESERT_EAGLE = ITEMS.register("desert_eagle",
+            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> PKP_PECHENEG = ITEMS.register("pkp_pecheneg",
+            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> MP5 = ITEMS.register("mp5",
+            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> FN_FAL = ITEMS.register("fn_fal",
+            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+
+
+    /** See MjolnirItem: only the worthy can lift it. */
+    public static final RegistryObject<Item> MJOLNIR = ITEMS.register("mjolnir",
+            () -> new MjolnirItem(new Item.Properties().stacksTo(1).fireResistant()));
+
+    /** Wearable in the chestplate slot (drawn on the belt); right-click plays music. */
+    public static final RegistryObject<Item> WALKMAN = ITEMS.register("walkman",
+            () -> new WalkmanItem(new Item.Properties().stacksTo(1)));
+
     public static final RegistryObject<CreativeModeTab> KIKO_GROUP = CREATIVE_TABS.register("kiko_group",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemgroup.kiko.kiko_group"))
@@ -191,6 +246,20 @@ public class ModItems {
                         output.accept(RIFLE.get());
                         output.accept(SAWTOOTH_PHONE.get());
                         output.accept(CAMERA.get());
+                        output.accept(MJOLNIR.get());
+                        output.accept(WALKMAN.get());
+                        output.accept(M870.get());
+                        output.accept(M16.get());
+                        output.accept(RPG_7.get());
+                        output.accept(AKS_74U.get());
+                        output.accept(UMP.get());
+                        output.accept(SNIPER_RIFLE.get());
+                        output.accept(GLOCK_17.get());
+                        output.accept(AK_47.get());
+                        output.accept(DESERT_EAGLE.get());
+                        output.accept(PKP_PECHENEG.get());
+                        output.accept(MP5.get());
+                        output.accept(FN_FAL.get());
                         output.accept(MANNEQUIN.get());
                         output.accept(FILM_REEL.get());
                         output.accept(ZEME_NIKOHO.get());
@@ -200,6 +269,9 @@ public class ModItems {
                         output.accept(PAINTING_PATA.get().getDefaultInstance());
                         output.accept(PAINTING_CAM.get().getDefaultInstance());
                         output.accept(PAINTING_OLD_LOGO.get().getDefaultInstance());
+                        output.accept(PAINTING_MAWHENNA_SYMBOL.get().getDefaultInstance());
+                        output.accept(PAINTING_MAWHENNA_SYMBOL_SMALL.get().getDefaultInstance());
+                        output.accept(PAINTING_MAWHENNA_LOGO.get().getDefaultInstance());
                         // Sonic screwdrivers
                         output.accept(SONIC_SCREWDRIVER.get());
                         // Armor

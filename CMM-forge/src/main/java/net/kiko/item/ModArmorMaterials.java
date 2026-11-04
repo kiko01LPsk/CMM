@@ -15,6 +15,7 @@ public enum ModArmorMaterials implements ArmorMaterial {
     SUNGLASSES2("kiko_sunglasses2", 5, new int[]{1, 1, 1, 1}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0f, 0.0f),
     REGGAE_HAT("kiko_reggae_hat", 5,  new int[]{1, 1, 1, 1}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0f, 0.0f),
     VEST("kiko_vest",             8,  new int[]{1, 3, 5, 1},  8, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0f, 0.0f),
+    WALKMAN("kiko_walkman",       5,  new int[]{0, 0, 0, 0},  0, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0f, 0.0f),
     ZAKAR("kiko_zakar",          20,  new int[]{2, 5, 7, 3},  8, SoundEvents.ARMOR_EQUIP_IRON,    1.0f, 0.0f);
 
     private static final int[] BASE_DURABILITY = {13, 15, 16, 11}; // boots, legs, chest, head

@@ -20,6 +20,13 @@ public final class ModEntities {
                     .clientTrackingRange(10)
                     .build(new ResourceLocation(KikoMod.MOD_ID, "mannequin").toString()));
 
+    public static final RegistryObject<EntityType<net.kiko.mjolnir.ThrownMjolnir>> THROWN_MJOLNIR = ENTITIES.register("thrown_mjolnir",
+            () -> EntityType.Builder.<net.kiko.mjolnir.ThrownMjolnir>of(net.kiko.mjolnir.ThrownMjolnir::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(4)
+                    .updateInterval(20)
+                    .build(new ResourceLocation(KikoMod.MOD_ID, "thrown_mjolnir").toString()));
+
     private ModEntities() {}
 
     public static void register(IEventBus eventBus) {
