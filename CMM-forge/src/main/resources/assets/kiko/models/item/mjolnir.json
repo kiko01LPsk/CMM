@@ -14991,14 +14991,14 @@
   "display": {
     "thirdperson_righthand": {
       "rotation": [
-        75,
-        90,
+        -18,
+        180,
         0
       ],
       "translation": [
         0,
-        1.534,
-        -1.739
+        0.571,
+        -0.185
       ],
       "scale": [
         0.6,
@@ -15008,14 +15008,14 @@
     },
     "firstperson_righthand": {
       "rotation": [
-        -15,
-        90,
+        -12,
+        160,
         0
       ],
       "translation": [
-        1.5,
-        -2.594,
-        0.427
+        1,
+        -0.462,
+        -0.114
       ],
       "scale": [
         0.55,
