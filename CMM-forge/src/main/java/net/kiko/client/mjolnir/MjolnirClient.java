@@ -33,6 +33,10 @@ public final class MjolnirClient {
     public static final KeyMapping CALL = new KeyMapping("key.kiko.mjolnir_call",
             InputConstants.UNKNOWN.getValue(), PoseBindings.CATEGORY);
 
+    /** Unbound by default: strikes lightning where you look while holding the hammer. */
+    public static final KeyMapping LIGHTNING = new KeyMapping("key.kiko.mjolnir_lightning",
+            InputConstants.UNKNOWN.getValue(), PoseBindings.CATEGORY);
+
     /** Blocks per tick while flying. */
     private static final double SPEED = 1.5D;
 
@@ -73,6 +77,10 @@ public final class MjolnirClient {
         if (startCooldown > 0) startCooldown--;
         if (CALL.consumeClick() && mc.screen == null) {
             ModNetwork.CHANNEL.sendToServer(new MjolnirActionC2SPacket(MjolnirActionC2SPacket.CALL));
+        }
+
+        if (LIGHTNING.consumeClick() && mc.screen == null) {
+            ModNetwork.CHANNEL.sendToServer(new MjolnirActionC2SPacket(MjolnirActionC2SPacket.LIGHTNING));
         }
 
         ItemStack held = player.getMainHandItem();

@@ -83,13 +83,32 @@ public final class MjolnirCall {
         hammer.startReturn();
         level.addFreshEntity(hammer);
 
-        LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level);
-        if (bolt != null) {
-            bolt.moveTo(from);
-            bolt.setVisualOnly(true);
-            level.addFreshEntity(bolt);
-        }
         level.playSound(null, from.x, from.y, from.z, ModSounds.MJOLNIR_SWING.get(), SoundSource.PLAYERS, 1.2F, 1.0F);
-        level.playSound(null, player.blockPosition(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.PLAYERS, 0.4F, 1.4F);
+    }
+
+    /** The lightning key: a real lightning strike where the player looks (needs the hammer in the main hand). */
+    public static void lightning(ServerPlayer player) {
+        if (!MjolnirSaved.isWorthy(player)) return;
+        if (!player.getMainHandItem().is(ModItems.MJOLNIR.get())) return;
+        double range = 64.0D;
+        Vec3 eye = player.getEyePosition();
+        Vec3 end = eye.add(player.getLookAngle().scale(range));
+        net.minecraft.world.phys.HitResult block = player.level().clip(new net.minecraft.world.level.ClipContext(
+                eye, end, net.minecraft.world.level.ClipContext.Block.COLLIDER,
+                net.minecraft.world.level.ClipContext.Fluid.NONE, player));
+        Vec3 target = block.getType() == net.minecraft.world.phys.HitResult.Type.MISS ? null : block.getLocation();
+        double limit = target == null ? range * range : eye.distanceToSqr(target);
+        net.minecraft.world.phys.EntityHitResult hit = net.minecraft.world.entity.projectile.ProjectileUtil.getEntityHitResult(
+                player.level(), player, eye, end, player.getBoundingBox().expandTowards(player.getLookAngle().scale(range)).inflate(1.0D),
+                e -> !e.isSpectator() && e.isPickable());
+        if (hit != null && eye.distanceToSqr(hit.getLocation()) <= limit) target = hit.getLocation();
+        if (target == null) return;
+
+        LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(player.serverLevel());
+        if (bolt != null) {
+            bolt.moveTo(target);
+            bolt.setCause(player);
+            player.serverLevel().addFreshEntity(bolt);
+        }
     }
 }

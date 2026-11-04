@@ -38,6 +38,7 @@ public final class ClientModEvents {
         }
         event.register(MannequinImitation.TOGGLE);
         event.register(MjolnirClient.CALL);
+        event.register(MjolnirClient.LIGHTNING);
     }
 
     @SubscribeEvent

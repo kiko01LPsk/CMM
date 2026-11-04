@@ -137,6 +137,27 @@ public class ModItems {
     public static final RegistryObject<Item> PAINTING_MAWHENNA_LOGO = ITEMS.register("painting_mawhenna_logo",
             () -> new KikoPaintingItem(ModPaintings.MAWHENNA_LOGO.getId(), new Item.Properties()));
 
+    public static final RegistryObject<Item> PAINTING_BIGGERD = ITEMS.register("painting_biggerd",
+            () -> new KikoPaintingItem(ModPaintings.BIGGERD.getId(), new Item.Properties()));
+
+    public static final RegistryObject<Item> PAINTING_TOMCAIK = ITEMS.register("painting_tomcaik",
+            () -> new KikoPaintingItem(ModPaintings.TOMCAIK.getId(), new Item.Properties()));
+
+    public static final RegistryObject<Item> PAINTING_DEYD = ITEMS.register("painting_deyd",
+            () -> new KikoPaintingItem(ModPaintings.DEYD.getId(), new Item.Properties()));
+
+    public static final RegistryObject<Item> PAINTING_SHOCKER = ITEMS.register("painting_shocker",
+            () -> new KikoPaintingItem(ModPaintings.SHOCKER.getId(), new Item.Properties()));
+
+    public static final RegistryObject<Item> PAINTING_KIKO = ITEMS.register("painting_kiko",
+            () -> new KikoPaintingItem(ModPaintings.KIKO.getId(), new Item.Properties()));
+
+    public static final RegistryObject<Item> PAINTING_SCORPY = ITEMS.register("painting_scorpy",
+            () -> new KikoPaintingItem(ModPaintings.SCORPY.getId(), new Item.Properties()));
+
+    public static final RegistryObject<Item> PAINTING_TRIXL = ITEMS.register("painting_trixl",
+            () -> new KikoPaintingItem(ModPaintings.TRIXL.getId(), new Item.Properties()));
+
     // ── Sonic Screwdriver (one item, modes shown by colour) ────────────────────────────────────────────────────
 
     public static final RegistryObject<Item> SONIC_SCREWDRIVER =ITEMS.register("sonic_screwdriver",
@@ -272,6 +293,13 @@ public class ModItems {
                         output.accept(PAINTING_MAWHENNA_SYMBOL.get().getDefaultInstance());
                         output.accept(PAINTING_MAWHENNA_SYMBOL_SMALL.get().getDefaultInstance());
                         output.accept(PAINTING_MAWHENNA_LOGO.get().getDefaultInstance());
+                        output.accept(PAINTING_BIGGERD.get().getDefaultInstance());
+                        output.accept(PAINTING_TOMCAIK.get().getDefaultInstance());
+                        output.accept(PAINTING_DEYD.get().getDefaultInstance());
+                        output.accept(PAINTING_SHOCKER.get().getDefaultInstance());
+                        output.accept(PAINTING_KIKO.get().getDefaultInstance());
+                        output.accept(PAINTING_SCORPY.get().getDefaultInstance());
+                        output.accept(PAINTING_TRIXL.get().getDefaultInstance());
                         // Sonic screwdrivers
                         output.accept(SONIC_SCREWDRIVER.get());
                         // Armor

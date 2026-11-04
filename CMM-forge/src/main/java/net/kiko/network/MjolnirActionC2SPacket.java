@@ -14,6 +14,7 @@ public class MjolnirActionC2SPacket {
     public static final byte CALL = 0;
     public static final byte START_FLIGHT = 1;
     public static final byte STOP_FLIGHT = 2;
+    public static final byte LIGHTNING = 3;
 
     private final byte action;
 
@@ -36,6 +37,7 @@ public class MjolnirActionC2SPacket {
             case CALL -> MjolnirCall.call(player);
             case START_FLIGHT -> MjolnirFlight.start(player);
             case STOP_FLIGHT -> MjolnirFlight.stop(player);
+            case LIGHTNING -> MjolnirCall.lightning(player);
             default -> {
             }
         }

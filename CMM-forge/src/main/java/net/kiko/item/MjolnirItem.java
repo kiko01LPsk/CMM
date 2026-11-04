@@ -273,7 +273,8 @@ public class MjolnirItem extends Item {
         consumer.accept(new IClientItemExtensions() {
             @Override
             public HumanoidModel.ArmPose getArmPose(LivingEntity entity, InteractionHand hand, ItemStack stack) {
-                if (isSpinning(stack) || isFlying(stack)) {
+                // Only the flight stretches the arm out; spinning is done in the normal stance.
+                if (isFlying(stack)) {
                     return HumanoidModel.ArmPose.BOW_AND_ARROW;
                 }
                 return null;

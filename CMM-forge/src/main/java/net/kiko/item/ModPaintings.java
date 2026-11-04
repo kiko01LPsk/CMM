@@ -41,6 +41,27 @@ public class ModPaintings {
     public static final RegistryObject<PaintingVariant> MAWHENNA_LOGO =
             PAINTINGS.register("mawhenna_logo", () -> new PaintingVariant(32, 32));         // 2 x 2 blocks
 
+    public static final RegistryObject<PaintingVariant> BIGGERD =
+            PAINTINGS.register("biggerd", () -> new PaintingVariant(16, 16)); // 1 x 1 blocks
+
+    public static final RegistryObject<PaintingVariant> TOMCAIK =
+            PAINTINGS.register("tomcaik", () -> new PaintingVariant(16, 16)); // 1 x 1 blocks
+
+    public static final RegistryObject<PaintingVariant> DEYD =
+            PAINTINGS.register("deyd", () -> new PaintingVariant(16, 16)); // 1 x 1 blocks
+
+    public static final RegistryObject<PaintingVariant> SHOCKER =
+            PAINTINGS.register("shocker", () -> new PaintingVariant(16, 16)); // 1 x 1 blocks
+
+    public static final RegistryObject<PaintingVariant> KIKO =
+            PAINTINGS.register("kiko", () -> new PaintingVariant(16, 16)); // 1 x 1 blocks
+
+    public static final RegistryObject<PaintingVariant> SCORPY =
+            PAINTINGS.register("scorpy", () -> new PaintingVariant(16, 16)); // 1 x 1 blocks
+
+    public static final RegistryObject<PaintingVariant> TRIXL =
+            PAINTINGS.register("trixl", () -> new PaintingVariant(16, 16)); // 1 x 1 blocks
+
     public static void register(IEventBus eventBus) {
         PAINTINGS.register(eventBus);
     }
