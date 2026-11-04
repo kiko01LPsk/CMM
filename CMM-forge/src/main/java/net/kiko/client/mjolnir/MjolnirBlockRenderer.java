@@ -17,8 +17,8 @@ public class MjolnirBlockRenderer implements BlockEntityRenderer<MjolnirBlockEnt
 
     /** How far the handle leans away from straight up, in degrees. */
     private static final float TILT = 9.0F;
-    /** Height of the model centre above its head when the head is down (blocks): (19.5 - 8) / 16. */
-    private static final float CENTRE_ABOVE_HEAD = 0.71875F;
+    /** Height of the model centre above its head when the head is down (blocks): (17.5 - 8) / 16 (the model was moved down 2 pixels so the hand grips the handle higher). */
+    private static final float CENTRE_ABOVE_HEAD = 0.59375F;
     private static final float SCALE = 0.9F;
 
     private ItemStack stack;
