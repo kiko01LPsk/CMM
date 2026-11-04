@@ -274,8 +274,9 @@ public class MjolnirItem extends Item {
             @Override
             public HumanoidModel.ArmPose getArmPose(LivingEntity entity, InteractionHand hand, ItemStack stack) {
                 // Only the flight stretches the arm out; spinning is done in the normal stance.
-                if (isFlying(stack)) {
-                    return HumanoidModel.ArmPose.BOW_AND_ARROW;
+                if (isFlying(stack) && hand == InteractionHand.MAIN_HAND) {
+                    // Trident (spear throw) pose, only for the arm holding the hammer; the other arm stays normal.
+                    return HumanoidModel.ArmPose.THROW_SPEAR;
                 }
                 return null;
             }

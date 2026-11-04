@@ -74,7 +74,7 @@ public final class ClientModEvents {
                     new ResourceLocation(KikoMod.MOD_ID, "spin"),
                     (stack, level, entity, seed) -> {
                         if (entity == null || !MjolnirItem.isSpinning(stack) || MjolnirItem.isFlying(stack)) return 0.0F;
-                        int frame = (int) ((net.minecraft.Util.getMillis() / 55L) % 12L);
+                        int frame = (int) ((net.minecraft.Util.getMillis() / 32L) % 12L);
                         return (frame + 1) / 12.0F;
                     });
             ItemProperties.register(ModItems.MJOLNIR.get(),
