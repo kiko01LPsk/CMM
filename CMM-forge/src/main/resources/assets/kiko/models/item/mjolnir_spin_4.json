@@ -1,0 +1,39 @@
+{
+  "parent": "kiko:item/mjolnir",
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [
+        102.0,
+        90.0,
+        0.0
+      ],
+      "translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        0.6,
+        0.6,
+        0.6
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        108.0,
+        70.0,
+        0.0
+      ],
+      "translation": [
+        1.0,
+        0.5,
+        -0.87
+      ],
+      "scale": [
+        0.55,
+        0.55,
+        0.55
+      ]
+    }
+  }
+}

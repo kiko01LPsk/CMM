@@ -16,5 +16,39 @@
     "sounds": [
       "kiko:sonic_screwdriver_switch"
     ]
+  },
+  "mjolnir_swing": {
+    "subtitle": "subtitles.kiko.mjolnir_swing",
+    "sounds": [
+      "kiko:mjolnir_swing"
+    ]
+  },
+  "mjolnir_throw": {
+    "subtitle": "subtitles.kiko.mjolnir_throw",
+    "sounds": [
+      "kiko:mjolnir_throw"
+    ]
+  },
+  "mjolnir_spin": {
+    "subtitle": "subtitles.kiko.mjolnir_spin",
+    "sounds": [
+      "kiko:mjolnir_spin"
+    ]
+  },
+  "mjolnir_drop": {
+    "subtitle": "subtitles.kiko.mjolnir_drop",
+    "sounds": [
+      "kiko:mjolnir_drop"
+    ]
+  },
+  "walkman_song": {
+    "subtitle": "subtitles.kiko.walkman_song",
+    "sounds": [
+      {
+        "name": "kiko:walkman_song",
+        "stream": true,
+        "attenuation_distance": 12
+      }
+    ]
   }
 }
