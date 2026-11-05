@@ -13,6 +13,7 @@ public enum ModArmorMaterials implements ArmorMaterial {
     GLASSES2("kiko_glasses2",     5,  new int[]{1, 1, 1, 1}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0f, 0.0f),
     SUNGLASSES("kiko_sunglasses", 5,  new int[]{1, 1, 1, 1}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0f, 0.0f),
     SUNGLASSES2("kiko_sunglasses2", 5, new int[]{1, 1, 1, 1}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0f, 0.0f),
+    SONIC_SUNGLASSES("kiko_sonic_sunglasses", 5, new int[]{1, 1, 1, 1}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0f, 0.0f),
     REGGAE_HAT("kiko_reggae_hat", 5,  new int[]{1, 1, 1, 1}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0f, 0.0f),
     VEST("kiko_vest",             8,  new int[]{1, 3, 5, 1},  8, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0f, 0.0f),
     WALKMAN("kiko_walkman",       5,  new int[]{0, 0, 0, 0},  0, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0f, 0.0f),

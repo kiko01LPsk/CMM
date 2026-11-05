@@ -282,5 +282,14 @@
   "item.kiko.wildwest_rifle": "Wild West Rifle",
   "item.kiko.wildwest_shotgun": "Wild West Shotgun",
   "block.kiko.atlantida_glass": "Atlantida Glass",
-  "block.kiko.atlantida_broken_glass": "Atlantída Broken Glass"
+  "block.kiko.atlantida_broken_glass": "Atlantida Broken Glass",
+  "item.kiko.sonic_sunglasses": "Sonic Sunglasses",
+  "item.kiko.sonic_sunglasses.mode": "Mode: %s",
+  "item.kiko.sonic_sunglasses.mode.off": "Off",
+  "item.kiko.sonic_sunglasses.mode.redstone": "Redstone",
+  "item.kiko.sonic_sunglasses.mode.players": "Players",
+  "item.kiko.sonic_sunglasses.tooltip": "Wear on your head. Key: use. Sneak + key: change mode.",
+  "key.kiko.sonic_sunglasses": "Sonic Sunglasses (use / sneak = change mode)",
+  "item.kiko.guitar.on_back": "Guitar on your back (select its slot to take it off)",
+  "item.kiko.guitar.off_back": "Guitar taken off your back"
 }

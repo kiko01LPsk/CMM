@@ -177,7 +177,7 @@ public class SonicScrewdriverItem extends Item {
 
     // ── Aiming ────────────────────────────────────────────────────────────────
 
-    private static BlockHitResult rayBlock(Player player, double range) {
+    static BlockHitResult rayBlock(Player player, double range) {
         Vec3 eye = player.getEyePosition();
         Vec3 end = eye.add(player.getViewVector(1.0F).scale(range));
         return player.level().clip(new ClipContext(eye, end, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player));
@@ -209,7 +209,7 @@ public class SonicScrewdriverItem extends Item {
     }
 
     /** Switches a redstone-related block: toggles it, presses it or triggers it. */
-    private static boolean activate(ServerLevel level, BlockPos pos, ServerPlayer player) {
+    static boolean activate(ServerLevel level, BlockPos pos, ServerPlayer player) {
         BlockState state = level.getBlockState(pos);
         Block block = state.getBlock();
 

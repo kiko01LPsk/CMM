@@ -55,6 +55,18 @@ public final class ModNetwork {
                 .consumerMainThread(MjolnirActionC2SPacket::handle)
                 .add();
 
+        CHANNEL.messageBuilder(SonicSunglassesC2SPacket.class, id++, NetworkDirection.PLAY_TO_SERVER)
+                .decoder(SonicSunglassesC2SPacket::new)
+                .encoder(SonicSunglassesC2SPacket::toBytes)
+                .consumerMainThread(SonicSunglassesC2SPacket::handle)
+                .add();
+
+        CHANNEL.messageBuilder(GuitarBackS2CPacket.class, id++, NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(GuitarBackS2CPacket::new)
+                .encoder(GuitarBackS2CPacket::toBytes)
+                .consumerMainThread(GuitarBackS2CPacket::handle)
+                .add();
+
         CHANNEL.messageBuilder(MannequinModeS2CPacket.class, id++, NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(MannequinModeS2CPacket::new)
                 .encoder(MannequinModeS2CPacket::toBytes)

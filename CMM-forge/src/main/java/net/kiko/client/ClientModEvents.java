@@ -39,6 +39,7 @@ public final class ClientModEvents {
         event.register(MannequinImitation.TOGGLE);
         event.register(MjolnirClient.CALL);
         event.register(MjolnirClient.LIGHTNING);
+        event.register(net.kiko.client.sunglasses.SonicSunglassesClient.USE);
     }
 
     @SubscribeEvent
@@ -55,6 +56,7 @@ public final class ClientModEvents {
         for (String skin : event.getSkins()) {
             if (event.getSkin(skin) instanceof PlayerRenderer renderer) {
                 renderer.addLayer(new WalkmanLayer(renderer));
+                renderer.addLayer(new net.kiko.client.guitar.GuitarBackLayer(renderer));
             }
         }
     }

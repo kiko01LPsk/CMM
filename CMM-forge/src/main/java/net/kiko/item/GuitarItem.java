@@ -10,6 +10,7 @@ import net.minecraft.world.level.Level;
 /**
  * Guitar. Right-click switches the music on or off. The music is played on the clients
  * (see GuitarClient) only while the player holds a switched-on guitar in the main hand.
+ * Sneak + right-click slings it on the back (see GuitarBackLayer); sneak + right-click again takes it off.
  */
 public class GuitarItem extends Item {
 
@@ -35,6 +36,23 @@ public class GuitarItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
+        if (player.isShiftKeyDown()) {
+            // Sneak + right-click: sling the guitar on the back (or take it off again).
+            if (!level.isClientSide() && player instanceof net.minecraft.server.level.ServerPlayer sp) {
+                boolean on = !net.kiko.guitar.GuitarBackEvents.isOnBack(sp);
+                net.kiko.guitar.GuitarBackEvents.setOnBack(sp, on);
+                if (on) {
+                    setPlaying(stack, false);
+                    // Free the hand: select the next hotbar slot.
+                    int slot = (sp.getInventory().selected + 1) % 9;
+                    sp.getInventory().selected = slot;
+                    sp.connection.send(new net.minecraft.network.protocol.game.ClientboundSetCarriedItemPacket(slot));
+                }
+                sp.displayClientMessage(net.minecraft.network.chat.Component.translatable(
+                        on ? "item.kiko.guitar.on_back" : "item.kiko.guitar.off_back"), true);
+            }
+            return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
+        }
         if (!level.isClientSide()) {
             setPlaying(stack, !isPlaying(stack));
         }
