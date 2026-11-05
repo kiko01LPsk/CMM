@@ -84,11 +84,16 @@ public class MannequinRenderer extends LivingEntityRenderer<Mannequin, Mannequin
 
     private final MannequinModel wideModel;
     private final MannequinModel slimModel;
+    /** The game's own player model layers: other mods that change players change the mannequin too. */
+    private final MannequinModel playerWide;
+    private final MannequinModel playerSlim;
 
     public MannequinRenderer(EntityRendererProvider.Context context) {
         super(context, new MannequinModel(context.bakeLayer(MannequinLayers.WIDE), false), 0.4F);
         this.wideModel = this.model;
         this.slimModel = new MannequinModel(context.bakeLayer(MannequinLayers.SLIM), true);
+        this.playerWide = new MannequinModel(context.bakeLayer(ModelLayers.PLAYER), false);
+        this.playerSlim = new MannequinModel(context.bakeLayer(ModelLayers.PLAYER_SLIM), true);
 
         ModelPart golem = context.bakeLayer(ModelLayers.IRON_GOLEM);
         mobModels[Mannequin.MODEL_GOLEM] = new IronGolemModel<IronGolem>(golem);
@@ -154,7 +159,9 @@ public class MannequinRenderer extends LivingEntityRenderer<Mannequin, Mannequin
             renderMob(mannequin, partialTick, poseStack, buffer, packedLight);
             return;
         }
-        MannequinModel m = mannequin.slimArms() ? slimModel : wideModel;
+        MannequinModel m = mannequin.usesPlayerModel()
+                ? (mannequin.slimArms() ? playerSlim : playerWide)
+                : (mannequin.slimArms() ? slimModel : wideModel);
         this.model = m;
         m.setAllVisible(true);
         m.hat.visible = mannequin.isPartShown(PlayerModelPart.HAT);
@@ -274,7 +281,8 @@ public class MannequinRenderer extends LivingEntityRenderer<Mannequin, Mannequin
         poseMob(type, root, mannequin);
 
         float yaw = Mth.rotLerp(partialTick, mannequin.yRotO, mannequin.getYRot());
-        float s = mannequin.getEntityScale() * (mannequin.isSmall() ? 0.5F : 1.0F);
+        // Mob models are always drawn adult size; the "small" toggle only shrinks the player model.
+        float s = mannequin.getEntityScale();
         poseStack.pushPose();
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - yaw));
         if (mannequin.getTiltX() != 0.0F) poseStack.mulPose(Axis.XP.rotationDegrees(mannequin.getTiltX()));

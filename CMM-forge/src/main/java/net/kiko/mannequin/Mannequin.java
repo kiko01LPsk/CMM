@@ -79,6 +79,9 @@ public class Mannequin extends ArmorStand {
     private static final EntityDataAccessor<String> DATA_SKIN =
             SynchedEntityData.defineId(Mannequin.class, EntityDataSerializers.STRING);
 
+    private static final EntityDataAccessor<Boolean> DATA_PLAYER_MODEL =
+            SynchedEntityData.defineId(Mannequin.class, EntityDataSerializers.BOOLEAN);
+
     private static final EntityDataAccessor<String> DATA_CUSTOM_MODEL =
             SynchedEntityData.defineId(Mannequin.class, EntityDataSerializers.STRING);
 
@@ -122,6 +125,7 @@ public class Mannequin extends ArmorStand {
         entityData.define(DATA_SMALL, false);
         entityData.define(DATA_MODEL, (byte) 0);
         entityData.define(DATA_CUSTOM_MODEL, "");
+        entityData.define(DATA_PLAYER_MODEL, false);
     }
 
     @Override
@@ -136,6 +140,7 @@ public class Mannequin extends ArmorStand {
         tag.putByte("MannequinModel", (byte) getModelType());
         tag.putString("MannequinSkin", getSkin());
         tag.putString("MannequinCustomModel", getCustomModel());
+        tag.putBoolean("MannequinPlayerModel", usesPlayerModel());
     }
 
     @Override
@@ -148,6 +153,7 @@ public class Mannequin extends ArmorStand {
         if (tag.contains("MannequinTiltX")) setTiltX(tag.getFloat("MannequinTiltX"));
         if (tag.contains("MannequinTiltZ")) setTiltZ(tag.getFloat("MannequinTiltZ"));
         if (tag.contains("MannequinModel")) setModelType(tag.getByte("MannequinModel"));
+        if (tag.contains("MannequinPlayerModel")) setPlayerModel(tag.getBoolean("MannequinPlayerModel"));
         if (tag.contains("MannequinCustomModel")) setCustomModel(tag.getString("MannequinCustomModel"));
         if (tag.contains("MannequinSkin")) setSkin(tag.getString("MannequinSkin"));
         if (tag.contains("Small")) setMannequinSmall(tag.getBoolean("Small"));
@@ -187,6 +193,11 @@ public class Mannequin extends ArmorStand {
 
     /** An uploaded model: gzip + base64 text (see CustomModelCodec on the client), or "". */
     public String getCustomModel() { return entityData.get(DATA_CUSTOM_MODEL); }
+
+    /** True: drawn with the game's own player model, so mods that change players (Fresh Moves ...) change it too. */
+    public boolean usesPlayerModel() { return entityData.get(DATA_PLAYER_MODEL); }
+
+    public void setPlayerModel(boolean value) { entityData.set(DATA_PLAYER_MODEL, value); }
 
     public boolean hasCustomModel() { return !getCustomModel().isEmpty(); }
 
@@ -306,7 +317,7 @@ public class Mannequin extends ArmorStand {
         CompoundTag kept = new CompoundTag();
         for (String key : new String[]{"Small", "ShowArms", "NoBasePlate", "Pose", "Invisible",
                 "MannequinSlimArms", "MannequinCrouching", "MannequinParts", "MannequinScale",
-                "MannequinTiltX", "MannequinTiltZ", "MannequinSkin", "MannequinModel", "MannequinCustomModel"}) {
+                "MannequinTiltX", "MannequinTiltZ", "MannequinSkin", "MannequinModel", "MannequinCustomModel", "MannequinPlayerModel"}) {
             if (all.contains(key)) kept.put(key, all.get(key).copy());
         }
         stack.addTagElement("EntityTag", kept);

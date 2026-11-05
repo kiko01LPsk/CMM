@@ -325,5 +325,6 @@
   "screen.kiko.mannequin.model.removed": "Model removed.",
   "screen.kiko.mannequin.model.no_file": "File not found. Paste the full path of a .geo.json file.",
   "screen.kiko.mannequin.model.invalid": "That file is not a Bedrock Entity model (.geo.json from Blockbench).",
-  "screen.kiko.mannequin.model.too_big": "That model is too big. Remove some cubes or details."
+  "screen.kiko.mannequin.model.too_big": "That model is too big. Remove some cubes or details.",
+  "screen.kiko.mannequin.player_model": "Player model (like players, e.g. Fresh Moves)"
 }

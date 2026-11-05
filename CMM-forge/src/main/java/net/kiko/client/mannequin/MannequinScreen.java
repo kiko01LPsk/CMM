@@ -177,6 +177,8 @@ public class MannequinScreen extends Screen {
                 toggle(x, y, w, "screen.kiko.mannequin.small", () -> settings.small, v -> settings.small = v);
                 y += 22;
                 toggle(x, y, w, "screen.kiko.mannequin.crouching", () -> settings.crouching, v -> settings.crouching = v);
+                y += 22;
+                toggle(x, y, w, "screen.kiko.mannequin.player_model", () -> settings.playerModel, v -> settings.playerModel = v);
                 y += 26;
                 part(x, y, half, "screen.kiko.mannequin.hat", PlayerModelPart.HAT);
                 part(x + half + 2, y, half, "screen.kiko.mannequin.jacket", PlayerModelPart.JACKET);
