@@ -30,9 +30,9 @@ import java.util.UUID;
  */
 public final class MannequinImitation {
 
-    /** Exit / toggle key. J is not used by the game by default; it can be changed in Controls. */
+    /** Exit / toggle key. Unbound by default; set it in Controls. */
     public static final KeyMapping TOGGLE = new KeyMapping("key.kiko.mannequin_mode",
-            InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_J, PoseBindings.CATEGORY);
+            InputConstants.UNKNOWN.getValue(), PoseBindings.CATEGORY);
 
     private static final class Dummy {
         Mannequin mannequin;

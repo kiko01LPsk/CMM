@@ -44,7 +44,21 @@ public class Mannequin extends ArmorStand {
     public static final int MODEL_GOLEM = 1;
     public static final int MODEL_VILLAGER = 2;
     public static final int MODEL_CREEPER = 3;
-    public static final int MODEL_COUNT = 4;
+    public static final int MODEL_ZOMBIE = 4;
+    public static final int MODEL_HUSK = 5;
+    public static final int MODEL_DROWNED = 6;
+    public static final int MODEL_SKELETON = 7;
+    public static final int MODEL_WITHER_SKELETON = 8;
+    public static final int MODEL_PILLAGER = 9;
+    public static final int MODEL_VINDICATOR = 10;
+    public static final int MODEL_ENDERMAN = 11;
+    public static final int MODEL_PIGLIN = 12;
+    public static final int MODEL_WITCH = 13;
+    public static final int MODEL_PIG = 14;
+    public static final int MODEL_COW = 15;
+    /** A model the player uploaded (a Blockbench "Bedrock Entity" .geo.json file). */
+    public static final int MODEL_CUSTOM = 16;
+    public static final int MODEL_COUNT = 17;
     public static final float MAX_SCALE = 4.0F;
 
     private static final EntityDataAccessor<Boolean> DATA_SLIM =
@@ -63,6 +77,9 @@ public class Mannequin extends ArmorStand {
     private static final EntityDataAccessor<Boolean> DATA_SMALL =
             SynchedEntityData.defineId(Mannequin.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<String> DATA_SKIN =
+            SynchedEntityData.defineId(Mannequin.class, EntityDataSerializers.STRING);
+
+    private static final EntityDataAccessor<String> DATA_CUSTOM_MODEL =
             SynchedEntityData.defineId(Mannequin.class, EntityDataSerializers.STRING);
 
     private static final EntityDataAccessor<Byte> DATA_MODEL =
@@ -104,6 +121,7 @@ public class Mannequin extends ArmorStand {
         entityData.define(DATA_SKIN, "");
         entityData.define(DATA_SMALL, false);
         entityData.define(DATA_MODEL, (byte) 0);
+        entityData.define(DATA_CUSTOM_MODEL, "");
     }
 
     @Override
@@ -117,6 +135,7 @@ public class Mannequin extends ArmorStand {
         tag.putFloat("MannequinTiltZ", getTiltZ());
         tag.putByte("MannequinModel", (byte) getModelType());
         tag.putString("MannequinSkin", getSkin());
+        tag.putString("MannequinCustomModel", getCustomModel());
     }
 
     @Override
@@ -129,6 +148,7 @@ public class Mannequin extends ArmorStand {
         if (tag.contains("MannequinTiltX")) setTiltX(tag.getFloat("MannequinTiltX"));
         if (tag.contains("MannequinTiltZ")) setTiltZ(tag.getFloat("MannequinTiltZ"));
         if (tag.contains("MannequinModel")) setModelType(tag.getByte("MannequinModel"));
+        if (tag.contains("MannequinCustomModel")) setCustomModel(tag.getString("MannequinCustomModel"));
         if (tag.contains("MannequinSkin")) setSkin(tag.getString("MannequinSkin"));
         if (tag.contains("Small")) setMannequinSmall(tag.getBoolean("Small"));
     }
@@ -163,6 +183,15 @@ public class Mannequin extends ArmorStand {
 
     public void setSkin(String base64) {
         entityData.set(DATA_SKIN, MannequinSkinData.isValid(base64, getModelType()) ? base64 : "");
+    }
+
+    /** An uploaded model: gzip + base64 text (see CustomModelCodec on the client), or "". */
+    public String getCustomModel() { return entityData.get(DATA_CUSTOM_MODEL); }
+
+    public boolean hasCustomModel() { return !getCustomModel().isEmpty(); }
+
+    public void setCustomModel(String data) {
+        entityData.set(DATA_CUSTOM_MODEL, MannequinSkinData.isValidModel(data) ? data : "");
     }
 
     public int getModelType() { return entityData.get(DATA_MODEL); }
@@ -277,7 +306,7 @@ public class Mannequin extends ArmorStand {
         CompoundTag kept = new CompoundTag();
         for (String key : new String[]{"Small", "ShowArms", "NoBasePlate", "Pose", "Invisible",
                 "MannequinSlimArms", "MannequinCrouching", "MannequinParts", "MannequinScale",
-                "MannequinTiltX", "MannequinTiltZ", "MannequinSkin", "MannequinModel"}) {
+                "MannequinTiltX", "MannequinTiltZ", "MannequinSkin", "MannequinModel", "MannequinCustomModel"}) {
             if (all.contains(key)) kept.put(key, all.get(key).copy());
         }
         stack.addTagElement("EntityTag", kept);

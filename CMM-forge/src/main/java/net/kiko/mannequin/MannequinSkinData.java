@@ -19,10 +19,26 @@ public final class MannequinSkinData {
     public static boolean sizeFits(int width, int height, int model) {
         return switch (model) {
             case Mannequin.MODEL_GOLEM -> width == 128 && height == 128;
-            case Mannequin.MODEL_VILLAGER -> width == 64 && height == 64;
-            case Mannequin.MODEL_CREEPER -> width == 64 && height == 32;
+            case Mannequin.MODEL_VILLAGER, Mannequin.MODEL_ZOMBIE, Mannequin.MODEL_HUSK, Mannequin.MODEL_DROWNED,
+                 Mannequin.MODEL_PILLAGER, Mannequin.MODEL_VINDICATOR, Mannequin.MODEL_PIGLIN -> width == 64 && height == 64;
+            case Mannequin.MODEL_CREEPER, Mannequin.MODEL_SKELETON, Mannequin.MODEL_WITHER_SKELETON,
+                 Mannequin.MODEL_ENDERMAN, Mannequin.MODEL_PIG, Mannequin.MODEL_COW -> width == 64 && height == 32;
+            case Mannequin.MODEL_WITCH -> width == 64 && height == 128;
+            case Mannequin.MODEL_CUSTOM -> width >= 16 && height >= 16 && width <= 256 && height <= 256;
             default -> width == 64 && (height == 64 || height == 32);
         };
+    }
+
+    /** "" (no model) is valid; otherwise valid base64 text that is not too long. */
+    public static boolean isValidModel(String data) {
+        if (data == null) return false;
+        if (data.isEmpty()) return true;
+        if (data.length() > MAX_LENGTH) return false;
+        try {
+            return Base64.getDecoder().decode(data).length > 10;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 
     /** "" (no skin) is valid. Otherwise it must be a PNG whose size fits the model and that is not too big. */

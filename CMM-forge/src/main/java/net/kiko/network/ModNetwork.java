@@ -67,6 +67,12 @@ public final class ModNetwork {
                 .consumerMainThread(GuitarBackS2CPacket::handle)
                 .add();
 
+        CHANNEL.messageBuilder(MannequinModelC2SPacket.class, id++, NetworkDirection.PLAY_TO_SERVER)
+                .decoder(MannequinModelC2SPacket::new)
+                .encoder(MannequinModelC2SPacket::toBytes)
+                .consumerMainThread(MannequinModelC2SPacket::handle)
+                .add();
+
         CHANNEL.messageBuilder(MannequinModeS2CPacket.class, id++, NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(MannequinModeS2CPacket::new)
                 .encoder(MannequinModeS2CPacket::toBytes)

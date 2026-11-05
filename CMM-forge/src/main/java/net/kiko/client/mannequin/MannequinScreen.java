@@ -5,6 +5,7 @@ import net.kiko.mannequin.MannequinMode;
 import net.kiko.mannequin.MannequinPresets;
 import net.kiko.mannequin.MannequinSettings;
 import net.kiko.network.MannequinEditC2SPacket;
+import net.kiko.network.MannequinModelC2SPacket;
 import net.kiko.network.MannequinSkinC2SPacket;
 import net.kiko.network.ModNetwork;
 import net.minecraft.client.gui.GuiGraphics;
@@ -239,6 +240,25 @@ public class MannequinScreen extends Screen {
                     ModNetwork.CHANNEL.sendToServer(new MannequinSkinC2SPacket(mannequin.getId(), ""));
                     setStatus(Component.translatable("screen.kiko.mannequin.skin.cleared"), 0xFFFFFF);
                 }).bounds(x, y, w, 20).build());
+                if (settings.model == Mannequin.MODEL_CUSTOM) {
+                    y += 26;
+                    addRenderableWidget(Button.builder(Component.translatable("screen.kiko.mannequin.model.browse"), b -> {
+                        String chosen = MannequinSkinLoader.browse("Select a model file", "*.json", "Model files (.geo.json)");
+                        if (chosen == null || chosen.isEmpty()) {
+                            setStatus(Component.translatable("screen.kiko.mannequin.skin.browse_failed"), 0xFFAA55);
+                            return;
+                        }
+                        pathText = chosen;
+                        loadModel();
+                    }).bounds(x, y, half, 20).build());
+                    addRenderableWidget(Button.builder(Component.translatable("screen.kiko.mannequin.model.load"), b -> loadModel())
+                            .bounds(x + half + 2, y, half, 20).build());
+                    y += 22;
+                    addRenderableWidget(Button.builder(Component.translatable("screen.kiko.mannequin.model.remove"), b -> {
+                        ModNetwork.CHANNEL.sendToServer(new MannequinModelC2SPacket(mannequin.getId(), ""));
+                        setStatus(Component.translatable("screen.kiko.mannequin.model.removed"), 0xFFFFFF);
+                    }).bounds(x, y, w, 20).build());
+                }
                 hintY = y + 26;
             }
         }
@@ -251,6 +271,16 @@ public class MannequinScreen extends Screen {
         // null clears the message
         this.status = text;
         this.statusColor = color;
+    }
+
+    private void loadModel() {
+        try {
+            String model = CustomModelCodec.load(pathText);
+            ModNetwork.CHANNEL.sendToServer(new MannequinModelC2SPacket(mannequin.getId(), model));
+            setStatus(Component.translatable("screen.kiko.mannequin.model.loaded"), 0x55FF55);
+        } catch (CustomModelCodec.ModelException e) {
+            setStatus(Component.translatable(e.getMessage()), 0xFF5555);
+        }
     }
 
     private void loadSkin() {

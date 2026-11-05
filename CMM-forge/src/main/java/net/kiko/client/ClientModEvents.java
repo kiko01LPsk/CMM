@@ -50,6 +50,11 @@ public final class ClientModEvents {
         event.registerBlockEntityRenderer(ModBlocks.MJOLNIR_BLOCK_ENTITY.get(), MjolnirBlockRenderer::new);
     }
 
+    @SubscribeEvent
+    public static void onRegisterLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        net.kiko.client.mannequin.MannequinLayers.register(event);
+    }
+
     /** Adds the worn-walkman layer to both player skins (normal and slim arms). */
     @SubscribeEvent
     public static void onAddLayers(EntityRenderersEvent.AddLayers event) {

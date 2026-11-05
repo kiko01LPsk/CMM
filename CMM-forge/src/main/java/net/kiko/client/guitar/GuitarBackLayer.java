@@ -18,8 +18,8 @@ import net.minecraft.world.item.ItemStack;
 /** Draws the guitar on the player's back (face outwards, neck pointing down and to the left). */
 public class GuitarBackLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 
-    private static final float SCALE = 0.40F;
-    private static final float TILT = 20.0F;
+    private static final float SCALE = 0.55F;
+    private static final float TILT = 30.0F;
     private static ItemStack stack;
 
     public GuitarBackLayer(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> parent) {
@@ -38,9 +38,9 @@ public class GuitarBackLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
         poseStack.pushPose();
         // Body space: +x is the player's left, +y is down, +z is the back.
         getParentModel().body.translateAndRotate(poseStack);
-        poseStack.translate(-0.5D / 16.0D, 9.5D / 16.0D, 2.7D / 16.0D);
+        poseStack.translate(3.0D / 16.0D, 13.0D / 16.0D, 2.7D / 16.0D);
         // Neck leans toward the player's left.
-        poseStack.mulPose(Axis.ZP.rotationDegrees(-TILT));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(TILT));
         // The flat guitar: front face -> back of the player, headstock -> down.
         poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
         poseStack.scale(SCALE, SCALE, SCALE);
