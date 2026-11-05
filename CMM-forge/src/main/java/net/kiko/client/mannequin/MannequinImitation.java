@@ -104,6 +104,7 @@ public final class MannequinImitation {
             m.setSlimArms(mode.slimArms());
             m.setMannequinCrouching(mode.crouching());
             m.setSkinUnchecked(mode.skin());
+            m.setPlayerModel(mode.playerModel());
             dummy.applied = mode;
         }
 
