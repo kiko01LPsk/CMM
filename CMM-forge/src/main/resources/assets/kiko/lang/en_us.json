@@ -8,7 +8,7 @@
   "item.kiko.salazarova_duse": "Salazar's Soul",
   "item.kiko.syringe_full": "Full Syringe",
   "item.kiko.syringe_empty": "Empty Syringe",
-  "item.kiko.invent": "Invent",
+  "item.kiko.invent": "Invent - Kulovy blesk",
   "item.kiko.musket": "Musket",
   "item.kiko.pistol": "Pistol",
   "item.kiko.guitar": "Guitar",
@@ -274,5 +274,13 @@
   "painting.kiko.scorpy.author": "Scorpy",
   "item.kiko.painting_trixl": "Trixl",
   "painting.kiko.trixl.title": "Trixl",
-  "painting.kiko.trixl.author": "Trixl"
+  "painting.kiko.trixl.author": "Trixl",
+  "item.kiko.invent_zastaveni_casu": "Invent - Zastavení času",
+  "item.kiko.invent_portal": "Invent - Portal",
+  "subtitles.kiko.guitar_song": "Guitar plays",
+  "item.kiko.revolver": "Revolver",
+  "item.kiko.wildwest_rifle": "Wild West Rifle",
+  "item.kiko.wildwest_shotgun": "Wild West Shotgun",
+  "block.kiko.atlantida_glass": "Atlantida Glass",
+  "block.kiko.atlantida_broken_glass": "Atlantída Broken Glass"
 }

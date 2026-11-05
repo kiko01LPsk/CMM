@@ -52,15 +52,21 @@ public class ModItems {
     public static final RegistryObject<Item> INVENT = ITEMS.register("invent",
             () -> new Item(new Item.Properties()));
 
+    public static final RegistryObject<Item> INVENT_ZASTAVENI_CASU = ITEMS.register("invent_zastaveni_casu",
+            () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> INVENT_PORTAL = ITEMS.register("invent_portal",
+            () -> new Item(new Item.Properties()));
+
     /** Prop: hold right-click to aim it in the bow pose, like the Rifle. */
     public static final RegistryObject<Item> MUSKET = ITEMS.register("musket",
             () -> new RifleItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> PISTOL = ITEMS.register("pistol",
-            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+            () -> new OneHandGunItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> GUITAR = ITEMS.register("guitar",
-            () -> new Item(new Item.Properties().stacksTo(1)));
+            () -> new GuitarItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> GAUNTLET = ITEMS.register("gauntlet",
             () -> new Item(new Item.Properties().stacksTo(1)));
@@ -80,6 +86,16 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
 
     // Items from the SCP pack (3D models, held like tools/weapons)
+    public static final RegistryObject<Item> WILDWEST_RIFLE = ITEMS.register("wildwest_rifle",
+            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> WILDWEST_SHOTGUN = ITEMS.register("wildwest_shotgun",
+            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+
+    /** One-handed prop: hold right-click to raise it in the horn pose. Fires nothing. */
+    public static final RegistryObject<Item> REVOLVER = ITEMS.register("revolver",
+            () -> new OneHandGunItem(new Item.Properties().stacksTo(1)));
+
     public static final RegistryObject<Item> FN_P90 = ITEMS.register("fn_p90",
             () -> new RifleItem(new Item.Properties().stacksTo(1)));
 
@@ -211,13 +227,13 @@ public class ModItems {
             () -> new RifleItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> GLOCK_17 = ITEMS.register("glock_17",
-            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+            () -> new OneHandGunItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> AK_47 = ITEMS.register("ak_47",
             () -> new RifleItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> DESERT_EAGLE = ITEMS.register("desert_eagle",
-            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+            () -> new OneHandGunItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> PKP_PECHENEG = ITEMS.register("pkp_pecheneg",
             () -> new RifleItem(new Item.Properties().stacksTo(1)));
@@ -253,6 +269,8 @@ public class ModItems {
                         output.accept(SYRINGE_FULL.get());
                         output.accept(SYRINGE_EMPTY.get());
                         output.accept(INVENT.get());
+                        output.accept(INVENT_ZASTAVENI_CASU.get());
+                        output.accept(INVENT_PORTAL.get());
                         output.accept(MUSKET.get());
                         output.accept(PISTOL.get());
                         output.accept(GUITAR.get());
@@ -262,6 +280,9 @@ public class ModItems {
                         output.accept(SAW.get());
                         output.accept(CLOCK.get());
                         output.accept(FN_P90.get());
+                        output.accept(REVOLVER.get());
+                        output.accept(WILDWEST_RIFLE.get());
+                        output.accept(WILDWEST_SHOTGUN.get());
                         output.accept(BATON.get());
                         output.accept(KEYCARD.get());
                         output.accept(RIFLE.get());

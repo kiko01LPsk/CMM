@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.FlowerPotBlock;
+import net.minecraft.world.level.block.GlassBlock;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.SlabBlock;
@@ -103,6 +104,13 @@ public class ModBlocks {
     public static final RegistryObject<BlockEntityType<MjolnirBlockEntity>> MJOLNIR_BLOCK_ENTITY =
             BLOCK_ENTITIES.register("mjolnir_block",
                     () -> BlockEntityType.Builder.of(MjolnirBlockEntity::new, MJOLNIR_BLOCK.get()).build(null));
+
+    // ── Atlantida glass (behaves like vanilla glass, see-through, drops itself) ──
+    public static final RegistryObject<Block> ATLANTIDA_GLASS = block("atlantida_glass",
+            () -> new GlassBlock(BlockBehaviour.Properties.copy(Blocks.GLASS)));
+
+    public static final RegistryObject<Block> ATLANTIDA_BROKEN_GLASS = block("atlantida_broken_glass",
+            () -> new GlassBlock(BlockBehaviour.Properties.copy(Blocks.GLASS)));
 
     // ── Doors and trapdoor (behave like their wooden vanilla versions) ────────
     // Doors use DoubleHighBlockItem so both halves are placed properly.

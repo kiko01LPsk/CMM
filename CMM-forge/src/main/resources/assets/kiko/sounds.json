@@ -50,5 +50,15 @@
         "attenuation_distance": 12
       }
     ]
+  },
+  "guitar_song": {
+    "subtitle": "subtitles.kiko.guitar_song",
+    "sounds": [
+      {
+        "name": "kiko:guitar_song",
+        "stream": true,
+        "attenuation_distance": 12
+      }
+    ]
   }
 }

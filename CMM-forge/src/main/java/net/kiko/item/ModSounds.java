@@ -24,6 +24,7 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> MJOLNIR_DROP = register("mjolnir_drop");
 
     public static final RegistryObject<SoundEvent> WALKMAN_SONG = register("walkman_song");
+    public static final RegistryObject<SoundEvent> GUITAR_SONG = register("guitar_song");
 
     private static RegistryObject<SoundEvent> register(String name) {
         return SOUNDS.register(name,
