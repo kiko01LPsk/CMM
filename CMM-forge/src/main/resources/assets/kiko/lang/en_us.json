@@ -343,5 +343,6 @@
   "block.kiko.chroma_white": "White Chroma",
   "block.kiko.chroma_black": "Black Chroma",
   "block.kiko.secure_door": "Secure Door",
-  "block.kiko.secure_door.locked": "This door is locked."
+  "block.kiko.secure_door.locked": "This door is locked.",
+  "item.kiko.loki_crown": "Loki's Crown"
 }

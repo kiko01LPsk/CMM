@@ -190,6 +190,9 @@ public class ModItems {
     public static final RegistryObject<Item> SUNGLASSES = ITEMS.register("sunglasses",
             () -> new ArmorItem(ModArmorMaterials.SUNGLASSES, ArmorItem.Type.HELMET, new Item.Properties()));
 
+    public static final RegistryObject<Item> LOKI_CROWN = ITEMS.register("loki_crown",
+            () -> new CrownItem(new Item.Properties().stacksTo(1)));
+
     public static final RegistryObject<Item> SONIC_SUNGLASSES = ITEMS.register("sonic_sunglasses",
             () -> new SonicSunglassesItem(new Item.Properties().stacksTo(1)));
 
@@ -332,6 +335,7 @@ public class ModItems {
                         output.accept(SUNGLASSES.get());
                         output.accept(SUNGLASSES2.get());
                         output.accept(SONIC_SUNGLASSES.get());
+                        output.accept(LOKI_CROWN.get());
                         output.accept(REGGAE_HAT.get());
                         output.accept(VEST.get());
                         output.accept(ZAKAROVA_HELMA.get());

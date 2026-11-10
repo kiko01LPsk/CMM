@@ -40,6 +40,10 @@ public class SecureDoorBlock extends DoorBlock {
             if (!level.isClientSide()) unlockToggle(player, level, state, pos);
             return InteractionResult.sidedSuccess(level.isClientSide());
         }
+        // A sonic screwdriver in the hand is left to the item itself (its redstone mode opens the door).
+        if (player.getItemInHand(hand).getItem() instanceof net.kiko.item.SonicScrewdriverItem) {
+            return InteractionResult.PASS;
+        }
         if (level.isClientSide()) {
             player.displayClientMessage(Component.translatable("block.kiko.secure_door.locked"), true);
         } else {
