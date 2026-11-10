@@ -5,6 +5,7 @@
     "kiko:scp_door_2",
     "kiko:scp_trapdoor",
     "kiko:scp_camera",
-    "kiko:sawtooth_camera"
+    "kiko:sawtooth_camera",
+    "kiko:secure_door"
   ]
 }

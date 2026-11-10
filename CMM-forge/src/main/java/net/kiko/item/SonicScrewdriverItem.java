@@ -210,8 +210,18 @@ public class SonicScrewdriverItem extends Item {
 
     /** Switches a redstone-related block: toggles it, presses it or triggers it. */
     static boolean activate(ServerLevel level, BlockPos pos, ServerPlayer player) {
+        return activateBlock(level, pos, player);
+    }
+
+    /** The screwdriver's redstone mode and the Sonic Sunglasses' redstone mode both end up here. */
+    static boolean activateBlock(ServerLevel level, BlockPos pos, ServerPlayer player) {
         BlockState state = level.getBlockState(pos);
         Block block = state.getBlock();
+
+        if (block instanceof net.kiko.block.SecureDoorBlock secure) {
+            secure.unlockToggle(player, level, state, pos);
+            return true;
+        }
 
         if (block instanceof LeverBlock lever) {
             lever.pull(state, level, pos);

@@ -58,7 +58,15 @@ public class Mannequin extends ArmorStand {
     public static final int MODEL_COW = 15;
     /** A model the player uploaded (a Blockbench "Bedrock Entity" .geo.json file). */
     public static final int MODEL_CUSTOM = 16;
-    public static final int MODEL_COUNT = 17;
+    public static final int MODEL_CHICKEN = 17;
+    public static final int MODEL_SHEEP = 18;
+    public static final int MODEL_WOLF = 19;
+    public static final int MODEL_EVOKER = 20;
+    public static final int MODEL_ZOMBIFIED_PIGLIN = 21;
+    public static final int MODEL_COUNT = 22;
+
+    /** The order of the model button; the uploaded model stays last. */
+    public static final int[] MODEL_ORDER = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 11, 12, 21, 13, 14, 15, 17, 18, 19, 16};
     public static final float MAX_SCALE = 4.0F;
 
     private static final EntityDataAccessor<Boolean> DATA_SLIM =

@@ -112,6 +112,19 @@ public class ModBlocks {
     public static final RegistryObject<Block> ATLANTIDA_BROKEN_GLASS = block("atlantida_broken_glass",
             () -> new GlassBlock(BlockBehaviour.Properties.copy(Blocks.GLASS)));
 
+
+    // ── Chroma blocks: one flat colour, no shading (green screen and the like) ──
+    public static final RegistryObject<Block> CHROMA_RED = block("chroma_red",
+            () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).strength(1.0F).sound(SoundType.STONE)));
+    public static final RegistryObject<Block> CHROMA_BLUE = block("chroma_blue",
+            () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLUE).strength(1.0F).sound(SoundType.STONE)));
+    public static final RegistryObject<Block> CHROMA_GREEN = block("chroma_green",
+            () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GREEN).strength(1.0F).sound(SoundType.STONE)));
+    public static final RegistryObject<Block> CHROMA_WHITE = block("chroma_white",
+            () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.SNOW).strength(1.0F).sound(SoundType.STONE)));
+    public static final RegistryObject<Block> CHROMA_BLACK = block("chroma_black",
+            () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).strength(1.0F).sound(SoundType.STONE)));
+
     // ── Doors and trapdoor (behave like their wooden vanilla versions) ────────
     // Doors use DoubleHighBlockItem so both halves are placed properly.
     public static final RegistryObject<Block> SCP_DOOR_1 = block("scp_door_1",
@@ -120,6 +133,11 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> SCP_DOOR_2 = block("scp_door_2",
             () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_DOOR), BlockSetType.DARK_OAK),
+            b -> new DoubleHighBlockItem(b, new Item.Properties()));
+
+    // Opens normally, but only for Tomcaik or a sonic screwdriver in redstone mode.
+    public static final RegistryObject<Block> SECURE_DOOR = block("secure_door",
+            () -> new SecureDoorBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_DOOR), BlockSetType.DARK_OAK),
             b -> new DoubleHighBlockItem(b, new Item.Properties()));
 
     public static final RegistryObject<Block> SCP_TRAPDOOR = block("scp_trapdoor",

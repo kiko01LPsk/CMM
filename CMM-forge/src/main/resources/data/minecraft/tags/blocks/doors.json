@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "kiko:scp_door_1",
-    "kiko:scp_door_2"
+    "kiko:scp_door_2",
+    "kiko:secure_door"
   ]
 }

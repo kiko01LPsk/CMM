@@ -194,7 +194,11 @@ public class MannequinScreen extends Screen {
                 addRenderableWidget(Button.builder(Component.translatable("screen.kiko.mannequin.model").append(": ")
                                 .append(Component.translatable("screen.kiko.mannequin.model." + settings.model)),
                         b -> {
-                            settings.model = (byte) ((settings.model + 1) % Mannequin.MODEL_COUNT);
+                            int at = 0;
+                            for (int i = 0; i < Mannequin.MODEL_ORDER.length; i++) {
+                                if (Mannequin.MODEL_ORDER[i] == settings.model) at = i;
+                            }
+                            settings.model = (byte) Mannequin.MODEL_ORDER[(at + 1) % Mannequin.MODEL_ORDER.length];
                             send();
                             setStatus(null, 0xFFFFFF);
                             rebuildWidgets();

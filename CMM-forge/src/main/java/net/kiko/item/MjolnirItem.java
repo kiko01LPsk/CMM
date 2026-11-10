@@ -150,11 +150,8 @@ public class MjolnirItem extends Item {
 
         ThrownMjolnir thrown = new ThrownMjolnir(level, player, stack);
         thrown.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 2.6F, 1.0F);
-        if (player.getAbilities().instabuild) {
-            thrown.setFromCreative(true);
-        } else {
-            player.getInventory().removeItem(stack);
-        }
+        // Like in survival, the hammer leaves the inventory when thrown (also in creative); catching it gives it back.
+        player.getInventory().removeItem(stack);
         level.addFreshEntity(thrown);
         level.playSound(null, thrown, ModSounds.MJOLNIR_THROW.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
         if (player instanceof ServerPlayer sp) MjolnirFlight.stop(sp);

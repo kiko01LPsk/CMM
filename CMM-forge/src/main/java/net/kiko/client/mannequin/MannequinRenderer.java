@@ -3,7 +3,17 @@ package net.kiko.client.mannequin;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import net.minecraft.client.model.ChickenModel;
 import net.minecraft.client.model.CowModel;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.SheepFurModel;
+import net.minecraft.client.model.SheepModel;
+import net.minecraft.client.model.WolfModel;
+import net.minecraft.world.entity.animal.Sheep;
+import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.animal.Chicken;
+import net.minecraft.world.entity.monster.Evoker;
+import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.client.model.CreeperModel;
 import net.minecraft.client.model.DrownedModel;
 import net.minecraft.client.model.EndermanModel;
@@ -76,11 +86,20 @@ public class MannequinRenderer extends LivingEntityRenderer<Mannequin, Mannequin
             tex("witch"),
             tex("pig/pig"),
             tex("cow/cow"),
-            WHITE};
+            WHITE,
+            tex("chicken"),
+            tex("sheep/sheep"),
+            tex("wolf/wolf"),
+            tex("illager/evoker"),
+            tex("piglin/zombified_piglin")};
+
+    private static final ResourceLocation SHEEP_FUR = tex("sheep/sheep_fur");
 
     /** Mob models by Mannequin.MODEL_*; they are only posed by hand, never animated. */
     private final Model[] mobModels = new Model[Mannequin.MODEL_COUNT];
     private final ModelPart[] mobRoots = new ModelPart[Mannequin.MODEL_COUNT];
+    private final Model sheepFur;
+    private final ModelPart sheepFurRoot;
 
     private final MannequinModel wideModel;
     private final MannequinModel slimModel;
@@ -122,6 +141,23 @@ public class MannequinRenderer extends LivingEntityRenderer<Mannequin, Mannequin
         mobModels[Mannequin.MODEL_PIG] = new PigModel<Pig>(pig);
         ModelPart cow = context.bakeLayer(ModelLayers.COW);
         mobModels[Mannequin.MODEL_COW] = new CowModel<Cow>(cow);
+        ModelPart chicken = context.bakeLayer(ModelLayers.CHICKEN);
+        mobModels[Mannequin.MODEL_CHICKEN] = new ChickenModel<Chicken>(chicken);
+        ModelPart sheep = context.bakeLayer(ModelLayers.SHEEP);
+        mobModels[Mannequin.MODEL_SHEEP] = new SheepModel<Sheep>(sheep);
+        sheepFurRoot = context.bakeLayer(ModelLayers.SHEEP_FUR);
+        sheepFur = new SheepFurModel<Sheep>(sheepFurRoot);
+        ModelPart wolf = context.bakeLayer(ModelLayers.WOLF);
+        mobModels[Mannequin.MODEL_WOLF] = new WolfModel<Wolf>(wolf);
+        ModelPart evoker = context.bakeLayer(ModelLayers.EVOKER);
+        mobModels[Mannequin.MODEL_EVOKER] = new IllagerModel<Evoker>(evoker);
+        ModelPart zombifiedPiglin = context.bakeLayer(ModelLayers.ZOMBIFIED_PIGLIN);
+        mobModels[Mannequin.MODEL_ZOMBIFIED_PIGLIN] = new PiglinModel<ZombifiedPiglin>(zombifiedPiglin);
+        mobRoots[Mannequin.MODEL_CHICKEN] = chicken;
+        mobRoots[Mannequin.MODEL_SHEEP] = sheep;
+        mobRoots[Mannequin.MODEL_WOLF] = wolf;
+        mobRoots[Mannequin.MODEL_EVOKER] = evoker;
+        mobRoots[Mannequin.MODEL_ZOMBIFIED_PIGLIN] = zombifiedPiglin;
         mobRoots[Mannequin.MODEL_GOLEM] = golem;
         mobRoots[Mannequin.MODEL_VILLAGER] = villager;
         mobRoots[Mannequin.MODEL_CREEPER] = creeper;
@@ -188,21 +224,42 @@ public class MannequinRenderer extends LivingEntityRenderer<Mannequin, Mannequin
     private static boolean isHumanoid(int type) {
         return type == Mannequin.MODEL_ZOMBIE || type == Mannequin.MODEL_HUSK || type == Mannequin.MODEL_DROWNED
                 || type == Mannequin.MODEL_SKELETON || type == Mannequin.MODEL_WITHER_SKELETON
-                || type == Mannequin.MODEL_ENDERMAN || type == Mannequin.MODEL_PIGLIN;
+                || type == Mannequin.MODEL_ENDERMAN || type == Mannequin.MODEL_PIGLIN
+                || type == Mannequin.MODEL_ZOMBIFIED_PIGLIN;
+    }
+
+    private static boolean isIllager(int type) {
+        return type == Mannequin.MODEL_PILLAGER || type == Mannequin.MODEL_VINDICATOR || type == Mannequin.MODEL_EVOKER;
     }
 
     private static boolean isCrossedArms(int type) {
-        return type == Mannequin.MODEL_VILLAGER || type == Mannequin.MODEL_WITCH
-                || type == Mannequin.MODEL_PILLAGER || type == Mannequin.MODEL_VINDICATOR;
+        return type == Mannequin.MODEL_VILLAGER || type == Mannequin.MODEL_WITCH;
     }
 
     /** Poses the parts of a mob model from the mannequin's pose. */
     private static void poseMob(int type, ModelPart root, Mannequin mannequin) {
         pose(child(root, "head"), mannequin.getHeadPose(), 0.0F);
         pose(child(root, "hat"), mannequin.getHeadPose(), 0.0F);
-        boolean quadruped = type == Mannequin.MODEL_PIG || type == Mannequin.MODEL_COW;
-        if (!quadruped) pose(child(root, "body"), mannequin.getBodyPose(), 0.0F);
-        if (type == Mannequin.MODEL_GOLEM || isHumanoid(type)) {
+        boolean quadruped = type == Mannequin.MODEL_PIG || type == Mannequin.MODEL_COW
+                || type == Mannequin.MODEL_SHEEP || type == Mannequin.MODEL_WOLF;
+        boolean chicken = type == Mannequin.MODEL_CHICKEN;
+        // The body of the four-legged animals and the chicken is laid down by the model itself.
+        if (!quadruped && !chicken) pose(child(root, "body"), mannequin.getBodyPose(), 0.0F);
+        if (isIllager(type)) {
+            // Real arms (not the crossed ones), so they follow the pose like on the other humanoids.
+            ModelPart crossed = child(root, "arms");
+            if (crossed != null) crossed.visible = false;
+            ModelPart left = child(root, "left_arm");
+            ModelPart right = child(root, "right_arm");
+            if (left != null) left.visible = true;
+            if (right != null) right.visible = true;
+        }
+        if (chicken) {
+            pose(child(root, "left_wing"), mannequin.getLeftArmPose(), 0.0F);
+            pose(child(root, "right_wing"), mannequin.getRightArmPose(), 0.0F);
+            pose(child(root, "left_leg"), mannequin.getLeftLegPose(), 0.0F);
+            pose(child(root, "right_leg"), mannequin.getRightLegPose(), 0.0F);
+        } else if (type == Mannequin.MODEL_GOLEM || isHumanoid(type) || isIllager(type)) {
             pose(child(root, "left_arm"), mannequin.getLeftArmPose(), 0.0F);
             pose(child(root, "right_arm"), mannequin.getRightArmPose(), 0.0F);
             pose(child(root, "left_leg"), mannequin.getLeftLegPose(), 0.0F);
@@ -279,6 +336,12 @@ public class MannequinRenderer extends LivingEntityRenderer<Mannequin, Mannequin
         Model model = mobModels[type];
         ModelPart root = mobRoots[type] != null ? mobRoots[type] : ((HierarchicalModel<?>) model).root();
         poseMob(type, root, mannequin);
+        // Models start out as the baby shape; mannequins are always the adult one.
+        if (model instanceof EntityModel<?> entityModel) entityModel.young = false;
+        if (type == Mannequin.MODEL_SHEEP) {
+            poseMob(type, sheepFurRoot, mannequin);
+            ((EntityModel<?>) sheepFur).young = false;
+        }
 
         float yaw = Mth.rotLerp(partialTick, mannequin.yRotO, mannequin.getYRot());
         // Mob models are always drawn adult size; the "small" toggle only shrinks the player model.
@@ -294,6 +357,10 @@ public class MannequinRenderer extends LivingEntityRenderer<Mannequin, Mannequin
                 ? RenderType.entityTranslucent(texture) : RenderType.entityCutoutNoCull(texture));
         if (!mannequin.isInvisible()) {
             model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            if (type == Mannequin.MODEL_SHEEP) {
+                VertexConsumer fur = buffer.getBuffer(RenderType.entityCutoutNoCull(SHEEP_FUR));
+                sheepFur.renderToBuffer(poseStack, fur, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            }
         }
         poseStack.popPose();
     }

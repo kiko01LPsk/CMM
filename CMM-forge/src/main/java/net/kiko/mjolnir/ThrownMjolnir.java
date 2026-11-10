@@ -165,7 +165,6 @@ public class ThrownMjolnir extends AbstractArrow {
     protected boolean tryPickup(Player player) {
         level().playSound(null, player.getX(), player.getY(), player.getZ(), net.kiko.item.ModSounds.MJOLNIR_SWING.get(),
                 net.minecraft.sounds.SoundSource.PLAYERS, 0.9F, 1.0F);
-        if (fromCreative) return true;
         ItemStack stack = getPickupItem();
         if (player.getMainHandItem().isEmpty()) {
             player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, stack);

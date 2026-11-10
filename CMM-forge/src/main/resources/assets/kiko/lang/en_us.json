@@ -326,5 +326,22 @@
   "screen.kiko.mannequin.model.no_file": "File not found. Paste the full path of a .geo.json file.",
   "screen.kiko.mannequin.model.invalid": "That file is not a Bedrock Entity model (.geo.json from Blockbench).",
   "screen.kiko.mannequin.model.too_big": "That model is too big. Remove some cubes or details.",
-  "screen.kiko.mannequin.player_model": "Player model (like players, e.g. Fresh Moves)"
+  "screen.kiko.mannequin.player_model": "Player model (like players, e.g. Fresh Moves)",
+  "screen.kiko.mannequin.model.17": "Chicken",
+  "screen.kiko.mannequin.skin.hint.17": "Chicken texture: 64x32 PNG. No texture loaded = the normal chicken.",
+  "screen.kiko.mannequin.model.18": "Sheep",
+  "screen.kiko.mannequin.skin.hint.18": "Sheep texture: 64x32 PNG. No texture loaded = the normal sheep.",
+  "screen.kiko.mannequin.model.19": "Wolf",
+  "screen.kiko.mannequin.skin.hint.19": "Wolf texture: 64x32 PNG. No texture loaded = the normal wolf.",
+  "screen.kiko.mannequin.model.20": "Evoker",
+  "screen.kiko.mannequin.skin.hint.20": "Evoker texture: 64x64 PNG. No texture loaded = the normal evoker.",
+  "screen.kiko.mannequin.model.21": "Zombified Piglin",
+  "screen.kiko.mannequin.skin.hint.21": "Zombified Piglin texture: 64x64 PNG. No texture loaded = the normal zombified piglin.",
+  "block.kiko.chroma_red": "Red Chroma",
+  "block.kiko.chroma_blue": "Blue Chroma",
+  "block.kiko.chroma_green": "Green Chroma",
+  "block.kiko.chroma_white": "White Chroma",
+  "block.kiko.chroma_black": "Black Chroma",
+  "block.kiko.secure_door": "Secure Door",
+  "block.kiko.secure_door.locked": "This door is locked."
 }

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_top_left",
+  "textures": {
+    "bottom": "kiko:block/secure_door_bottom",
+    "top": "kiko:block/secure_door_top"
+  }
+}
