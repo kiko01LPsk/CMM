@@ -146,11 +146,6 @@ public class ModBlocks {
                     .lightLevel(st -> st.getValue(DoorBlock.OPEN) ? 13 : 0), BlockSetType.DARK_OAK),
             b -> new DoubleHighBlockItem(b, new Item.Properties()));
 
-    public static final RegistryObject<Block> DIMENSIONAL_DOOR_REALISTIC = block("dimensional_door_realistic",
-            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_DOOR)
-                    .lightLevel(st -> st.getValue(DoorBlock.OPEN) ? 13 : 0), BlockSetType.DARK_OAK),
-            b -> new DoubleHighBlockItem(b, new Item.Properties()));
-
     public static final RegistryObject<Block> SCP_TRAPDOOR = block("scp_trapdoor",
             () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_TRAPDOOR), BlockSetType.OAK));
 

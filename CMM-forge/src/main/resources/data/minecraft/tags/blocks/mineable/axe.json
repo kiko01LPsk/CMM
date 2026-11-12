@@ -7,7 +7,6 @@
     "kiko:scp_camera",
     "kiko:sawtooth_camera",
     "kiko:secure_door",
-    "kiko:dimensional_door",
-    "kiko:dimensional_door_realistic"
+    "kiko:dimensional_door"
   ]
 }
