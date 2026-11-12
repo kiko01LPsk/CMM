@@ -174,6 +174,18 @@ public class ModItems {
     public static final RegistryObject<Item> PAINTING_TRIXL = ITEMS.register("painting_trixl",
             () -> new KikoPaintingItem(ModPaintings.TRIXL.getId(), new Item.Properties()));
 
+    public static final RegistryObject<Item> PAINTING_MODEL_POSTER_1 = ITEMS.register("painting_model_poster_1",
+            () -> new KikoPaintingItem(ModPaintings.MODEL_POSTER_1.getId(), new Item.Properties()));
+
+    public static final RegistryObject<Item> PAINTING_MODEL_POSTER_2 = ITEMS.register("painting_model_poster_2",
+            () -> new KikoPaintingItem(ModPaintings.MODEL_POSTER_2.getId(), new Item.Properties()));
+
+    public static final RegistryObject<Item> PAINTING_MODEL_POSTER_3 = ITEMS.register("painting_model_poster_3",
+            () -> new KikoPaintingItem(ModPaintings.MODEL_POSTER_3.getId(), new Item.Properties()));
+
+    public static final RegistryObject<Item> PAINTING_MODEL_POSTER_4 = ITEMS.register("painting_model_poster_4",
+            () -> new KikoPaintingItem(ModPaintings.MODEL_POSTER_4.getId(), new Item.Properties()));
+
     // ── Sonic Screwdriver (one item, modes shown by colour) ────────────────────────────────────────────────────
 
     public static final RegistryObject<Item> SONIC_SCREWDRIVER =ITEMS.register("sonic_screwdriver",
@@ -192,6 +204,10 @@ public class ModItems {
 
     public static final RegistryObject<Item> LOKI_CROWN = ITEMS.register("loki_crown",
             () -> new CrownItem(new Item.Properties().stacksTo(1)));
+
+    // Goes on the head: the player turns into a flying drone (see DroneEvents / DroneRenderEvents).
+    public static final RegistryObject<Item> DRONE = ITEMS.register("drone",
+            () -> new DroneItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> SONIC_SUNGLASSES = ITEMS.register("sonic_sunglasses",
             () -> new SonicSunglassesItem(new Item.Properties().stacksTo(1)));
@@ -327,6 +343,10 @@ public class ModItems {
                         output.accept(PAINTING_KIKO.get().getDefaultInstance());
                         output.accept(PAINTING_SCORPY.get().getDefaultInstance());
                         output.accept(PAINTING_TRIXL.get().getDefaultInstance());
+                        output.accept(PAINTING_MODEL_POSTER_1.get().getDefaultInstance());
+                        output.accept(PAINTING_MODEL_POSTER_2.get().getDefaultInstance());
+                        output.accept(PAINTING_MODEL_POSTER_3.get().getDefaultInstance());
+                        output.accept(PAINTING_MODEL_POSTER_4.get().getDefaultInstance());
                         // Sonic screwdrivers
                         output.accept(SONIC_SCREWDRIVER.get());
                         // Armor
@@ -336,6 +356,7 @@ public class ModItems {
                         output.accept(SUNGLASSES2.get());
                         output.accept(SONIC_SUNGLASSES.get());
                         output.accept(LOKI_CROWN.get());
+                        output.accept(DRONE.get());
                         output.accept(REGGAE_HAT.get());
                         output.accept(VEST.get());
                         output.accept(ZAKAROVA_HELMA.get());

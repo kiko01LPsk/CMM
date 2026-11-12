@@ -3,6 +3,8 @@
   "values": [
     "kiko:scp_door_1",
     "kiko:scp_door_2",
-    "kiko:secure_door"
+    "kiko:secure_door",
+    "kiko:dimensional_door",
+    "kiko:dimensional_door_realistic"
   ]
 }

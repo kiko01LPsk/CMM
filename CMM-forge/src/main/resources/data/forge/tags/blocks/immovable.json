@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "kiko:mjolnir_block"
+    "kiko:mjolnir_block",
+    "kiko:walkie_talkie"
   ]
 }

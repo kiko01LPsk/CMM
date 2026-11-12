@@ -344,5 +344,21 @@
   "block.kiko.chroma_black": "Black Chroma",
   "block.kiko.secure_door": "Secure Door",
   "block.kiko.secure_door.locked": "This door is locked.",
-  "item.kiko.loki_crown": "Loki's Crown"
+  "item.kiko.loki_crown": "Loki's Crown",
+  "block.kiko.dimensional_door": "Dimensional Door",
+  "block.kiko.dimensional_door_realistic": "Dimensional Door (Realistic)",
+  "item.kiko.painting_model_poster_1": "Model Poster 1",
+  "painting.kiko.model_poster_1.title": "Model Poster 1",
+  "painting.kiko.model_poster_1.author": "Kiko",
+  "item.kiko.painting_model_poster_2": "Model Poster 2",
+  "painting.kiko.model_poster_2.title": "Model Poster 2",
+  "painting.kiko.model_poster_2.author": "Kiko",
+  "item.kiko.painting_model_poster_3": "Model Poster 3",
+  "painting.kiko.model_poster_3.title": "Model Poster 3",
+  "painting.kiko.model_poster_3.author": "Kiko",
+  "item.kiko.painting_model_poster_4": "Model Poster 4",
+  "painting.kiko.model_poster_4.title": "Model Poster 4",
+  "painting.kiko.model_poster_4.author": "Kiko",
+  "item.kiko.drone": "Drone",
+  "block.kiko.walkie_talkie": "Walkie Talkie"
 }

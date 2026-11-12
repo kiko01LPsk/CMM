@@ -140,6 +140,17 @@ public class ModBlocks {
             () -> new SecureDoorBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_DOOR), BlockSetType.DARK_OAK),
             b -> new DoubleHighBlockItem(b, new Item.Properties()));
 
+    // Opens normally, but the opening shows a bright portal wall and the door glows.
+    public static final RegistryObject<Block> DIMENSIONAL_DOOR = block("dimensional_door",
+            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_DOOR)
+                    .lightLevel(st -> st.getValue(DoorBlock.OPEN) ? 13 : 0), BlockSetType.DARK_OAK),
+            b -> new DoubleHighBlockItem(b, new Item.Properties()));
+
+    public static final RegistryObject<Block> DIMENSIONAL_DOOR_REALISTIC = block("dimensional_door_realistic",
+            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_DOOR)
+                    .lightLevel(st -> st.getValue(DoorBlock.OPEN) ? 13 : 0), BlockSetType.DARK_OAK),
+            b -> new DoubleHighBlockItem(b, new Item.Properties()));
+
     public static final RegistryObject<Block> SCP_TRAPDOOR = block("scp_trapdoor",
             () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_TRAPDOOR), BlockSetType.OAK));
 
@@ -169,6 +180,11 @@ public class ModBlocks {
                 .requiresCorrectToolForDrops()
                 .noOcclusion();
     }
+
+    // ── Walkie talkie: stands on the floor or hangs on a wall; Carry On cannot move it (forge:immovable) ──
+    public static final RegistryObject<Block> WALKIE_TALKIE = block("walkie_talkie",
+            () -> new WalkieTalkieBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK)
+                    .strength(0.5F).sound(SoundType.METAL).noOcclusion()));
 
     // ── Hat: placeable prop that can also be worn on the head ─────────────────
     public static final RegistryObject<Block> SAWTOOTH_HAT = block("sawtooth_hat",

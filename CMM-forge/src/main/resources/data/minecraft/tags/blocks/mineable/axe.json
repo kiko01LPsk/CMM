@@ -6,6 +6,8 @@
     "kiko:scp_trapdoor",
     "kiko:scp_camera",
     "kiko:sawtooth_camera",
-    "kiko:secure_door"
+    "kiko:secure_door",
+    "kiko:dimensional_door",
+    "kiko:dimensional_door_realistic"
   ]
 }
