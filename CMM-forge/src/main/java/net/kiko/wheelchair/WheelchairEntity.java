@@ -183,7 +183,7 @@ public class WheelchairEntity extends Entity {
         Vec3 horizontal = new Vec3(look.x * speed, 0.0D, look.z * speed);
 
         // climb up to 0.6 blocks (slabs, stairs, carpets)
-        if (isOnGround() && Math.abs(speed) > 0.01D) {
+        if (onGround() && Math.abs(speed) > 0.01D) {
             AABB box = getBoundingBox();
             if (!level().noCollision(this, box.move(horizontal.x, 0.0D, horizontal.z))
                     && level().noCollision(this, box.move(horizontal.x, 0.6D, horizontal.z))
@@ -193,7 +193,7 @@ public class WheelchairEntity extends Entity {
         }
         move(MoverType.SELF, new Vec3(horizontal.x, dy, horizontal.z));
         if (horizontalCollision) speed = 0.0D;
-        setDeltaMovement(look.x * speed, isOnGround() ? 0.0D : dy, look.z * speed);
+        setDeltaMovement(look.x * speed, onGround() ? 0.0D : dy, look.z * speed);
     }
 
     private void animateWheels() {
