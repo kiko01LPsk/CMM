@@ -24,6 +24,8 @@ public final class ClientForgeEvents {
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
 
+        net.kiko.client.screen.VideoManager.tick();
+
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.getConnection() == null) return;
 
@@ -39,6 +41,7 @@ public final class ClientForgeEvents {
 
     @SubscribeEvent
     public static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
+        net.kiko.client.screen.VideoManager.closeAll();
         PoseBindings.clear();
         ClientPoseStore.clear();
         MannequinImitation.clear();

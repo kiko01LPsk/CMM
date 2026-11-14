@@ -120,6 +120,18 @@ public class ModItems {
     public static final RegistryObject<Item> MANNEQUIN = ITEMS.register("mannequin",
             () -> new MannequinItem(new Item.Properties().stacksTo(16)));
 
+    /** A keyboard that is an entity: points in any direction (right click turns it, sneak + right click tilts it). */
+    public static final RegistryObject<Item> KEYBOARD = ITEMS.register("keyboard",
+            () -> new KeyboardItem(new Item.Properties()));
+
+    /** A wheelchair you can sit in and drive (W/S, A/D, sneak to get out). */
+    public static final RegistryObject<Item> WHEELCHAIR = ITEMS.register("wheelchair",
+            () -> new WheelchairItem(new Item.Properties().stacksTo(1)));
+
+    /** Captain America's shield: blocks like a vanilla shield; sneak + left click throws it and it comes back (model by Gamerkm, Cubik Studio). */
+    public static final RegistryObject<Item> CAPTAIN_SHIELD = ITEMS.register("captain_shield",
+            () -> new net.minecraft.world.item.ShieldItem(new Item.Properties().durability(336)));
+
     // Film reels (3D models, texture + model from the Film_reel resource pack)
     public static final RegistryObject<Item> FILM_REEL = ITEMS.register("film_reel",
             () -> new Item(new Item.Properties()));
@@ -325,6 +337,9 @@ public class ModItems {
                         output.accept(MP5.get());
                         output.accept(FN_FAL.get());
                         output.accept(MANNEQUIN.get());
+                        output.accept(KEYBOARD.get());
+                        output.accept(WHEELCHAIR.get());
+                        output.accept(CAPTAIN_SHIELD.get());
                         output.accept(FILM_REEL.get());
                         output.accept(ZEME_NIKOHO.get());
                         // Paintings (stacks carry the painting variant, so use the default instance)

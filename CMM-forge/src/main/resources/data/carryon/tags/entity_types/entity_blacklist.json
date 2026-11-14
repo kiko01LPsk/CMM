@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "kiko:thrown_mjolnir",
+    "kiko:thrown_shield",
+    "kiko:keyboard",
+    "kiko:wheelchair"
+  ]
+}

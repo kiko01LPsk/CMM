@@ -176,6 +176,32 @@ public class ModBlocks {
                 .noOcclusion();
     }
 
+    // ── Studio light: tripod light, 2 blocks tall; right-click toggles it, sneak + right-click turns it ──
+    public static final RegistryObject<Block> STUDIO_LIGHT = block("studio_light",
+            () -> new StudioLightBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK)
+                    .strength(1.0F).sound(SoundType.METAL).noOcclusion()
+                    .lightLevel(st -> st.getValue(StudioLightBlock.LIT) ? 15 : 0)),
+            b -> new DoubleHighBlockItem(b, new Item.Properties()));
+
+    // ── Box REGNUM: a fletching-table look-alike with the REGNUM logo on one side (no function, like the vanilla one) ──
+    public static final RegistryObject<Block> BOX_REGNUM = block("box_regnum",
+            () -> new BoxRegnumBlock(BlockBehaviour.Properties.copy(Blocks.FLETCHING_TABLE)));
+
+    // ── Monitor: joins with its neighbours into one big screen that plays a link ──
+    public static final RegistryObject<Block> MONITOR = block("monitor",
+            () -> new net.kiko.screen.MonitorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK)
+                    .strength(1.0F).sound(SoundType.METAL).noOcclusion()));
+
+    public static final RegistryObject<BlockEntityType<net.kiko.screen.MonitorBlockEntity>> MONITOR_ENTITY =
+            BLOCK_ENTITIES.register("monitor",
+                    () -> BlockEntityType.Builder.of(net.kiko.screen.MonitorBlockEntity::new, MONITOR.get()).build(null));
+
+    // ── Hexagonal panel light: sticks to any surface, neighbours connect into a mesh ──
+    public static final RegistryObject<Block> HEX_LIGHT = block("hex_light",
+            () -> new HexLightBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY)
+                    .strength(0.5F).sound(SoundType.METAL).noOcclusion().noCollission()
+                    .lightLevel(st -> st.getValue(HexLightBlock.LIT) ? 13 : 0)));
+
     // ── Walkie talkie: stands on the floor or hangs on a wall; Carry On cannot move it (forge:immovable) ──
     public static final RegistryObject<Block> WALKIE_TALKIE = block("walkie_talkie",
             () -> new WalkieTalkieBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK)

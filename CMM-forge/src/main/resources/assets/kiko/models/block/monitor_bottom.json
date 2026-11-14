@@ -1,0 +1,77 @@
+{
+ "textures": {
+  "front": "kiko:block/monitor_front",
+  "frame": "kiko:block/monitor_frame",
+  "particle": "kiko:block/monitor_frame"
+ },
+ "elements": [
+  {
+   "from": [
+    0,
+    0,
+    12.5
+   ],
+   "to": [
+    16,
+    1,
+    13
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ],
+     "texture": "#frame"
+    },
+    "south": {
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ],
+     "texture": "#frame"
+    },
+    "east": {
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ],
+     "texture": "#frame"
+    },
+    "west": {
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ],
+     "texture": "#frame"
+    },
+    "up": {
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ],
+     "texture": "#frame"
+    },
+    "down": {
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ],
+     "texture": "#frame"
+    }
+   }
+  }
+ ]
+}

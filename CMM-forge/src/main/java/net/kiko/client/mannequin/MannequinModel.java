@@ -1,6 +1,8 @@
 package net.kiko.client.mannequin;
 
 import net.kiko.mannequin.Mannequin;
+import com.google.common.collect.Iterables;
+import java.util.List;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.core.Rotations;
@@ -13,6 +15,20 @@ public class MannequinModel extends PlayerModel<Mannequin> {
     public MannequinModel(ModelPart root, boolean slim) {
         super(root, slim);
         this.armY = this.leftArm.y;
+    }
+
+    /**
+     * In baby (small) form the game draws the head parts and the body parts with different scaling. The hat (second
+     * head layer) is a body part by default, so it ended up inside the head and vanished. Draw it with the head.
+     */
+    @Override
+    protected Iterable<ModelPart> headParts() {
+        return Iterables.concat(super.headParts(), List.of(hat));
+    }
+
+    @Override
+    protected Iterable<ModelPart> bodyParts() {
+        return Iterables.filter(super.bodyParts(), part -> part != hat);
     }
 
     private static void pose(ModelPart part, Rotations rotations) {

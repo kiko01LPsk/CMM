@@ -178,6 +178,7 @@ public class MannequinRenderer extends LivingEntityRenderer<Mannequin, Mannequin
                 new HumanoidModel<>(context.bakeLayer(MannequinLayers.INNER_ARMOR)),
                 new HumanoidModel<>(context.bakeLayer(MannequinLayers.OUTER_ARMOR)),
                 context.getModelManager()));
+        this.addLayer(new net.kiko.client.SunglassesLensLayer<>(this, context.getModelSet()));
         this.addLayer(new ItemInHandLayer<>(this, context.getItemInHandRenderer()));
         this.addLayer(new ElytraLayer<>(this, context.getModelSet()));
         this.addLayer(new CustomHeadLayer<>(this, context.getModelSet(), context.getItemInHandRenderer()));

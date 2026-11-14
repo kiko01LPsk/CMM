@@ -359,5 +359,14 @@
   "painting.kiko.model_poster_4.title": "Model Poster 4",
   "painting.kiko.model_poster_4.author": "Kiko",
   "item.kiko.drone": "Drone",
-  "block.kiko.walkie_talkie": "Walkie Talkie"
+  "block.kiko.walkie_talkie": "Walkie Talkie",
+  "item.kiko.keyboard": "Keyboard",
+  "entity.kiko.keyboard": "Keyboard",
+  "item.kiko.wheelchair": "Wheelchair",
+  "entity.kiko.wheelchair": "Wheelchair",
+  "item.kiko.captain_shield": "Captain America's Shield",
+  "block.kiko.studio_light": "Studio Light",
+  "block.kiko.hex_light": "Hex Light",
+  "block.kiko.monitor": "Monitor",
+  "block.kiko.box_regnum": "Box REGNUM"
 }

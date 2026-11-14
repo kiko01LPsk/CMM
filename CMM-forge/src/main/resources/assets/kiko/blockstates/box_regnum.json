@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "kiko:block/box_regnum"
+    },
+    "facing=east": {
+      "model": "kiko:block/box_regnum",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "kiko:block/box_regnum",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "kiko:block/box_regnum",
+      "y": 270
+    }
+  }
+}

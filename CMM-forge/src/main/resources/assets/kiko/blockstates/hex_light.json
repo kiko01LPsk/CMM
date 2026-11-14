@@ -1,0 +1,108 @@
+{
+ "variants": {
+  "attach=up,lit=true,odd=false": {
+   "model": "kiko:block/hex_light_on"
+  },
+  "attach=up,lit=true,odd=true": {
+   "model": "kiko:block/hex_light_odd_on"
+  },
+  "attach=up,lit=false,odd=false": {
+   "model": "kiko:block/hex_light_off"
+  },
+  "attach=up,lit=false,odd=true": {
+   "model": "kiko:block/hex_light_odd_off"
+  },
+  "attach=down,lit=true,odd=false": {
+   "model": "kiko:block/hex_light_on",
+   "x": 180
+  },
+  "attach=down,lit=true,odd=true": {
+   "model": "kiko:block/hex_light_odd_on",
+   "x": 180
+  },
+  "attach=down,lit=false,odd=false": {
+   "model": "kiko:block/hex_light_off",
+   "x": 180
+  },
+  "attach=down,lit=false,odd=true": {
+   "model": "kiko:block/hex_light_odd_off",
+   "x": 180
+  },
+  "attach=north,lit=true,odd=false": {
+   "model": "kiko:block/hex_light_on",
+   "x": 90
+  },
+  "attach=north,lit=true,odd=true": {
+   "model": "kiko:block/hex_light_odd_on",
+   "x": 90
+  },
+  "attach=north,lit=false,odd=false": {
+   "model": "kiko:block/hex_light_off",
+   "x": 90
+  },
+  "attach=north,lit=false,odd=true": {
+   "model": "kiko:block/hex_light_odd_off",
+   "x": 90
+  },
+  "attach=east,lit=true,odd=false": {
+   "model": "kiko:block/hex_light_on",
+   "x": 90,
+   "y": 90
+  },
+  "attach=east,lit=true,odd=true": {
+   "model": "kiko:block/hex_light_odd_on",
+   "x": 90,
+   "y": 90
+  },
+  "attach=east,lit=false,odd=false": {
+   "model": "kiko:block/hex_light_off",
+   "x": 90,
+   "y": 90
+  },
+  "attach=east,lit=false,odd=true": {
+   "model": "kiko:block/hex_light_odd_off",
+   "x": 90,
+   "y": 90
+  },
+  "attach=south,lit=true,odd=false": {
+   "model": "kiko:block/hex_light_on",
+   "x": 90,
+   "y": 180
+  },
+  "attach=south,lit=true,odd=true": {
+   "model": "kiko:block/hex_light_odd_on",
+   "x": 90,
+   "y": 180
+  },
+  "attach=south,lit=false,odd=false": {
+   "model": "kiko:block/hex_light_off",
+   "x": 90,
+   "y": 180
+  },
+  "attach=south,lit=false,odd=true": {
+   "model": "kiko:block/hex_light_odd_off",
+   "x": 90,
+   "y": 180
+  },
+  "attach=west,lit=true,odd=false": {
+   "model": "kiko:block/hex_light_on",
+   "x": 90,
+   "y": 270
+  },
+  "attach=west,lit=true,odd=true": {
+   "model": "kiko:block/hex_light_odd_on",
+   "x": 90,
+   "y": 270
+  },
+  "attach=west,lit=false,odd=false": {
+   "model": "kiko:block/hex_light_off",
+   "x": 90,
+   "y": 270
+  },
+  "attach=west,lit=false,odd=true": {
+   "model": "kiko:block/hex_light_odd_off",
+   "x": 90,
+   "y": 270
+  }
+ }
+}

@@ -22,6 +22,9 @@
     "kiko:sawtooth_deer",
     "kiko:sawtooth_corpse",
     "kiko:sawtooth_sign",
-    "kiko:sawtooth_tv"
+    "kiko:sawtooth_tv",
+    "kiko:studio_light",
+    "kiko:hex_light",
+    "kiko:monitor"
   ]
 }

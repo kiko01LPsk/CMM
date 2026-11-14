@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "kiko:block/box_regnum_front",
+    "north": "kiko:block/box_regnum_front_regnum",
+    "south": "kiko:block/box_regnum_front",
+    "east": "kiko:block/box_regnum_side",
+    "west": "kiko:block/box_regnum_side",
+    "up": "kiko:block/box_regnum_top",
+    "down": "kiko:block/box_regnum_bottom"
+  }
+}

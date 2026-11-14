@@ -46,8 +46,12 @@ public final class ClientModEvents {
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(net.minecraft.world.entity.EntityType.PAINTING, TransparentPaintingRenderer::new);
         event.registerEntityRenderer(ModEntities.MANNEQUIN.get(), MannequinRenderer::new);
+        event.registerEntityRenderer(ModEntities.KEYBOARD.get(), KeyboardRenderer::new);
+        event.registerEntityRenderer(ModEntities.WHEELCHAIR.get(), net.kiko.client.wheelchair.WheelchairRenderer::new);
+        event.registerEntityRenderer(ModEntities.THROWN_SHIELD.get(), net.kiko.client.shield.ThrownShieldRenderer::new);
         event.registerEntityRenderer(ModEntities.THROWN_MJOLNIR.get(), ThrownMjolnirRenderer::new);
         event.registerBlockEntityRenderer(ModBlocks.MJOLNIR_BLOCK_ENTITY.get(), MjolnirBlockRenderer::new);
+        event.registerBlockEntityRenderer(ModBlocks.MONITOR_ENTITY.get(), net.kiko.client.screen.MonitorRenderer::new);
     }
 
     @SubscribeEvent
@@ -63,6 +67,7 @@ public final class ClientModEvents {
             if (event.getSkin(skin) instanceof PlayerRenderer renderer) {
                 renderer.addLayer(new WalkmanLayer(renderer));
                 renderer.addLayer(new net.kiko.client.guitar.GuitarBackLayer(renderer));
+                renderer.addLayer(new SunglassesLensLayer<>(renderer, event.getEntityModels()));
             }
         }
     }
@@ -70,6 +75,7 @@ public final class ClientModEvents {
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
+            net.kiko.screen.video.VideoTools.init(net.minecraft.client.Minecraft.getInstance().gameDirectory.toPath());
             ItemProperties.register(ModItems.CLOCK.get(),
                     new ResourceLocation(KikoMod.MOD_ID, "time"),
                     ClientModEvents::clockTime);
