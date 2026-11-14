@@ -12,9 +12,9 @@ public final class AudioStream implements AutoCloseable {
 
     private final Process process;
 
-    public AudioStream(String ffmpeg, String url, double startSeconds) throws IOException {
+    public AudioStream(String ffmpeg, String url, double startSeconds, boolean seek) throws IOException {
         List<String> cmd = new ArrayList<>(List.of(ffmpeg, "-hide_banner", "-loglevel", "error", "-nostdin"));
-        if (startSeconds > 0.5D) { cmd.add("-ss"); cmd.add(String.format(java.util.Locale.ROOT, "%.2f", startSeconds)); }
+        if (seek && startSeconds > 0.5D) { cmd.add("-ss"); cmd.add(String.format(java.util.Locale.ROOT, "%.2f", startSeconds)); }
         if (!MediaResolver.isLocal(url)) {
             cmd.addAll(List.of("-reconnect", "1", "-reconnect_streamed", "1", "-reconnect_delay_max", "5", "-user_agent", "Mozilla/5.0"));
         }

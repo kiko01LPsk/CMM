@@ -22,6 +22,9 @@ final class VideoAudio extends Thread {
     volatile boolean go;
     /** Pause: the sound is held and carries on from the same spot. */
     volatile boolean suspended;
+    /** Bytes of sound to throw away (a jump ahead); the queued sound is dropped too. */
+    volatile long skipBytes;
+    volatile boolean flush;
     volatile float gain;
     volatile float relX, relY, relZ;
 
@@ -52,6 +55,17 @@ final class VideoAudio extends Thread {
             ByteBuffer direct = BufferUtils.createByteBuffer(CHUNK);
             boolean eof = false;
             while (!stop) {
+                if (flush) {
+                    flush = false;
+                    AL10.alSourceStop(source);
+                    int q = AL10.alGetSourcei(source, AL10.AL_BUFFERS_QUEUED);
+                    while (q-- > 0) free.add(AL10.alSourceUnqueueBuffers(source));
+                }
+                if (skipBytes > 0L && !eof) {
+                    int n = in.readNBytes(chunk, 0, (int) Math.min(CHUNK, skipBytes));
+                    if (n <= 0) { eof = true; skipBytes = 0L; } else skipBytes -= n;
+                    continue;
+                }
                 if (suspended) {
                     if (AL10.alGetSourcei(source, AL10.AL_SOURCE_STATE) == AL10.AL_PLAYING) AL10.alSourcePause(source);
                     try { Thread.sleep(20L); } catch (InterruptedException e) { break; }

@@ -68,6 +68,7 @@ public final class ClientModEvents {
             if (event.getSkin(skin) instanceof PlayerRenderer renderer) {
                 renderer.addLayer(new WalkmanLayer(renderer));
                 renderer.addLayer(new net.kiko.client.guitar.GuitarBackLayer(renderer));
+                renderer.addLayer(new net.kiko.client.shield.ShieldBackLayer(renderer));
                 renderer.addLayer(new SunglassesLensLayer<>(renderer, event.getEntityModels()));
             }
         }

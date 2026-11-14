@@ -30,8 +30,10 @@ public class ThrownShieldRenderer extends EntityRenderer<ThrownShield> {
         poseStack.pushPose();
         poseStack.translate(0.0D, 0.1D, 0.0D);
         poseStack.mulPose(Axis.YP.rotationDegrees((entity.tickCount + partialTick) * 55.0F));
-        poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
+        poseStack.mulPose(Axis.XP.rotationDegrees(-90.0F)); // star side up
         poseStack.scale(0.8F, 0.8F, 0.8F);
+        // the model is centred on the corner of its block: move it back so it spins around its own middle
+        poseStack.translate(0.5D, 0.5D, 0.5D - 1.5D / 16.0D);
         Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.NONE,
                 light, OverlayTexture.NO_OVERLAY, poseStack, buffer, entity.level(), entity.getId());
         poseStack.popPose();

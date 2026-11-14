@@ -18,6 +18,11 @@ public final class VideoStream implements AutoCloseable {
     public final int width;
     private final int fps;
     private volatile boolean suspended;
+    private final double baseSeconds;
+    private volatile long skipFrames;
+    private volatile boolean needRebase = true;
+    private volatile boolean forcePublish;
+    private volatile long consumed;
     public final int height;
 
     private final Process process;
@@ -33,7 +38,15 @@ public final class VideoStream implements AutoCloseable {
     private volatile String error;
     private final StringBuilder lastError = new StringBuilder();
 
-    public VideoStream(String ffmpeg, String url, int width, int height, int fps, double startSeconds) throws IOException {
+    /**
+     * @param seek true: let ffmpeg jump to startSeconds (fast on files); false: open at 0 and throw the pictures
+     *             away until startSeconds (slower, but works on streams that cannot be jumped into)
+     */
+    public VideoStream(String ffmpeg, String url, int width, int height, int fps, double startSeconds, boolean seek) throws IOException {
+        this.baseSeconds = seek && startSeconds > 0.5D ? startSeconds : 0.0D;
+        if (!(seek && startSeconds > 0.5D) && startSeconds > 0.5D) {
+            this.skipFrames = (long) (startSeconds * fps);
+        }
         this.width = width;
         this.fps = fps;
         this.height = height;
@@ -41,7 +54,7 @@ public final class VideoStream implements AutoCloseable {
         this.back = ByteBuffer.allocateDirect(width * height * 4);
 
         List<String> cmd = new ArrayList<>(List.of(ffmpeg, "-hide_banner", "-loglevel", "error", "-nostdin"));
-        if (startSeconds > 0.5D) { cmd.add("-ss"); cmd.add(String.format(java.util.Locale.ROOT, "%.2f", startSeconds)); }
+        if (seek && startSeconds > 0.5D) { cmd.add("-ss"); cmd.add(String.format(java.util.Locale.ROOT, "%.2f", startSeconds)); }
         if (!MediaResolver.isLocal(url)) {
             cmd.addAll(List.of("-reconnect", "1", "-reconnect_streamed", "1", "-reconnect_delay_max", "5", "-user_agent", "Mozilla/5.0"));
         }
@@ -85,10 +98,29 @@ public final class VideoStream implements AutoCloseable {
                     if (ch.read(back) < 0) throw new java.io.EOFException();
                 }
                 back.flip();
-                // ffmpeg is not paced: frames are shown on time here, and pausing simply stops taking them
-                if (gotFrame) {
+                consumed++;
+                if (skipFrames > 0L) { // jumping ahead: decode and drop pictures as fast as they come
+                    if (--skipFrames == 0L) { needRebase = true; forcePublish = true; }
+                    continue;
+                }
+                boolean immediate = !gotFrame || needRebase || forcePublish;
+                if (needRebase || !gotFrame) {
+                    base = System.nanoTime();
+                    index = 0L;
+                    needRebase = false;
+                }
+                boolean dropped = false;
+                if (immediate) {
+                    forcePublish = false;
+                } else {
+                    // ffmpeg is not paced: frames are shown on time here, and pausing simply stops taking them
                     while (!closed) {
                         long now = System.nanoTime();
+                        if (skipFrames > 0L) { // a jump was asked for while this picture was waiting
+                            if (--skipFrames == 0L) { needRebase = true; forcePublish = true; }
+                            dropped = true;
+                            break;
+                        }
                         if (suspended) {
                             if (suspendStart == 0L) suspendStart = now;
                             Thread.sleep(20L);
@@ -102,10 +134,8 @@ public final class VideoStream implements AutoCloseable {
                         Thread.sleep(wait / 1_000_000L, (int) (wait % 1_000_000L));
                     }
                     if (closed) break;
-                } else {
-                    base = System.nanoTime();
-                    index = 0L;
                 }
+                if (dropped) continue;
                 synchronized (lock) {
                     ByteBuffer t = front;
                     front = back;
@@ -126,6 +156,16 @@ public final class VideoStream implements AutoCloseable {
             }
         }
     }
+
+    /** Jumps ahead without reopening: the pictures in between are decoded and thrown away. */
+    public void skip(double seconds) {
+        if (seconds > 0.0D) skipFrames += (long) (seconds * fps);
+    }
+
+    public boolean skipping() { return skipFrames > 0L || forcePublish; }
+
+    /** Where in the video the decoder is now, in seconds. */
+    public double positionSeconds() { return baseSeconds + consumed / (double) fps; }
 
     /** Pausing: the stream stays open but no more pictures are shown until resumed. */
     public void setSuspended(boolean value) { suspended = value; }

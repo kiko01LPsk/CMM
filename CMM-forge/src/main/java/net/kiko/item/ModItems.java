@@ -134,7 +134,7 @@ public class ModItems {
 
     /** Captain America's shield: blocks like a vanilla shield; sneak + left click throws it and it comes back (model by Gamerkm, Cubik Studio). */
     public static final RegistryObject<Item> CAPTAIN_SHIELD = ITEMS.register("captain_shield",
-            () -> new net.minecraft.world.item.ShieldItem(new Item.Properties().durability(336)));
+            () -> new CaptainShieldItem(new Item.Properties().durability(336)));
 
     // Film reels (3D models, texture + model from the Film_reel resource pack)
     public static final RegistryObject<Item> FILM_REEL = ITEMS.register("film_reel",

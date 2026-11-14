@@ -29,6 +29,11 @@ final class VideoPlayer {
     final int texW, texH;
     final ResourceLocation location;
     final VideoTexture texture;
+    final VideoTexture spinTexture;
+    final ResourceLocation spinLocation;
+    /** True while the buffering / error picture should be drawn over the screen. */
+    volatile boolean showSpinner;
+    final int spinSize;
 
     volatile boolean loop = true;
     volatile int volume = 50;
@@ -57,11 +62,13 @@ final class VideoPlayer {
     private double suspendedPos;
     private long suspendedSince;
     private volatile long streamStart;
+    private volatile boolean streamSeeks = true;
+    private volatile double streamTarget;
+    private boolean fellBack;
     private long lastSpin;
     private int spinStep;
     private long lastErrorShown;
     private final java.nio.ByteBuffer spinBuffer;
-    private final int spinSize;
 
     VideoPlayer(String url, int texW, int texH, long now, LongSupplier gameTime,
                 boolean paused, boolean waiting, double pausedAt, long startTick, int seq, BlockPos controller) {
@@ -80,7 +87,10 @@ final class VideoPlayer {
         this.texture = new VideoTexture(texW, texH);
         Minecraft.getInstance().getTextureManager().register(location, texture);
         texture.clearBlack();
+        this.spinLocation = new ResourceLocation(KikoMod.MOD_ID, "video/screen_" + IDS.get() + "_spin");
         this.spinSize = Math.max(16, Math.min(Math.min(texW, texH) / 3, 128)) & ~1;
+        this.spinTexture = new VideoTexture(spinSize, spinSize);
+        Minecraft.getInstance().getTextureManager().register(spinLocation, spinTexture);
         this.spinBuffer = java.nio.ByteBuffer.allocateDirect(spinSize * spinSize * 4);
         begin(-1.0D);
     }
@@ -110,10 +120,24 @@ final class VideoPlayer {
                 sentReady = false;
                 return;
             }
+            sentReady = false;
+            double delta = be.getPausedAt() - (held == null ? 0.0D : held.positionSeconds());
+            if (held != null && !failed && !finished && held.hasFrame() && !held.ended()
+                    && (be.isWaiting() || be.isPaused()) && delta > 0.3D && delta <= 120.0D) {
+                // jump ahead on the open stream: no reopening, the pictures and sound in between are skipped
+                held.skip(delta);
+                VideoAudio au = audio;
+                if (au != null) {
+                    au.skipBytes += ((long) (delta * AudioStream.RATE)) * 4L;
+                    au.flush = true;
+                }
+                if (suspendedStreams) suspendedPos = be.getPausedAt();
+                return;
+            }
             triedStart = false;
             failed = false;
             finished = false;
-            sentReady = false;
+            fellBack = false;
             status = "";
             stopStreams();
             begin(-1.0D);
@@ -129,16 +153,19 @@ final class VideoPlayer {
     // ── start / restart ─────────────────────────────────────────────────────
 
     /** @param forcedOffset seconds to start at, or negative to join in where everybody else is */
-    private void begin(double forcedOffset) {
+    private void begin(double forcedOffset) { begin(forcedOffset, true); }
+
+    /** @param seek false: do not let ffmpeg jump into the stream (some YouTube streams hang on that), skip ahead instead */
+    private void begin(double forcedOffset, boolean seek) {
         final int gen = ++generation;
         // the position is decided now, before the (slow) loading, so loading time is not skipped in the video
         final double offset = forcedOffset >= 0.0D ? forcedOffset : currentOffset();
-        Thread worker = new Thread(() -> run(gen, offset), "CMM video loader");
+        Thread worker = new Thread(() -> run(gen, offset, seek), "CMM video loader");
         worker.setDaemon(true);
         worker.start();
     }
 
-    private void run(int gen, double forcedOffset) {
+    private void run(int gen, double forcedOffset, boolean seek) {
         try {
             String ffmpeg = VideoTools.ffmpeg(this::setStatus);
             MediaResolver.Media media = MediaResolver.resolve(url, 720, this::setStatus);
@@ -146,12 +173,13 @@ final class VideoPlayer {
             setStatus("Loading video...");
             double offset = forcedOffset;
             int fps = (long) texW * texH > 450_000L ? 24 : 30;
-            VideoStream v = new VideoStream(ffmpeg, media.videoUrl(), texW, texH, fps, offset);
+            VideoStream v = new VideoStream(ffmpeg, media.videoUrl(), texW, texH, fps, offset, seek);
             AudioStream a = null;
             VideoAudio audioThread = null;
             try {
-                a = new AudioStream(ffmpeg, media.audioUrl(), offset);
+                a = new AudioStream(ffmpeg, media.audioUrl(), offset, seek);
                 audioThread = new VideoAudio(a.pcm());
+                if (!seek && offset > 0.5D) audioThread.skipBytes = ((long) (offset * AudioStream.RATE)) * 4L;
                 audioThread.start();
             } catch (Exception e) {
                 KikoMod.LOGGER.warn("Monitor has no sound: {}", e.toString());
@@ -165,6 +193,8 @@ final class VideoPlayer {
             stopStreams();
             this.video = v;
             streamStart = System.nanoTime();
+            streamSeeks = seek;
+            streamTarget = offset;
             this.audioProcess = a;
             this.audio = audioThread;
             setStatus("");
@@ -198,7 +228,7 @@ final class VideoPlayer {
         VideoStream v = video;
         if (v != null) {
             if (v.consumeFrame(texture::upload)) hasPicture = true;
-            if (v.hasFrame() && waiting && !sentReady && controllerPos != null) {
+            if (v.hasFrame() && !v.skipping() && waiting && !sentReady && controllerPos != null) {
                 // first picture is ready: this starts the screen's clock for everybody
                 sentReady = true;
                 ModNetwork.CHANNEL.sendToServer(new MonitorReadyC2SPacket(controllerPos));
@@ -217,8 +247,16 @@ final class VideoPlayer {
                     v = null;
                 }
             }
+            // jumping into some streams hangs: after a few seconds open it from the start and skip ahead instead
+            if (v != null && !v.hasFrame() && !failed && streamSeeks && streamTarget > 0.5D && !fellBack
+                    && System.nanoTime() - streamStart > 8_000_000_000L) {
+                fellBack = true;
+                stopStreams();
+                v = null;
+                begin(-1.0D, false);
+            }
             // never sit in "buffering" forever
-            if (v != null && !v.hasFrame() && !failed && System.nanoTime() - streamStart > 30_000_000_000L) {
+            if (v != null && !v.hasFrame() && !failed && System.nanoTime() - streamStart > 45_000_000_000L) {
                 failed = true;
                 MediaResolver.forget(url);
                 setStatus("Monitor: the video took too long to load");
@@ -228,7 +266,7 @@ final class VideoPlayer {
         }
         if (v != null) {
             VideoAudio au = audio;
-            if (au != null && v.hasFrame() && !suspendedStreams) au.go = true;
+            if (au != null && v.hasFrame() && !v.skipping() && !suspendedStreams) au.go = true;
             if (v.ended() && !failed) {
                 if (v.hasFrame()) {
                     stopStreams();
@@ -247,8 +285,9 @@ final class VideoPlayer {
             }
         }
         VideoStream cur = video;
-        boolean buffering = !failed && !finished && (cur == null || !cur.hasFrame()) && !(paused && hasPicture);
-        if (!hasPicture || buffering) animatePlaceholder();
+        boolean buffering = !failed && !finished && (cur == null || !cur.hasFrame() || cur.skipping()) && !(paused && hasPicture && !(cur != null && cur.skipping()));
+        showSpinner = !hasPicture || buffering || (failed && !hasPicture);
+        if (showSpinner) animatePlaceholder();
         if (failed && distanceToPlayer < 12.0D && System.currentTimeMillis() - lastErrorShown > 5000L && !status.isEmpty()) {
             lastErrorShown = System.currentTimeMillis();
             Minecraft.getInstance().gui.setOverlayMessage(Component.literal(status), false);
@@ -300,7 +339,7 @@ final class VideoPlayer {
         double scale = (double) srcSize / n;
         for (int y = 0; y < n; y++) {
             for (int x = 0; x < n; x++) {
-                int r = 0, g = 0, b = 0;
+                int r = 0, g = 0, b = 0, al = 0;
                 if (src != null) {
                     double dx = x - c, dy = y - c;
                     // turn the picture clockwise by 'angle'
@@ -309,18 +348,18 @@ final class VideoPlayer {
                     int ix = (int) Math.round(sx), iy = (int) Math.round(sy);
                     if (ix >= 0 && iy >= 0 && ix < srcSize && iy < srcSize) {
                         int p = src[iy * srcSize + ix];
-                        int a = p >>> 24;
-                        r = (p & 0xFF) * a / 255;
-                        g = ((p >> 8) & 0xFF) * a / 255;
-                        b = ((p >> 16) & 0xFF) * a / 255;
+                        al = p >>> 24;
+                        r = p & 0xFF;
+                        g = (p >> 8) & 0xFF;
+                        b = (p >> 16) & 0xFF;
                     }
                 }
                 int o = (y * n + x) * 4;
-                spinBuffer.put(o, (byte) r).put(o + 1, (byte) g).put(o + 2, (byte) b).put(o + 3, (byte) 255);
+                spinBuffer.put(o, (byte) r).put(o + 1, (byte) g).put(o + 2, (byte) b).put(o + 3, (byte) al);
             }
         }
         spinBuffer.position(0);
-        texture.uploadRegion((texW - n) / 2, (texH - n) / 2, n, n, spinBuffer);
+        spinTexture.upload(spinBuffer);
     }
 
     void setSound(float gain, float x, float y, float z) {
@@ -338,6 +377,8 @@ final class VideoPlayer {
         generation++;
         stopStreams();
         texture.releaseId();
+        spinTexture.releaseId();
+        Minecraft.getInstance().getTextureManager().release(spinLocation);
         Minecraft.getInstance().getTextureManager().release(location);
     }
 }

@@ -92,6 +92,29 @@ public class MonitorRenderer implements BlockEntityRenderer<MonitorBlockEntity> 
         vc.vertex(m, xl, yb2, z).color(255, 255, 255, 255).uv(u0, v1).uv2(full).endVertex();
         vc.vertex(m, xr, yb2, z).color(255, 255, 255, 255).uv(u1, v1).uv2(full).endVertex();
         vc.vertex(m, xr, yt, z).color(255, 255, 255, 255).uv(u1, v0).uv2(full).endVertex();
+        // buffering / error picture: a see-through picture in the middle of the whole screen
+        if (player.showSpinner) {
+            float su = (float) player.spinSize / player.texW;
+            float sv = (float) player.spinSize / player.texH;
+            float a0 = 0.5F - su / 2.0F, a1 = 0.5F + su / 2.0F;
+            float b0 = 0.5F - sv / 2.0F, b1 = 0.5F + sv / 2.0F;
+            float iu0 = Math.max(u0, a0), iu1 = Math.min(u1, a1);
+            float iv0 = Math.max(v0, b0), iv1 = Math.min(v1, b1);
+            if (iu1 > iu0 && iv1 > iv0) {
+                float fx0 = (iu0 - u0) / (u1 - u0), fx1 = (iu1 - u0) / (u1 - u0);
+                float fy0 = (iv0 - v0) / (v1 - v0), fy1 = (iv1 - v0) / (v1 - v0);
+                float sxl = xl + (xr - xl) * fx0, sxr = xl + (xr - xl) * fx1;
+                float syt = yt + (yb2 - yt) * fy0, syb = yt + (yb2 - yt) * fy1;
+                float zz = z - 0.002F;
+                float tu0 = (iu0 - a0) / su, tu1 = (iu1 - a0) / su;
+                float tv0 = (iv0 - b0) / sv, tv1 = (iv1 - b0) / sv;
+                VertexConsumer sc = buffer.getBuffer(RenderType.text(player.spinLocation));
+                sc.vertex(m, sxl, syt, zz).color(255, 255, 255, 255).uv(tu0, tv0).uv2(full).endVertex();
+                sc.vertex(m, sxl, syb, zz).color(255, 255, 255, 255).uv(tu0, tv1).uv2(full).endVertex();
+                sc.vertex(m, sxr, syb, zz).color(255, 255, 255, 255).uv(tu1, tv1).uv2(full).endVertex();
+                sc.vertex(m, sxr, syt, zz).color(255, 255, 255, 255).uv(tu1, tv0).uv2(full).endVertex();
+            }
+        }
         poseStack.popPose();
     }
 
