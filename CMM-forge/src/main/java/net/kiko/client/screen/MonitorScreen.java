@@ -44,12 +44,17 @@ public class MonitorScreen extends Screen {
         int cx = width / 2;
         int top = height / 2 - 70;
 
-        urlBox = new EditBox(font, cx - 150, top + 22, 240, 20, Component.literal("Link"));
+        urlBox = new EditBox(font, cx - 150, top + 22, 216, 20, Component.literal("Link"));
         urlBox.setMaxLength(1024);
         urlBox.setValue(shown(initialUrl));
         urlBox.setHint(Component.literal("Paste a YouTube or video link"));
         addRenderableWidget(urlBox);
         setInitialFocus(urlBox);
+        addRenderableWidget(Button.builder(Component.literal("X"), b -> {
+            urlBox.setValue("");
+            message = "";
+            setFocused(urlBox);
+        }).bounds(cx + 70, top + 22, 20, 20).build());
         addRenderableWidget(Button.builder(Component.literal("File..."), b -> pickFile())
                 .bounds(cx + 94, top + 22, 56, 20).build());
 

@@ -35,9 +35,25 @@ public final class MediaResolver {
         return false;
     }
 
-    /** Blocks (runs yt-dlp for pages like YouTube); call from a worker thread. */
+    private record Cached(Media media, long time) {}
+
+    private static final java.util.Map<String, Cached> CACHE = new java.util.concurrent.ConcurrentHashMap<>();
+    private static final long CACHE_MS = TimeUnit.MINUTES.toMillis(90);
+
+    /** Throws away the remembered stream address of a link (it may have expired). */
+    public static void forget(String url) { CACHE.remove(url.trim()); }
+
+    /** Blocks (runs yt-dlp for pages like YouTube); call from a worker thread. Remembers the answer, so pausing and jumping are quick. */
     public static Media resolve(String url, int maxHeight, Consumer<String> status) throws IOException {
         url = url.trim();
+        Cached c = CACHE.get(url);
+        if (c != null && System.currentTimeMillis() - c.time() < CACHE_MS) return c.media();
+        Media m = resolveUncached(url, maxHeight, status);
+        CACHE.put(url, new Cached(m, System.currentTimeMillis()));
+        return m;
+    }
+
+    private static Media resolveUncached(String url, int maxHeight, Consumer<String> status) throws IOException {
         if (url.regionMatches(true, 0, "file:", 0, 5)) return localFile(url);
         if (!isHttp(url)) throw new IOException("Only http(s) links or picked files are supported");
         if (isDirectFile(url)) return new Media(url, url);

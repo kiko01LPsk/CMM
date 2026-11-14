@@ -40,20 +40,23 @@ public final class VideoManager {
         int texH = Math.max(64, ((int) (h * scale)) & ~1);
 
         VideoPlayer player = PLAYERS.get(key);
-        if (player != null && !player.matches(be.getUrl(), be.getStartTick(), texW, texH)) {
+        if (player != null && !player.matches(be.getUrl(), texW, texH)) {
             player.close();
             PLAYERS.remove(key);
             player = null;
         }
         if (player == null) {
             if (PLAYERS.size() >= MAX_PLAYERS) return null;
-            player = new VideoPlayer(be.getUrl(), be.getStartTick(), texW, texH, now, level::getGameTime);
+            player = new VideoPlayer(be.getUrl(), texW, texH, now, level::getGameTime,
+                    be.isPaused(), be.isWaiting(), be.getPausedAt(), be.getStartTick(), be.getSeq(), group.controller);
             PLAYERS.put(key, player);
         }
         player.lastTouched = now;
-        player.loop = be.isLoop();
-        player.setPaused(be.isPaused(), be.getPausedAt());
-        player.volume = be.getVolume();
+        if (be.getBlockPos().equals(group.controller)) {
+            player.loop = be.isLoop();
+            player.volume = be.getVolume();
+            player.sync(be, group.controller);
+        }
         return player;
     }
 

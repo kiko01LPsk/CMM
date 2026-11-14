@@ -76,27 +76,33 @@ public class MonitorSetC2SPacket {
             String u = be.getUrl();
             boolean playing = be.isPlaying();
             boolean paused = be.isPaused();
+            boolean waiting = be.isWaiting();
             double pausedAt = be.getPausedAt();
             long start = be.getStartTick();
+            int seq = be.getSeq();
             switch (msg.action) {
-                case PLAY -> { u = url; playing = true; paused = false; pausedAt = 0.0D; start = now; }
-                case STOP -> { playing = false; paused = false; }
+                case PLAY -> { u = url; playing = true; paused = false; waiting = true; pausedAt = 0.0D; seq++; }
+                case STOP -> { playing = false; paused = false; waiting = false; }
                 case PAUSE -> {
-                    if (playing && !paused) { pausedAt = Math.max(0.0D, (now - start) / 20.0D); paused = true; }
+                    if (playing && !paused) {
+                        if (!waiting) pausedAt = Math.max(0.0D, (now - start) / 20.0D);
+                        paused = true;
+                        waiting = false;
+                    }
                 }
                 case RESUME -> {
-                    if (playing && paused) { start = now - (long) (pausedAt * 20.0D); paused = false; }
+                    if (playing && paused) { paused = false; waiting = true; seq++; }
                 }
                 case SEEK -> {
                     if (playing) {
-                        double position = Math.max(0.0D, be.positionSeconds(now) + delta);
-                        if (paused) pausedAt = position;
-                        else start = now - (long) (position * 20.0D);
+                        pausedAt = Math.max(0.0D, be.positionSeconds(now) + delta);
+                        if (!paused) waiting = true;
+                        seq++;
                     }
                 }
                 default -> { }
             }
-            be.set(u, playing && !u.isEmpty(), paused, pausedAt, msg.loop, msg.volume, start);
+            be.set(u, playing && !u.isEmpty(), paused, waiting && playing, pausedAt, msg.loop, msg.volume, start, seq);
         }
     }
 }

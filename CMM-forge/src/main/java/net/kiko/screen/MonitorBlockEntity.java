@@ -16,6 +16,10 @@ public class MonitorBlockEntity extends BlockEntity {
     private String url = "";
     private boolean playing;
     private boolean paused;
+    /** True from a Play / Resume / jump until the first screen has its picture ready: the clock does not run meanwhile. */
+    private boolean waiting;
+    /** Counts Play / Resume / jump commands so clients know when to reload their stream. */
+    private int seq;
     /** Seconds into the video where it was paused (only meaningful while paused). */
     private double pausedAt;
     private boolean loop = true;
@@ -34,6 +38,8 @@ public class MonitorBlockEntity extends BlockEntity {
     public String getUrl() { return url; }
     public boolean isPlaying() { return playing; }
     public boolean isPaused() { return paused; }
+    public boolean isWaiting() { return waiting; }
+    public int getSeq() { return seq; }
     public double getPausedAt() { return pausedAt; }
     public boolean isLoop() { return loop; }
     public int getVolume() { return volume; }
@@ -41,13 +47,15 @@ public class MonitorBlockEntity extends BlockEntity {
 
     /** Where in the video we are, in seconds. */
     public double positionSeconds(long now) {
-        return paused ? pausedAt : Math.max(0.0D, (now - startTick) / 20.0D);
+        return (paused || waiting) ? pausedAt : Math.max(0.0D, (now - startTick) / 20.0D);
     }
 
-    public void set(String url, boolean playing, boolean paused, double pausedAt, boolean loop, int volume, long startTick) {
+    public void set(String url, boolean playing, boolean paused, boolean waiting, double pausedAt, boolean loop, int volume, long startTick, int seq) {
         this.url = url;
         this.playing = playing;
         this.paused = paused;
+        this.waiting = waiting;
+        this.seq = seq;
         this.pausedAt = pausedAt;
         this.loop = loop;
         this.volume = Math.max(0, Math.min(100, volume));
@@ -57,7 +65,7 @@ public class MonitorBlockEntity extends BlockEntity {
     }
 
     public void copyFrom(MonitorBlockEntity other) {
-        set(other.url, other.playing, other.paused, other.pausedAt, other.loop, other.volume, other.startTick);
+        set(other.url, other.playing, other.paused, other.waiting, other.pausedAt, other.loop, other.volume, other.startTick, other.seq);
     }
 
     /** Client: the screen this monitor belongs to (cached for a second). */
@@ -77,6 +85,8 @@ public class MonitorBlockEntity extends BlockEntity {
         tag.putString("Url", url);
         tag.putBoolean("Playing", playing);
         tag.putBoolean("Paused", paused);
+        tag.putBoolean("Waiting", waiting);
+        tag.putInt("Seq", seq);
         tag.putDouble("PausedAt", pausedAt);
         tag.putBoolean("Loop", loop);
         tag.putInt("Volume", volume);
@@ -89,6 +99,8 @@ public class MonitorBlockEntity extends BlockEntity {
         url = tag.getString("Url");
         playing = tag.getBoolean("Playing");
         paused = tag.getBoolean("Paused");
+        waiting = tag.getBoolean("Waiting");
+        seq = tag.getInt("Seq");
         pausedAt = tag.getDouble("PausedAt");
         loop = !tag.contains("Loop") || tag.getBoolean("Loop");
         volume = tag.contains("Volume") ? tag.getInt("Volume") : 50;

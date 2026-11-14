@@ -90,5 +90,10 @@ public final class ModNetwork {
                 .encoder(MonitorSetC2SPacket::toBytes)
                 .consumerMainThread(MonitorSetC2SPacket::handle)
                 .add();
+        CHANNEL.messageBuilder(MonitorReadyC2SPacket.class, id++, NetworkDirection.PLAY_TO_SERVER)
+                .decoder(MonitorReadyC2SPacket::new)
+                .encoder(MonitorReadyC2SPacket::toBytes)
+                .consumerMainThread(MonitorReadyC2SPacket::handle)
+                .add();
     }
 }
