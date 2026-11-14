@@ -18,6 +18,8 @@ final class VideoAudio extends Thread {
 
     private final InputStream in;
     private volatile boolean stop;
+    /** Sound stays silent until the picture is there, so you never hear a video you cannot see. */
+    volatile boolean go;
     volatile float gain;
     volatile float relX, relY, relZ;
 
@@ -66,7 +68,7 @@ final class VideoAudio extends Thread {
                 AL10.alSource3f(source, AL10.AL_POSITION, relX, relY, relZ);
                 int state = AL10.alGetSourcei(source, AL10.AL_SOURCE_STATE);
                 int queued = AL10.alGetSourcei(source, AL10.AL_BUFFERS_QUEUED);
-                if (state != AL10.AL_PLAYING && queued > 0) AL10.alSourcePlay(source);
+                if (go && state != AL10.AL_PLAYING && queued > 0) AL10.alSourcePlay(source);
                 if (eof && queued == 0) break;
                 try { Thread.sleep(10L); } catch (InterruptedException e) { break; }
             }

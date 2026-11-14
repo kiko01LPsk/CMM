@@ -52,6 +52,7 @@ public final class VideoManager {
         }
         player.lastTouched = now;
         player.loop = be.isLoop();
+        player.setPaused(be.isPaused(), be.getPausedAt());
         player.volume = be.getVolume();
         return player;
     }

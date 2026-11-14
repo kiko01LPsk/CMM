@@ -15,9 +15,10 @@ public final class AudioStream implements AutoCloseable {
     public AudioStream(String ffmpeg, String url, double startSeconds) throws IOException {
         List<String> cmd = new ArrayList<>(List.of(ffmpeg, "-hide_banner", "-loglevel", "error", "-nostdin"));
         if (startSeconds > 0.5D) { cmd.add("-ss"); cmd.add(String.format(java.util.Locale.ROOT, "%.2f", startSeconds)); }
-        cmd.addAll(List.of("-re", "-protocol_whitelist", "http,https,tcp,tls,crypto",
-                "-reconnect", "1", "-reconnect_streamed", "1", "-reconnect_delay_max", "5",
-                "-user_agent", "Mozilla/5.0",
+        if (!MediaResolver.isLocal(url)) {
+            cmd.addAll(List.of("-reconnect", "1", "-reconnect_streamed", "1", "-reconnect_delay_max", "5", "-user_agent", "Mozilla/5.0"));
+        }
+        cmd.addAll(List.of("-re", "-protocol_whitelist", MediaResolver.isLocal(url) ? "file" : "http,https,tcp,tls,crypto",
                 "-i", url, "-vn", "-sn", "-dn", "-f", "s16le", "-ar", String.valueOf(RATE), "-ac", "2", "-"));
         this.process = new ProcessBuilder(cmd).redirectError(ProcessBuilder.Redirect.DISCARD).start();
     }

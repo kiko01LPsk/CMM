@@ -19,6 +19,7 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> SONIC_SWITCH = register("sonic_screwdriver_switch");
 
     public static final RegistryObject<SoundEvent> MJOLNIR_SWING = register("mjolnir_swing");
+    public static final RegistryObject<SoundEvent> SHIELD_THROW = register("shield_throw");
     public static final RegistryObject<SoundEvent> MJOLNIR_THROW = register("mjolnir_throw");
     public static final RegistryObject<SoundEvent> MJOLNIR_SPIN = register("mjolnir_spin");
     public static final RegistryObject<SoundEvent> MJOLNIR_DROP = register("mjolnir_drop");

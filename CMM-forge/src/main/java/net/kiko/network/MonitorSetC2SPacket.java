@@ -10,36 +10,48 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-/** Client -> server: "this screen should play this link" (sent by the monitor settings window). */
+/** Client -> server: something the monitor settings window asked a screen to do. */
 public class MonitorSetC2SPacket {
+
+    public static final int PLAY = 0;     // start the link from the beginning
+    public static final int STOP = 1;
+    public static final int PAUSE = 2;
+    public static final int RESUME = 3;
+    public static final int SEEK = 4;     // jump by 'delta' seconds
+    public static final int SETTINGS = 5; // only loop / volume
 
     private final BlockPos pos;
     private final String url;
-    private final boolean playing;
-    private final boolean restart;
+    private final int action;
+    private final int delta;
     private final boolean loop;
     private final int volume;
 
-    public MonitorSetC2SPacket(BlockPos pos, String url, boolean playing, boolean restart, boolean loop, int volume) {
+    public MonitorSetC2SPacket(BlockPos pos, String url, int action, int delta, boolean loop, int volume) {
         this.pos = pos;
         this.url = url;
-        this.playing = playing;
-        this.restart = restart;
+        this.action = action;
+        this.delta = delta;
         this.loop = loop;
         this.volume = volume;
     }
 
     public MonitorSetC2SPacket(FriendlyByteBuf buf) {
-        this(buf.readBlockPos(), buf.readUtf(1024), buf.readBoolean(), buf.readBoolean(), buf.readBoolean(), buf.readVarInt());
+        this(buf.readBlockPos(), buf.readUtf(1024), buf.readVarInt(), buf.readInt(), buf.readBoolean(), buf.readVarInt());
     }
 
     public void toBytes(FriendlyByteBuf buf) {
         buf.writeBlockPos(pos);
         buf.writeUtf(url, 1024);
-        buf.writeBoolean(playing);
-        buf.writeBoolean(restart);
+        buf.writeVarInt(action);
+        buf.writeInt(delta);
         buf.writeBoolean(loop);
         buf.writeVarInt(volume);
+    }
+
+    public static boolean validUrl(String url) {
+        return url.regionMatches(true, 0, "http://", 0, 7) || url.regionMatches(true, 0, "https://", 0, 8)
+                || url.regionMatches(true, 0, "file:", 0, 5);
     }
 
     public static void handle(MonitorSetC2SPacket msg, Supplier<NetworkEvent.Context> ctx) {
@@ -53,17 +65,38 @@ public class MonitorSetC2SPacket {
         for (int i = 0; i < url.length(); i++) {
             if (Character.isISOControl(url.charAt(i))) return;
         }
-        if (!url.isEmpty() && !(url.regionMatches(true, 0, "http://", 0, 7) || url.regionMatches(true, 0, "https://", 0, 8))) return;
+        if (msg.action == PLAY && !validUrl(url)) return;
 
         ScreenGroup group = ScreenGroup.find(level, msg.pos);
         if (group == null) return;
         long now = level.getGameTime();
+        int delta = Math.max(-3600, Math.min(3600, msg.delta));
         for (BlockPos member : group.members) {
-            if (level.getBlockEntity(member) instanceof MonitorBlockEntity be) {
-                boolean changed = !be.getUrl().equals(url) || !be.isPlaying();
-                long start = (msg.restart || (msg.playing && changed)) ? now : be.getStartTick();
-                be.set(url, msg.playing && !url.isEmpty(), msg.loop, msg.volume, start);
+            if (!(level.getBlockEntity(member) instanceof MonitorBlockEntity be)) continue;
+            String u = be.getUrl();
+            boolean playing = be.isPlaying();
+            boolean paused = be.isPaused();
+            double pausedAt = be.getPausedAt();
+            long start = be.getStartTick();
+            switch (msg.action) {
+                case PLAY -> { u = url; playing = true; paused = false; pausedAt = 0.0D; start = now; }
+                case STOP -> { playing = false; paused = false; }
+                case PAUSE -> {
+                    if (playing && !paused) { pausedAt = Math.max(0.0D, (now - start) / 20.0D); paused = true; }
+                }
+                case RESUME -> {
+                    if (playing && paused) { start = now - (long) (pausedAt * 20.0D); paused = false; }
+                }
+                case SEEK -> {
+                    if (playing) {
+                        double position = Math.max(0.0D, be.positionSeconds(now) + delta);
+                        if (paused) pausedAt = position;
+                        else start = now - (long) (position * 20.0D);
+                    }
+                }
+                default -> { }
             }
+            be.set(u, playing && !u.isEmpty(), paused, pausedAt, msg.loop, msg.volume, start);
         }
     }
 }

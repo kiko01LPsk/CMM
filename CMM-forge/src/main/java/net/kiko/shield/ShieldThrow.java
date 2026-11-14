@@ -20,7 +20,7 @@ public final class ShieldThrow {
         player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
         player.stopUsingItem();
         player.level().addFreshEntity(thrown);
-        player.level().playSound(null, player.blockPosition(), SoundEvents.TRIDENT_THROW, SoundSource.PLAYERS, 1.0F, 1.2F);
+        player.level().playSound(null, player.blockPosition(), net.kiko.item.ModSounds.SHIELD_THROW.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
         player.swing(InteractionHand.MAIN_HAND, true);
     }
 }

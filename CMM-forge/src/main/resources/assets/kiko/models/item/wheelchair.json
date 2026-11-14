@@ -5,8 +5,8 @@
   32
  ],
  "textures": {
-  "0": "kiko:entity/wheelchair",
-  "particle": "kiko:entity/wheelchair"
+  "0": "kiko:item/wheelchair_model",
+  "particle": "kiko:item/wheelchair_model"
  },
  "elements": [
   {

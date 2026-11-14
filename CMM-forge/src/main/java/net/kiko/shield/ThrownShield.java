@@ -65,7 +65,7 @@ public class ThrownShield extends AbstractArrow {
             double speed = motion.length();
             if (speed > 2.6D) motion = motion.scale(2.6D / speed);
             setDeltaMovement(motion);
-            if (returnTicks == 0) playSound(SoundEvents.TRIDENT_RETURN, 4.0F, 1.2F);
+            if (returnTicks == 0) playSound(net.kiko.item.ModSounds.SHIELD_THROW.get(), 1.0F, 1.0F);
             returnTicks++;
         }
         super.tick();

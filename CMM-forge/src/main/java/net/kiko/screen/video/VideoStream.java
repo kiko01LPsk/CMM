@@ -39,9 +39,10 @@ public final class VideoStream implements AutoCloseable {
 
         List<String> cmd = new ArrayList<>(List.of(ffmpeg, "-hide_banner", "-loglevel", "error", "-nostdin"));
         if (startSeconds > 0.5D) { cmd.add("-ss"); cmd.add(String.format(java.util.Locale.ROOT, "%.2f", startSeconds)); }
-        cmd.addAll(List.of("-re", "-protocol_whitelist", "http,https,tcp,tls,crypto",
-                "-reconnect", "1", "-reconnect_streamed", "1", "-reconnect_delay_max", "5",
-                "-user_agent", "Mozilla/5.0",
+        if (!MediaResolver.isLocal(url)) {
+            cmd.addAll(List.of("-reconnect", "1", "-reconnect_streamed", "1", "-reconnect_delay_max", "5", "-user_agent", "Mozilla/5.0"));
+        }
+        cmd.addAll(List.of("-re", "-protocol_whitelist", MediaResolver.isLocal(url) ? "file" : "http,https,tcp,tls,crypto",
                 "-threads", "4", "-i", url, "-an", "-sn", "-dn",
                 "-vf", "fps=" + fps + ",scale=" + width + ":" + height
                         + ":force_original_aspect_ratio=decrease:flags=fast_bilinear,pad=" + width + ":" + height

@@ -124,6 +124,10 @@ public class ModItems {
     public static final RegistryObject<Item> KEYBOARD = ITEMS.register("keyboard",
             () -> new KeyboardItem(new Item.Properties()));
 
+    /** A studio camera on a tripod, placed as an entity that can be turned. */
+    public static final RegistryObject<Item> TRIPOD_CAMERA = ITEMS.register("tripod_camera",
+            () -> new TripodCameraItem(new Item.Properties().stacksTo(16)));
+
     /** A wheelchair you can sit in and drive (W/S, A/D, sneak to get out). */
     public static final RegistryObject<Item> WHEELCHAIR = ITEMS.register("wheelchair",
             () -> new WheelchairItem(new Item.Properties().stacksTo(1)));
@@ -339,6 +343,7 @@ public class ModItems {
                         output.accept(MANNEQUIN.get());
                         output.accept(KEYBOARD.get());
                         output.accept(WHEELCHAIR.get());
+                        output.accept(TRIPOD_CAMERA.get());
                         output.accept(CAPTAIN_SHIELD.get());
                         output.accept(FILM_REEL.get());
                         output.accept(ZEME_NIKOHO.get());

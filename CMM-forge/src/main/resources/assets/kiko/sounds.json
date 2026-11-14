@@ -60,5 +60,11 @@
         "attenuation_distance": 12
       }
     ]
+  },
+  "shield_throw": {
+    "subtitle": "subtitles.kiko.shield_throw",
+    "sounds": [
+      "kiko:shield_throw"
+    ]
   }
 }

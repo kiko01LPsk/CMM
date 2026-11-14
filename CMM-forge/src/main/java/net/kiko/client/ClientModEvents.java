@@ -47,6 +47,7 @@ public final class ClientModEvents {
         event.registerEntityRenderer(net.minecraft.world.entity.EntityType.PAINTING, TransparentPaintingRenderer::new);
         event.registerEntityRenderer(ModEntities.MANNEQUIN.get(), MannequinRenderer::new);
         event.registerEntityRenderer(ModEntities.KEYBOARD.get(), KeyboardRenderer::new);
+        event.registerEntityRenderer(ModEntities.TRIPOD_CAMERA.get(), net.kiko.client.tripod.TripodCameraRenderer::new);
         event.registerEntityRenderer(ModEntities.WHEELCHAIR.get(), net.kiko.client.wheelchair.WheelchairRenderer::new);
         event.registerEntityRenderer(ModEntities.THROWN_SHIELD.get(), net.kiko.client.shield.ThrownShieldRenderer::new);
         event.registerEntityRenderer(ModEntities.THROWN_MJOLNIR.get(), ThrownMjolnirRenderer::new);
@@ -94,6 +95,10 @@ public final class ClientModEvents {
             ItemProperties.register(ModItems.MJOLNIR.get(),
                     new ResourceLocation(KikoMod.MOD_ID, "flying"),
                     (stack, level, entity, seed) -> entity != null && MjolnirItem.isFlying(stack) ? 1.0F : 0.0F);
+            // Captain shield: blocking pose, same as the vanilla shield.
+            ItemProperties.register(ModItems.CAPTAIN_SHIELD.get(),
+                    new ResourceLocation("blocking"),
+                    (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
         });
     }
 

@@ -61,7 +61,6 @@ public class MonitorRenderer implements BlockEntityRenderer<MonitorBlockEntity> 
             player.poll();
             updateSound(player, group, mc);
         }
-        if (!player.hasPicture()) return;
 
         Direction facing = state.getValue(MonitorBlock.FACING);
         int c = group.columnOf(pos);

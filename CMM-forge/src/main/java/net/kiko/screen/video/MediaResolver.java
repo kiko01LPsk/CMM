@@ -38,7 +38,8 @@ public final class MediaResolver {
     /** Blocks (runs yt-dlp for pages like YouTube); call from a worker thread. */
     public static Media resolve(String url, int maxHeight, Consumer<String> status) throws IOException {
         url = url.trim();
-        if (!isHttp(url)) throw new IOException("Only http(s) links are supported");
+        if (url.regionMatches(true, 0, "file:", 0, 5)) return localFile(url);
+        if (!isHttp(url)) throw new IOException("Only http(s) links or picked files are supported");
         if (isDirectFile(url)) return new Media(url, url);
 
         status.accept("Finding the video...");
@@ -63,9 +64,56 @@ public final class MediaResolver {
         }
     }
 
+    /** A file on this computer (picked with the File button). Nobody else can see it unless they have the same file there. */
+    private static Media localFile(String url) throws IOException {
+        java.nio.file.Path path;
+        try {
+            path = java.nio.file.Path.of(URI.create(url));
+        } catch (RuntimeException e) {
+            throw new IOException("that file path is not valid");
+        }
+        if (!java.nio.file.Files.isRegularFile(path)) {
+            throw new IOException("file not found on this computer: " + path.getFileName());
+        }
+        String p = path.toString();
+        return new Media(p, p);
+    }
+
+    public static boolean isLocal(String address) {
+        return !(address.regionMatches(true, 0, "http://", 0, 7) || address.regionMatches(true, 0, "https://", 0, 8));
+    }
+
+    /** Different ways of asking YouTube: some older or restricted videos only work with another "client". */
+    private static final String[][] ATTEMPTS = {
+            {},
+            {"--extractor-args", "youtube:player_client=android_vr"},
+            {"--extractor-args", "youtube:player_client=tv"},
+            {"--extractor-args", "youtube:player_client=web_safari,mweb"},
+    };
+
     private static Media runYtdlp(String exe, String url, int maxHeight, String deno) throws IOException {
-        String format = "bv*[height<=" + maxHeight + "]+ba/b[height<=" + maxHeight + "]/b";
-        List<String> cmd = new ArrayList<>(List.of(exe, "--no-playlist", "--no-warnings", "-f", format));
+        IOException last = null;
+        for (int i = 0; i < ATTEMPTS.length; i++) {
+            // the first try wants a nice picture, later tries take whatever exists
+            String format = i < 2
+                    ? "bv*[height<=" + maxHeight + "]+ba/b[height<=" + maxHeight + "]/b"
+                    : "b/bv*+ba/w";
+            try {
+                return runYtdlpOnce(exe, url, format, deno, ATTEMPTS[i]);
+            } catch (IOException e) {
+                last = e;
+                String m = String.valueOf(e.getMessage()).toLowerCase(Locale.ROOT);
+                // no point asking again if the video itself is the problem
+                if (m.contains("private video") || m.contains("been removed") || m.contains("does not exist")
+                        || m.contains("not available in your country") || m.contains("copyright")) break;
+            }
+        }
+        throw last;
+    }
+
+    private static Media runYtdlpOnce(String exe, String url, String format, String deno, String[] extra) throws IOException {
+        List<String> cmd = new ArrayList<>(List.of(exe, "--no-playlist", "--no-warnings", "--ignore-config", "-f", format));
+        for (String e : extra) cmd.add(e);
         if (deno != null) { cmd.add("--js-runtimes"); cmd.add("deno:" + deno); }
         cmd.add("-g");
         cmd.add(url);
