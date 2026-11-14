@@ -20,6 +20,8 @@ final class VideoAudio extends Thread {
     private volatile boolean stop;
     /** Sound stays silent until the picture is there, so you never hear a video you cannot see. */
     volatile boolean go;
+    /** Pause: the sound is held and carries on from the same spot. */
+    volatile boolean suspended;
     volatile float gain;
     volatile float relX, relY, relZ;
 
@@ -50,6 +52,11 @@ final class VideoAudio extends Thread {
             ByteBuffer direct = BufferUtils.createByteBuffer(CHUNK);
             boolean eof = false;
             while (!stop) {
+                if (suspended) {
+                    if (AL10.alGetSourcei(source, AL10.AL_SOURCE_STATE) == AL10.AL_PLAYING) AL10.alSourcePause(source);
+                    try { Thread.sleep(20L); } catch (InterruptedException e) { break; }
+                    continue;
+                }
                 int processed = AL10.alGetSourcei(source, AL10.AL_BUFFERS_PROCESSED);
                 while (processed-- > 0) free.add(AL10.alSourceUnqueueBuffers(source));
 

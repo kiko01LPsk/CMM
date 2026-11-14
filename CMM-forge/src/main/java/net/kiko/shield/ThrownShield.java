@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
@@ -29,6 +30,10 @@ public class ThrownShield extends AbstractArrow {
     private ItemStack shield = new ItemStack(ModItems.CAPTAIN_SHIELD.get());
     private boolean dealtDamage;
     private int returnTicks;
+    private static final double SPEED = 2.2D;
+    private static final double MAX_RANGE = 22.0D;
+    private Vec3 direction;
+    private Vec3 startPos;
 
     public ThrownShield(EntityType<? extends ThrownShield> type, Level level) {
         super(type, level);
@@ -37,6 +42,7 @@ public class ThrownShield extends AbstractArrow {
     public ThrownShield(Level level, LivingEntity owner, ItemStack stack) {
         super(ModEntities.THROWN_SHIELD.get(), owner, level);
         this.shield = stack.copy();
+        setNoGravity(true);
     }
 
     @Override
@@ -46,7 +52,20 @@ public class ThrownShield extends AbstractArrow {
 
     @Override
     public void tick() {
+        setNoGravity(true);
         if (inGroundTime > 4) dealtDamage = true;
+        if (!dealtDamage) {
+            // straight line the way it was thrown, at full speed, until it hits something or reaches its range
+            if (direction == null) {
+                Vec3 m = getDeltaMovement();
+                if (m.lengthSqr() > 1.0E-4D) direction = m.normalize();
+                startPos = position();
+            }
+            if (direction != null) {
+                setDeltaMovement(direction.scale(SPEED));
+                if (startPos != null && position().distanceToSqr(startPos) > MAX_RANGE * MAX_RANGE) dealtDamage = true;
+            }
+        }
 
         Entity owner = getOwner();
         if (dealtDamage && owner != null) {
@@ -85,6 +104,14 @@ public class ThrownShield extends AbstractArrow {
         target.hurt(source, DAMAGE);
         setDeltaMovement(getDeltaMovement().multiply(-0.01D, -0.1D, -0.01D));
         playSound(SoundEvents.SHIELD_BLOCK, 1.0F, 1.3F);
+    }
+
+    /** Hitting a block sends it back right away instead of sticking in it. */
+    @Override
+    protected void onHitBlock(BlockHitResult result) {
+        if (dealtDamage) return;
+        dealtDamage = true;
+        playSound(SoundEvents.SHIELD_BLOCK, 1.0F, 1.0F);
     }
 
     @Override

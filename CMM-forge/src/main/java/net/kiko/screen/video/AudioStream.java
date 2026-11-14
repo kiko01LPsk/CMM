@@ -18,7 +18,7 @@ public final class AudioStream implements AutoCloseable {
         if (!MediaResolver.isLocal(url)) {
             cmd.addAll(List.of("-reconnect", "1", "-reconnect_streamed", "1", "-reconnect_delay_max", "5", "-user_agent", "Mozilla/5.0"));
         }
-        cmd.addAll(List.of("-re", "-protocol_whitelist", MediaResolver.isLocal(url) ? "file" : "http,https,tcp,tls,crypto",
+        cmd.addAll(List.of("-protocol_whitelist", MediaResolver.isLocal(url) ? "file" : "http,https,tcp,tls,crypto",
                 "-i", url, "-vn", "-sn", "-dn", "-f", "s16le", "-ar", String.valueOf(RATE), "-ac", "2", "-"));
         this.process = new ProcessBuilder(cmd).redirectError(ProcessBuilder.Redirect.DISCARD).start();
     }

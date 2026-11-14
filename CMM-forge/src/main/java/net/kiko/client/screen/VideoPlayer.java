@@ -53,6 +53,10 @@ final class VideoPlayer {
     private BlockPos controllerPos;
     private boolean sentReady;
     private boolean finished;
+    private boolean suspendedStreams;
+    private double suspendedPos;
+    private long suspendedSince;
+    private volatile long streamStart;
     private long lastSpin;
     private int spinStep;
     private long lastErrorShown;
@@ -96,6 +100,16 @@ final class VideoPlayer {
         this.paused = be.isPaused();
         if (be.getSeq() != seq) {
             seq = be.getSeq();
+            VideoStream held = video;
+            if (suspendedStreams && held != null && !failed && Math.abs(be.getPausedAt() - suspendedPos) < 0.5D) {
+                // plain Resume: the stream is still open where we stopped, just carry on (no reloading)
+                suspendedStreams = false;
+                held.setSuspended(false);
+                VideoAudio au = audio;
+                if (au != null) au.suspended = false;
+                sentReady = false;
+                return;
+            }
             triedStart = false;
             failed = false;
             finished = false;
@@ -150,6 +164,7 @@ final class VideoPlayer {
             }
             stopStreams();
             this.video = v;
+            streamStart = System.nanoTime();
             this.audioProcess = a;
             this.audio = audioThread;
             setStatus("");
@@ -163,6 +178,7 @@ final class VideoPlayer {
     }
 
     private void stopStreams() {
+        suspendedStreams = false;
         VideoStream v = video;
         VideoAudio au = audio;
         AudioStream ap = audioProcess;
@@ -187,15 +203,32 @@ final class VideoPlayer {
                 sentReady = true;
                 ModNetwork.CHANNEL.sendToServer(new MonitorReadyC2SPacket(controllerPos));
             }
-            // paused: keep the picture, stop decoding and sound
+            // paused: keep the picture, hold the stream and the sound where they are
             if (paused && v.hasFrame() && !failed) {
+                if (!suspendedStreams) {
+                    suspendedStreams = true;
+                    suspendedPos = pausedAt;
+                    suspendedSince = System.nanoTime();
+                    v.setSuspended(true);
+                    VideoAudio held = audio;
+                    if (held != null) held.suspended = true;
+                } else if (System.nanoTime() - suspendedSince > 600_000_000_000L) {
+                    stopStreams(); // paused for a very long time: let go of the connection
+                    v = null;
+                }
+            }
+            // never sit in "buffering" forever
+            if (v != null && !v.hasFrame() && !failed && System.nanoTime() - streamStart > 30_000_000_000L) {
+                failed = true;
+                MediaResolver.forget(url);
+                setStatus("Monitor: the video took too long to load");
                 stopStreams();
                 v = null;
             }
         }
         if (v != null) {
             VideoAudio au = audio;
-            if (au != null && v.hasFrame() && !paused) au.go = true;
+            if (au != null && v.hasFrame() && !suspendedStreams) au.go = true;
             if (v.ended() && !failed) {
                 if (v.hasFrame()) {
                     stopStreams();
@@ -229,31 +262,57 @@ final class VideoPlayer {
         }
     }
 
-    /** Buffering ring in the middle of the screen (a red cross if the video cannot be played). */
+    private static int[] spinPixels, errorPixels;
+    private static int spinSrc, errorSrc;
+    private static boolean imagesLoaded;
+
+    private static void loadImages() {
+        if (imagesLoaded) return;
+        imagesLoaded = true;
+        for (int k = 0; k < 2; k++) {
+            String name = k == 0 ? "monitor_buffering" : "monitor_error";
+            try (var in = Minecraft.getInstance().getResourceManager()
+                    .getResourceOrThrow(new ResourceLocation(KikoMod.MOD_ID, "textures/gui/" + name + ".png")).open();
+                 com.mojang.blaze3d.platform.NativeImage img = com.mojang.blaze3d.platform.NativeImage.read(in)) {
+                int w = img.getWidth(), h = img.getHeight();
+                int[] px = new int[w * h];
+                for (int y = 0; y < h; y++) for (int x = 0; x < w; x++) px[y * w + x] = img.getPixelRGBA(x, y);
+                if (k == 0) { spinPixels = px; spinSrc = w; } else { errorPixels = px; errorSrc = w; }
+            } catch (Exception e) {
+                KikoMod.LOGGER.warn("Could not load {}: {}", name, e.toString());
+            }
+        }
+    }
+
+    /** Buffering picture (textures/gui/monitor_buffering.png, turning) or the error picture, in the middle of the screen. */
     private void animatePlaceholder() {
         long now = System.currentTimeMillis();
-        if (now - lastSpin < 80L) return;
+        if (now - lastSpin < 70L) return;
         lastSpin = now;
-        spinStep = (spinStep + 1) % 12;
+        spinStep = (spinStep + 1) % 16;
+        loadImages();
+        int[] src = failed ? errorPixels : spinPixels;
+        int srcSize = failed ? errorSrc : spinSrc;
         int n = spinSize;
+        double angle = failed ? 0.0D : spinStep * (Math.PI * 2.0D / 16.0D);
+        double cos = Math.cos(angle), sin = Math.sin(angle);
         double c = (n - 1) / 2.0D;
+        double scale = (double) srcSize / n;
         for (int y = 0; y < n; y++) {
             for (int x = 0; x < n; x++) {
                 int r = 0, g = 0, b = 0;
-                double dx = x - c, dy = y - c;
-                if (failed) {
-                    double d = Math.min(Math.abs(dx - dy), Math.abs(dx + dy)) / Math.sqrt(2.0D);
-                    if (d < n * 0.04D && Math.abs(dx) < n * 0.32D && Math.abs(dy) < n * 0.32D) { r = 220; g = 50; b = 50; }
-                } else {
-                    for (int i = 0; i < 12; i++) {
-                        double ang = i * Math.PI / 6.0D;
-                        double px = Math.sin(ang) * n * 0.38D, py = -Math.cos(ang) * n * 0.38D;
-                        double d = Math.hypot(dx - px, dy - py);
-                        if (d < n * 0.065D) {
-                            int age = (spinStep - i + 12) % 12;
-                            int v = 255 - age * 19;
-                            r = g = b = Math.max(v, 30);
-                        }
+                if (src != null) {
+                    double dx = x - c, dy = y - c;
+                    // turn the picture clockwise by 'angle'
+                    double sx = (dx * cos + dy * sin) * scale + (srcSize - 1) / 2.0D;
+                    double sy = (-dx * sin + dy * cos) * scale + (srcSize - 1) / 2.0D;
+                    int ix = (int) Math.round(sx), iy = (int) Math.round(sy);
+                    if (ix >= 0 && iy >= 0 && ix < srcSize && iy < srcSize) {
+                        int p = src[iy * srcSize + ix];
+                        int a = p >>> 24;
+                        r = (p & 0xFF) * a / 255;
+                        g = ((p >> 8) & 0xFF) * a / 255;
+                        b = ((p >> 16) & 0xFF) * a / 255;
                     }
                 }
                 int o = (y * n + x) * 4;
