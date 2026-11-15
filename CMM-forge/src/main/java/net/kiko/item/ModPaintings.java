@@ -26,6 +26,9 @@ public class ModPaintings {
     public static final RegistryObject<PaintingVariant> PATA =
             PAINTINGS.register("pata", () -> new PaintingVariant(16, 16));     // 1 x 1 blocks
 
+    public static final RegistryObject<PaintingVariant> KAPPER =
+            PAINTINGS.register("kapper", () -> new PaintingVariant(16, 16));   // 1 x 1 blocks
+
     public static final RegistryObject<PaintingVariant> CAM =
             PAINTINGS.register("cam", () -> new PaintingVariant(32, 16));      // 2 x 1 blocks
 

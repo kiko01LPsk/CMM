@@ -41,6 +41,13 @@ public final class ModEntities {
                     .updateInterval(2)
                     .build(new ResourceLocation(KikoMod.MOD_ID, "thrown_shield").toString()));
 
+    public static final RegistryObject<EntityType<net.kiko.chair.ThrownChair>> THROWN_CHAIR = ENTITIES.register("thrown_chair",
+            () -> EntityType.Builder.<net.kiko.chair.ThrownChair>of(net.kiko.chair.ThrownChair::new, MobCategory.MISC)
+                    .sized(0.4F, 0.4F)
+                    .clientTrackingRange(4)
+                    .updateInterval(10)
+                    .build(new ResourceLocation(KikoMod.MOD_ID, "thrown_chair").toString()));
+
     public static final RegistryObject<EntityType<net.kiko.tripod.TripodCameraEntity>> TRIPOD_CAMERA = ENTITIES.register("tripod_camera",
             () -> EntityType.Builder.<net.kiko.tripod.TripodCameraEntity>of(net.kiko.tripod.TripodCameraEntity::new, MobCategory.MISC)
                     .sized(0.9F, 1.5F)

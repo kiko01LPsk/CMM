@@ -136,6 +136,10 @@ public class ModItems {
     public static final RegistryObject<Item> CAPTAIN_SHIELD = ITEMS.register("captain_shield",
             () -> new CaptainShieldItem(new Item.Properties().durability(336)));
 
+    /** A plastic chair (model from Yuushya) that only kiko01LPsk can throw; it does no damage and breaks on impact. */
+    public static final RegistryObject<Item> PLASTIC_CHAIR = ITEMS.register("plastic_chair",
+            () -> new net.kiko.chair.PlasticChairItem(new Item.Properties().stacksTo(16)));
+
     // Film reels (3D models, texture + model from the Film_reel resource pack)
     public static final RegistryObject<Item> FILM_REEL = ITEMS.register("film_reel",
             () -> new Item(new Item.Properties()));
@@ -150,6 +154,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> PAINTING_FOAM = ITEMS.register("painting_foam",
             () -> new KikoPaintingItem(ModPaintings.FOAM.getId(), new Item.Properties()));
+
+    public static final RegistryObject<Item> PAINTING_KAPPER = ITEMS.register("painting_kapper",
+            () -> new KikoPaintingItem(ModPaintings.KAPPER.getId(), new Item.Properties()));
 
     public static final RegistryObject<Item> PAINTING_PATA = ITEMS.register("painting_pata",
             () -> new KikoPaintingItem(ModPaintings.PATA.getId(), new Item.Properties()));
@@ -345,12 +352,14 @@ public class ModItems {
                         output.accept(WHEELCHAIR.get());
                         output.accept(TRIPOD_CAMERA.get());
                         output.accept(CAPTAIN_SHIELD.get());
+                        output.accept(PLASTIC_CHAIR.get());
                         output.accept(FILM_REEL.get());
                         output.accept(ZEME_NIKOHO.get());
                         // Paintings (stacks carry the painting variant, so use the default instance)
                         output.accept(PAINTING_TV.get().getDefaultInstance());
                         output.accept(PAINTING_FOAM.get().getDefaultInstance());
                         output.accept(PAINTING_PATA.get().getDefaultInstance());
+                        output.accept(PAINTING_KAPPER.get().getDefaultInstance());
                         output.accept(PAINTING_CAM.get().getDefaultInstance());
                         output.accept(PAINTING_OLD_LOGO.get().getDefaultInstance());
                         output.accept(PAINTING_MAWHENNA_SYMBOL.get().getDefaultInstance());
