@@ -19,6 +19,7 @@ public class MonitorSetC2SPacket {
     public static final int RESUME = 3;
     public static final int SEEK = 4;     // jump by 'delta' seconds
     public static final int SETTINGS = 5; // only loop / volume
+    public static final int CLEAR = 6;    // forget the link: the screen goes back to blank
 
     private final BlockPos pos;
     private final String url;
@@ -82,6 +83,7 @@ public class MonitorSetC2SPacket {
             int seq = be.getSeq();
             switch (msg.action) {
                 case PLAY -> { u = url; playing = true; paused = false; waiting = true; pausedAt = 0.0D; seq++; }
+                case CLEAR -> { u = ""; playing = false; paused = false; waiting = false; pausedAt = 0.0D; seq++; }
                 case STOP -> { playing = false; paused = false; waiting = false; }
                 case PAUSE -> {
                     if (playing && !paused) {

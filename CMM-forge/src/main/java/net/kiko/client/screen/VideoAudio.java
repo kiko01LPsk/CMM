@@ -61,8 +61,9 @@ final class VideoAudio extends Thread {
                 if (flush) {
                     flush = false;
                     AL10.alSourceStop(source);
-                    int q = AL10.alGetSourcei(source, AL10.AL_BUFFERS_QUEUED);
-                    while (q-- > 0) free.add(AL10.alSourceUnqueueBuffers(source));
+                    AL10.alSourcei(source, AL10.AL_BUFFER, 0); // lets go of every queued buffer at once
+                    free.clear();
+                    for (int b : buffers) free.add(b);
                 }
                 if (bytesRead < targetBytes && !eof) {
                     int n = in.readNBytes(chunk, 0, (int) Math.min(CHUNK, targetBytes - bytesRead));

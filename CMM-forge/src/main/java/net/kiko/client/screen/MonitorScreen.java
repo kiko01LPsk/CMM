@@ -178,6 +178,16 @@ public class MonitorScreen extends Screen {
                 width / 2, top + 162, message.isEmpty() ? 0x909090 : 0xFFD070);
     }
 
+    /** Leaving with an empty link box unloads the screen: it stays blank. */
+    @Override
+    public void onClose() {
+        MonitorBlockEntity be = be();
+        if (urlBox != null && urlBox.getValue().trim().isEmpty() && be != null && !be.getUrl().isEmpty()) {
+            send(MonitorSetC2SPacket.CLEAR, 0);
+        }
+        super.onClose();
+    }
+
     @Override
     public boolean isPauseScreen() { return false; }
 }
