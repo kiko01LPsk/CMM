@@ -152,6 +152,9 @@ public class ModItems {
     public static final RegistryObject<Item> PAINTING_TV = ITEMS.register("painting_tv",
             () -> new KikoPaintingItem(ModPaintings.TV.getId(), new Item.Properties()));
 
+    public static final RegistryObject<Item> PAINTING_FOAM_SMALL = ITEMS.register("painting_foam_small",
+            () -> new KikoPaintingItem(ModPaintings.FOAM_SMALL.getId(), new Item.Properties()));
+
     public static final RegistryObject<Item> PAINTING_FOAM = ITEMS.register("painting_foam",
             () -> new KikoPaintingItem(ModPaintings.FOAM.getId(), new Item.Properties()));
 
@@ -358,6 +361,7 @@ public class ModItems {
                         // Paintings (stacks carry the painting variant, so use the default instance)
                         output.accept(PAINTING_TV.get().getDefaultInstance());
                         output.accept(PAINTING_FOAM.get().getDefaultInstance());
+                        output.accept(PAINTING_FOAM_SMALL.get().getDefaultInstance());
                         output.accept(PAINTING_PATA.get().getDefaultInstance());
                         output.accept(PAINTING_KAPPER.get().getDefaultInstance());
                         output.accept(PAINTING_CAM.get().getDefaultInstance());

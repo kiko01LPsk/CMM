@@ -1,8 +1,6 @@
 package net.kiko.chair;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
@@ -56,8 +54,6 @@ public class PlasticChairItem extends Item {
             ThrownChair chair = new ThrownChair(level, player);
             chair.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.9F, 1.0F);
             level.addFreshEntity(chair);
-            level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.TRIDENT_THROW,
-                    SoundSource.PLAYERS, 1.0F, 1.0F);
             if (!player.getAbilities().instabuild) stack.shrink(1);
         }
         player.awardStat(net.minecraft.stats.Stats.ITEM_USED.get(this));
