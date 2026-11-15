@@ -107,6 +107,7 @@ public final class VideoStream implements AutoCloseable {
                 if (needRebase || !gotFrame) {
                     base = System.nanoTime();
                     index = 0L;
+                    suspendStart = 0L; // an old pause must not push the clock ahead
                     needRebase = false;
                 }
                 boolean dropped = false;

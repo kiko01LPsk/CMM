@@ -128,7 +128,8 @@ final class VideoPlayer {
                 held.skip(delta);
                 VideoAudio au = audio;
                 if (au != null) {
-                    au.skipBytes += ((long) (delta * AudioStream.RATE)) * 4L;
+                    au.go = false; // silent until the picture has caught up too
+                    au.targetBytes = ((long) ((be.getPausedAt() - au.baseSeconds) * AudioStream.RATE)) * 4L;
                     au.flush = true;
                 }
                 if (suspendedStreams) suspendedPos = be.getPausedAt();
@@ -179,7 +180,8 @@ final class VideoPlayer {
             try {
                 a = new AudioStream(ffmpeg, media.audioUrl(), offset, seek);
                 audioThread = new VideoAudio(a.pcm());
-                if (!seek && offset > 0.5D) audioThread.skipBytes = ((long) (offset * AudioStream.RATE)) * 4L;
+                audioThread.baseSeconds = seek && offset > 0.5D ? offset : 0.0D;
+                if (!seek && offset > 0.5D) audioThread.targetBytes = ((long) (offset * AudioStream.RATE)) * 4L;
                 audioThread.start();
             } catch (Exception e) {
                 KikoMod.LOGGER.warn("Monitor has no sound: {}", e.toString());

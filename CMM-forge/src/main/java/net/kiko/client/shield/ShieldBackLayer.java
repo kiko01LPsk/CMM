@@ -17,7 +17,7 @@ import net.minecraft.world.item.ItemStack;
 /** Draws Captain America's shield on the back of a player who wears it in the chestplate slot. */
 public class ShieldBackLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 
-    private static final float SCALE = 0.5F;
+    private static final float SCALE = 1.0F;
 
     public ShieldBackLayer(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> parent) {
         super(parent);
@@ -33,7 +33,7 @@ public class ShieldBackLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
         poseStack.pushPose();
         // Body space: +x is the player's left, +y is down, +z is the back.
         getParentModel().body.translateAndRotate(poseStack);
-        poseStack.translate(0.0D, 6.0D / 16.0D, 0.123D);
+        poseStack.translate(0.0D, 6.0D / 16.0D, 0.10D);
         poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F)); // upright, star facing backwards
         poseStack.scale(SCALE, SCALE, SCALE);
         // the shield model is centred on the corner of its block

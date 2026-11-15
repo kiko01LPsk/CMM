@@ -22,8 +22,11 @@ final class VideoAudio extends Thread {
     volatile boolean go;
     /** Pause: the sound is held and carries on from the same spot. */
     volatile boolean suspended;
-    /** Bytes of sound to throw away (a jump ahead); the queued sound is dropped too. */
-    volatile long skipBytes;
+    /** Seconds of the video where this sound stream starts (0 unless ffmpeg was told to jump in). */
+    volatile double baseSeconds;
+    /** Sound is read and thrown away until this many bytes of the stream have gone by (a jump ahead). */
+    volatile long targetBytes;
+    private long bytesRead;
     volatile boolean flush;
     volatile float gain;
     volatile float relX, relY, relZ;
@@ -61,9 +64,9 @@ final class VideoAudio extends Thread {
                     int q = AL10.alGetSourcei(source, AL10.AL_BUFFERS_QUEUED);
                     while (q-- > 0) free.add(AL10.alSourceUnqueueBuffers(source));
                 }
-                if (skipBytes > 0L && !eof) {
-                    int n = in.readNBytes(chunk, 0, (int) Math.min(CHUNK, skipBytes));
-                    if (n <= 0) { eof = true; skipBytes = 0L; } else skipBytes -= n;
+                if (bytesRead < targetBytes && !eof) {
+                    int n = in.readNBytes(chunk, 0, (int) Math.min(CHUNK, targetBytes - bytesRead));
+                    if (n <= 0) eof = true; else bytesRead += n;
                     continue;
                 }
                 if (suspended) {
@@ -76,6 +79,7 @@ final class VideoAudio extends Thread {
 
                 while (!free.isEmpty() && !eof && !stop) {
                     int n = in.readNBytes(chunk, 0, CHUNK);
+                    bytesRead += n;
                     n -= n % 4;
                     if (n <= 0) { eof = true; break; }
                     direct.clear();
@@ -90,6 +94,7 @@ final class VideoAudio extends Thread {
                 int state = AL10.alGetSourcei(source, AL10.AL_SOURCE_STATE);
                 int queued = AL10.alGetSourcei(source, AL10.AL_BUFFERS_QUEUED);
                 if (go && state != AL10.AL_PLAYING && queued > 0) AL10.alSourcePlay(source);
+                if (!go && state == AL10.AL_PLAYING) AL10.alSourcePause(source);
                 if (eof && queued == 0) break;
                 try { Thread.sleep(10L); } catch (InterruptedException e) { break; }
             }
