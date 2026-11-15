@@ -27,6 +27,7 @@ final class VideoAudio extends Thread {
     /** Sound is read and thrown away until this many bytes of the stream have gone by (a jump ahead). */
     volatile long targetBytes;
     private long bytesRead;
+    private boolean loggedPlay;
     volatile boolean flush;
     volatile float gain;
     volatile float relX, relY, relZ;
@@ -60,10 +61,15 @@ final class VideoAudio extends Thread {
             while (!stop) {
                 if (flush) {
                     flush = false;
+                    // start over with a brand new source: the surest way to drop everything that was queued
                     AL10.alSourceStop(source);
-                    AL10.alSourcei(source, AL10.AL_BUFFER, 0); // lets go of every queued buffer at once
+                    AL10.alDeleteSources(source);
+                    source = AL10.alGenSources();
+                    AL10.alSourcei(source, AL10.AL_SOURCE_RELATIVE, AL10.AL_TRUE);
+                    AL10.alSourcef(source, AL10.AL_ROLLOFF_FACTOR, 0.0F);
                     free.clear();
                     for (int b : buffers) free.add(b);
+                    KikoMod.LOGGER.info("Monitor sound: jumped, waiting for the picture (target byte {})", targetBytes);
                 }
                 if (bytesRead < targetBytes && !eof) {
                     int n = in.readNBytes(chunk, 0, (int) Math.min(CHUNK, targetBytes - bytesRead));
@@ -94,7 +100,8 @@ final class VideoAudio extends Thread {
                 AL10.alSource3f(source, AL10.AL_POSITION, relX, relY, relZ);
                 int state = AL10.alGetSourcei(source, AL10.AL_SOURCE_STATE);
                 int queued = AL10.alGetSourcei(source, AL10.AL_BUFFERS_QUEUED);
-                if (go && state != AL10.AL_PLAYING && queued > 0) AL10.alSourcePlay(source);
+                if (go && state != AL10.AL_PLAYING && queued > 0) { AL10.alSourcePlay(source); if (!loggedPlay) { loggedPlay = true; KikoMod.LOGGER.info("Monitor sound: playing"); } }
+                if (!go) loggedPlay = false;
                 if (!go && state == AL10.AL_PLAYING) AL10.alSourcePause(source);
                 if (eof && queued == 0) break;
                 try { Thread.sleep(10L); } catch (InterruptedException e) { break; }
