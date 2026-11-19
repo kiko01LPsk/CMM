@@ -292,7 +292,7 @@ public class ModItems {
             () -> new MorphWandItem(new Item.Properties().stacksTo(1)));
 
     /** An open cardboard box you can sit in and drive like a car (W/S, A/D, sneak to get out). */
-    public static final RegistryObject<Item> CARDBOARD_BOX = ITEMS.register("cardboard_box",
+    public static final RegistryObject<Item> CARDBOARD_BOX = ITEMS.register("cardboard_box_car",
             () -> new CardboardBoxItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> PKP_PECHENEG = ITEMS.register("pkp_pecheneg",

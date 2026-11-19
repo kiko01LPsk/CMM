@@ -20,7 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 /** Draws the open cardboard box: floor, four walls and four flaps folded outwards. */
 public class CardboardBoxRenderer extends EntityRenderer<CardboardBoxEntity> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation("kiko", "textures/entity/cardboard_box.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation("kiko", "textures/entity/cardboard_box_car.png");
 
     private final ModelPart root;
 
