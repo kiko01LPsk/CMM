@@ -40,6 +40,7 @@ public final class ClientModEvents {
         event.register(MjolnirClient.CALL);
         event.register(MjolnirClient.LIGHTNING);
         event.register(net.kiko.client.sunglasses.SonicSunglassesClient.USE);
+        event.register(net.kiko.client.morph.MorphRenderer.RESET);
     }
 
     @SubscribeEvent
@@ -49,6 +50,7 @@ public final class ClientModEvents {
         event.registerEntityRenderer(ModEntities.KEYBOARD.get(), KeyboardRenderer::new);
         event.registerEntityRenderer(ModEntities.TRIPOD_CAMERA.get(), net.kiko.client.tripod.TripodCameraRenderer::new);
         event.registerEntityRenderer(ModEntities.WHEELCHAIR.get(), net.kiko.client.wheelchair.WheelchairRenderer::new);
+        event.registerEntityRenderer(ModEntities.CARDBOARD_BOX.get(), net.kiko.client.cardboard.CardboardBoxRenderer::new);
         event.registerEntityRenderer(ModEntities.THROWN_SHIELD.get(), net.kiko.client.shield.ThrownShieldRenderer::new);
         event.registerEntityRenderer(ModEntities.THROWN_CHAIR.get(), net.kiko.client.chair.ThrownChairRenderer::new);
         event.registerEntityRenderer(ModEntities.THROWN_MJOLNIR.get(), ThrownMjolnirRenderer::new);

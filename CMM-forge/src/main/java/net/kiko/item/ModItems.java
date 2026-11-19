@@ -283,6 +283,18 @@ public class ModItems {
     public static final RegistryObject<Item> DESERT_EAGLE = ITEMS.register("desert_eagle",
             () -> new OneHandGunItem(new Item.Properties().stacksTo(1)));
 
+    /** Prop: hold right-click to aim it one-handed. Model from the Terramity mod. */
+    public static final RegistryObject<Item> REQUIEM = ITEMS.register("requiem",
+            () -> new OneHandGunItem(new Item.Properties().stacksTo(1)));
+
+    /** Right-click a mob to morph into it; the Reset morph key changes you back. */
+    public static final RegistryObject<Item> MORPH_WAND = ITEMS.register("morph_wand",
+            () -> new MorphWandItem(new Item.Properties().stacksTo(1)));
+
+    /** An open cardboard box you can sit in and drive like a car (W/S, A/D, sneak to get out). */
+    public static final RegistryObject<Item> CARDBOARD_BOX = ITEMS.register("cardboard_box",
+            () -> new CardboardBoxItem(new Item.Properties().stacksTo(1)));
+
     public static final RegistryObject<Item> PKP_PECHENEG = ITEMS.register("pkp_pecheneg",
             () -> new RifleItem(new Item.Properties().stacksTo(1)));
 
@@ -347,12 +359,15 @@ public class ModItems {
                         output.accept(GLOCK_17.get());
                         output.accept(AK_47.get());
                         output.accept(DESERT_EAGLE.get());
+                        output.accept(REQUIEM.get());
+                        output.accept(MORPH_WAND.get());
                         output.accept(PKP_PECHENEG.get());
                         output.accept(MP5.get());
                         output.accept(FN_FAL.get());
                         output.accept(MANNEQUIN.get());
                         output.accept(KEYBOARD.get());
                         output.accept(WHEELCHAIR.get());
+                        output.accept(CARDBOARD_BOX.get());
                         output.accept(TRIPOD_CAMERA.get());
                         output.accept(CAPTAIN_SHIELD.get());
                         output.accept(PLASTIC_CHAIR.get());

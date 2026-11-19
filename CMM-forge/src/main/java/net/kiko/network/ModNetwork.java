@@ -95,5 +95,15 @@ public final class ModNetwork {
                 .encoder(MonitorReadyC2SPacket::toBytes)
                 .consumerMainThread(MonitorReadyC2SPacket::handle)
                 .add();
+        CHANNEL.messageBuilder(MorphS2CPacket.class, id++, NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(MorphS2CPacket::new)
+                .encoder(MorphS2CPacket::toBytes)
+                .consumerMainThread(MorphS2CPacket::handle)
+                .add();
+        CHANNEL.messageBuilder(MorphResetC2SPacket.class, id++, NetworkDirection.PLAY_TO_SERVER)
+                .decoder(MorphResetC2SPacket::new)
+                .encoder(MorphResetC2SPacket::toBytes)
+                .consumerMainThread(MorphResetC2SPacket::handle)
+                .add();
     }
 }

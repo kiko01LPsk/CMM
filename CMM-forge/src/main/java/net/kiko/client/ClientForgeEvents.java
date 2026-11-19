@@ -25,6 +25,7 @@ public final class ClientForgeEvents {
         if (event.phase != TickEvent.Phase.END) return;
 
         net.kiko.client.screen.VideoManager.tick();
+        net.kiko.client.morph.MorphRenderer.tick(Minecraft.getInstance());
 
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.getConnection() == null) return;
@@ -37,6 +38,9 @@ public final class ClientForgeEvents {
         while (MannequinImitation.TOGGLE.consumeClick()) {
             MannequinImitation.toggle();
         }
+        while (net.kiko.client.morph.MorphRenderer.RESET.consumeClick()) {
+            net.kiko.network.ModNetwork.CHANNEL.sendToServer(new net.kiko.network.MorphResetC2SPacket());
+        }
     }
 
     @SubscribeEvent
@@ -45,6 +49,7 @@ public final class ClientForgeEvents {
         PoseBindings.clear();
         ClientPoseStore.clear();
         MannequinImitation.clear();
+        net.kiko.client.morph.MorphRenderer.clear();
     }
 
     /**
@@ -55,6 +60,13 @@ public final class ClientForgeEvents {
     @SubscribeEvent
     public static void onRenderLivingPre(RenderLivingEvent.Pre<?, ?> event) {
         if (!(event.getEntity() instanceof AbstractClientPlayer player)) return;
+
+        // Morph wand: draw the player as the mob they turned into.
+        if (net.kiko.client.morph.MorphRenderer.render(player, event.getPartialTick(), event.getPoseStack(),
+                event.getMultiBufferSource(), event.getPackedLight())) {
+            event.setCanceled(true);
+            return;
+        }
 
         // "Imitate mannequin": draw the player as a mannequin instead (skips the normal player rendering).
         if (MannequinImitation.render(player, event.getPartialTick(), event.getPoseStack(),
