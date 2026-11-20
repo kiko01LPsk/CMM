@@ -1,0 +1,280 @@
+{
+ "credit": "Created by Workshop Six",
+ "textures": {
+  "4": "kiko:block/cardboard_box_stack_1"
+ },
+ "elements": [
+  {
+   "from": [
+    0,
+    0,
+    0
+   ],
+   "to": [
+    16,
+    16,
+    16
+   ],
+   "rotation": {
+    "angle": 0,
+    "axis": "y",
+    "origin": [
+     1,
+     0,
+     1
+    ]
+   },
+   "faces": {
+    "north": {
+     "uv": [
+      0,
+      0,
+      4,
+      4
+     ],
+     "texture": "#4"
+    },
+    "east": {
+     "uv": [
+      0,
+      4,
+      4,
+      8
+     ],
+     "texture": "#4"
+    },
+    "south": {
+     "uv": [
+      4,
+      0,
+      8,
+      4
+     ],
+     "texture": "#4"
+    },
+    "west": {
+     "uv": [
+      4,
+      4,
+      8,
+      8
+     ],
+     "texture": "#4"
+    },
+    "up": {
+     "uv": [
+      4,
+      12,
+      0,
+      8
+     ],
+     "texture": "#4"
+    },
+    "down": {
+     "uv": [
+      12,
+      0,
+      8,
+      4
+     ],
+     "texture": "#4"
+    }
+   }
+  },
+  {
+   "from": [
+    2,
+    16,
+    0
+   ],
+   "to": [
+    14,
+    24,
+    16
+   ],
+   "rotation": {
+    "angle": 22.5,
+    "axis": "y",
+    "origin": [
+     8,
+     20,
+     8
+    ]
+   },
+   "faces": {
+    "north": {
+     "uv": [
+      11,
+      4,
+      14,
+      6
+     ],
+     "texture": "#4"
+    },
+    "east": {
+     "uv": [
+      7,
+      8,
+      11,
+      10
+     ],
+     "texture": "#4"
+    },
+    "south": {
+     "uv": [
+      11,
+      6,
+      14,
+      8
+     ],
+     "texture": "#4"
+    },
+    "west": {
+     "uv": [
+      7,
+      10,
+      11,
+      12
+     ],
+     "texture": "#4"
+    },
+    "up": {
+     "uv": [
+      7,
+      12,
+      4,
+      8
+     ],
+     "texture": "#4"
+    },
+    "down": {
+     "uv": [
+      11,
+      4,
+      8,
+      8
+     ],
+     "texture": "#4"
+    }
+   }
+  }
+ ],
+ "gui_light": "front",
+ "display": {
+  "gui": {
+   "rotation": [
+    30,
+    225,
+    0
+   ],
+   "translation": [
+    0,
+    -5,
+    0
+   ],
+   "scale": [
+    0.45,
+    0.45,
+    0.45
+   ]
+  },
+  "thirdperson_righthand": {
+   "rotation": [
+    75,
+    45,
+    0
+   ],
+   "translation": [
+    0,
+    2.5,
+    0
+   ],
+   "scale": [
+    0.27,
+    0.27,
+    0.27
+   ]
+  },
+  "thirdperson_lefthand": {
+   "rotation": [
+    75,
+    45,
+    0
+   ],
+   "translation": [
+    0,
+    2.5,
+    0
+   ],
+   "scale": [
+    0.27,
+    0.27,
+    0.27
+   ]
+  },
+  "firstperson_righthand": {
+   "rotation": [
+    0,
+    45,
+    0
+   ],
+   "scale": [
+    0.27,
+    0.27,
+    0.27
+   ]
+  },
+  "firstperson_lefthand": {
+   "rotation": [
+    0,
+    225,
+    0
+   ],
+   "scale": [
+    0.27,
+    0.27,
+    0.27
+   ]
+  },
+  "ground": {
+   "translation": [
+    0,
+    3,
+    0
+   ],
+   "scale": [
+    0.18000000000000002,
+    0.18000000000000002,
+    0.18000000000000002
+   ]
+  },
+  "fixed": {
+   "scale": [
+    0.36000000000000004,
+    0.36000000000000004,
+    0.36000000000000004
+   ],
+   "translation": [
+    0,
+    -4,
+    0
+   ]
+  }
+ },
+ "groups": [
+  {
+   "name": "group",
+   "origin": [
+    8,
+    20,
+    8
+   ],
+   "color": 0,
+   "children": [
+    0,
+    1
+   ]
+  }
+ ],
+ "mcmodels": "ea15544821734c0d0203ff4db32948d4"
+}

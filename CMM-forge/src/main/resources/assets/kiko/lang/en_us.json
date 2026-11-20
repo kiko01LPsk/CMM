@@ -374,8 +374,8 @@
   "item.kiko.keyboard": "Keyboard",
   "entity.kiko.keyboard": "Keyboard",
   "item.kiko.wheelchair": "Wheelchair",
-  "item.kiko.cardboard_box_car": "Cardboard box car",
-  "entity.kiko.cardboard_box_car": "Cardboard box car",
+  "item.kiko.cardboard_box_car": "Drivable cardboard box",
+  "entity.kiko.cardboard_box_car": "Drivable cardboard box",
   "item.kiko.tripod_camera": "Tripod Camera",
   "entity.kiko.tripod_camera": "Tripod Camera",
   "entity.kiko.wheelchair": "Wheelchair",
@@ -385,5 +385,10 @@
   "block.kiko.studio_light": "Studio Light",
   "block.kiko.hex_light": "Hex Light",
   "block.kiko.monitor": "Monitor",
-  "block.kiko.box_regnum": "Box REGNUM"
+  "block.kiko.box_regnum": "Box REGNUM",
+  "block.kiko.cardboard_box_closed": "Cardboard box (closed)",
+  "block.kiko.cardboard_box_open": "Cardboard box (open)",
+  "block.kiko.cardboard_box_small": "Cardboard box (small)",
+  "block.kiko.cardboard_box_stack_1": "Cardboard boxes (stack of 2)",
+  "block.kiko.cardboard_box_stack_2": "Cardboard boxes (stack of 3)"
 }

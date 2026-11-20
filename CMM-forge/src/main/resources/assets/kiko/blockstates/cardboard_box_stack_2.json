@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "kiko:block/cardboard_box_stack_2"
+    },
+    "facing=east": {
+      "model": "kiko:block/cardboard_box_stack_2",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "kiko:block/cardboard_box_stack_2",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "kiko:block/cardboard_box_stack_2",
+      "y": 270
+    }
+  }
+}

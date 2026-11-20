@@ -187,6 +187,22 @@ public class ModBlocks {
     public static final RegistryObject<Block> BOX_REGNUM = block("box_regnum",
             () -> new BoxRegnumBlock(BlockBehaviour.Properties.copy(Blocks.FLETCHING_TABLE)));
 
+    // ── Cardboard box props (models from the Nexo cardboard box pack) ──
+    private static BlockBehaviour.Properties cardboard() {
+        return BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(0.4F).sound(SoundType.WOOL).noOcclusion();
+    }
+
+    public static final RegistryObject<Block> CARDBOARD_BOX_CLOSED = block("cardboard_box_closed",
+            () -> new CardboardPropBlock(cardboard(), 0, 0, 0, 16, 16, 16));
+    public static final RegistryObject<Block> CARDBOARD_BOX_OPEN = block("cardboard_box_open",
+            () -> new CardboardPropBlock(cardboard(), 0, 0, 0, 16, 16, 16));
+    public static final RegistryObject<Block> CARDBOARD_BOX_SMALL = block("cardboard_box_small",
+            () -> new CardboardPropBlock(cardboard(), 2, 0, 0, 14, 8, 16));
+    public static final RegistryObject<Block> CARDBOARD_BOX_STACK_1 = block("cardboard_box_stack_1",
+            () -> new CardboardPropBlock(cardboard(), 0, 0, 0, 16, 24, 16));
+    public static final RegistryObject<Block> CARDBOARD_BOX_STACK_2 = block("cardboard_box_stack_2",
+            () -> new CardboardPropBlock(cardboard(), 0, 0, 0, 16, 32, 16));
+
     // ── Monitor: joins with its neighbours into one big screen that plays a link ──
     public static final RegistryObject<Block> MONITOR = block("monitor",
             () -> new net.kiko.screen.MonitorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK)

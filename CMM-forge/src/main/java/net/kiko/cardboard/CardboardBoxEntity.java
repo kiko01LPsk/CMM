@@ -26,9 +26,9 @@ import net.minecraftforge.network.NetworkHooks;
 /** A cardboard box you can sit in and drive like a car: W/S accelerate and reverse, A/D steer, sneak to get out. */
 public class CardboardBoxEntity extends Entity {
 
-    private static final double MAX_FORWARD = 0.42D;
+    private static final double MAX_FORWARD = 0.58D;
     private static final double MAX_BACKWARD = 0.14D;
-    private static final double ACCEL = 0.018D;
+    private static final double ACCEL = 0.025D;
     private static final double BRAKE = 0.03D;
     private static final float TURN = 5.0F;
 
@@ -177,13 +177,13 @@ public class CardboardBoxEntity extends Entity {
         double dy = isInWater() ? -0.02D : motion.y - 0.08D;
         Vec3 horizontal = new Vec3(look.x * speed, 0.0D, look.z * speed);
 
-        // climb up to 0.6 blocks (slabs, stairs, carpets)
+        // climb up to one full block
         if (onGround() && Math.abs(speed) > 0.01D) {
             AABB box = getBoundingBox();
             if (!level().noCollision(this, box.move(horizontal.x, 0.0D, horizontal.z))
-                    && level().noCollision(this, box.move(horizontal.x, 0.6D, horizontal.z))
-                    && level().noCollision(this, box.move(0.0D, 0.6D, 0.0D))) {
-                move(MoverType.SELF, new Vec3(0.0D, 0.6D, 0.0D));
+                    && level().noCollision(this, box.move(horizontal.x, 1.02D, horizontal.z))
+                    && level().noCollision(this, box.move(0.0D, 1.02D, 0.0D))) {
+                move(MoverType.SELF, new Vec3(0.0D, 1.02D, 0.0D));
             }
         }
         move(MoverType.SELF, new Vec3(horizontal.x, dy, horizontal.z));

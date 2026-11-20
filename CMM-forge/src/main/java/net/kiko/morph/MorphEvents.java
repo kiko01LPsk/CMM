@@ -6,6 +6,7 @@ import net.kiko.network.MorphS2CPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.PacketDistributor;
@@ -39,6 +40,26 @@ public final class MorphEvents {
         else player.getPersistentData().putString(TAG, id);
         ModNetwork.CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player),
                 new MorphS2CPacket(player.getUUID(), id));
+    }
+
+    /**
+     * Runs before the mob's own right-click behaviour, so the wand also works on villagers, llamas, horses and the like
+     * (otherwise their trade screen / saddle / feeding would take the click first).
+     */
+    @SubscribeEvent(priority = net.minecraftforge.eventbus.api.EventPriority.HIGH)
+    public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
+        if (!(event.getItemStack().getItem() instanceof net.kiko.item.MorphWandItem)) return;
+        if (event.getTarget() instanceof net.minecraft.world.entity.player.Player
+                || !(event.getTarget() instanceof net.minecraft.world.entity.LivingEntity target)) return;
+        if (event.getEntity() instanceof ServerPlayer sp) {
+            set(sp, target.getType());
+            sp.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.kiko.morphed",
+                    target.getType().getDescription()), true);
+            sp.level().playSound(null, sp.blockPosition(), net.minecraft.sounds.SoundEvents.ENCHANTMENT_TABLE_USE,
+                    net.minecraft.sounds.SoundSource.PLAYERS, 1.0F, 1.2F);
+        }
+        event.setCancellationResult(net.minecraft.world.InteractionResult.sidedSuccess(event.getLevel().isClientSide));
+        event.setCanceled(true);
     }
 
     @SubscribeEvent
