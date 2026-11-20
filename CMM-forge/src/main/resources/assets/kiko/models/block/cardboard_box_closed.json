@@ -1,4 +1,5 @@
 {
+ "ambientocclusion": false,
  "credit": "Created by Workshop Six",
  "textures": {
   "0": "kiko:block/cardboard_box_closed",

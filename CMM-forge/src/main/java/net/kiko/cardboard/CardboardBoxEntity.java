@@ -177,18 +177,20 @@ public class CardboardBoxEntity extends Entity {
         double dy = isInWater() ? -0.02D : motion.y - 0.08D;
         Vec3 horizontal = new Vec3(look.x * speed, 0.0D, look.z * speed);
 
-        // climb up to one full block
+        // climb up to one full block: lift first, then roll forward without falling back down in the same move
+        boolean climbed = false;
         if (onGround() && Math.abs(speed) > 0.01D) {
             AABB box = getBoundingBox();
             if (!level().noCollision(this, box.move(horizontal.x, 0.0D, horizontal.z))
                     && level().noCollision(this, box.move(horizontal.x, 1.02D, horizontal.z))
                     && level().noCollision(this, box.move(0.0D, 1.02D, 0.0D))) {
                 move(MoverType.SELF, new Vec3(0.0D, 1.02D, 0.0D));
+                climbed = true;
             }
         }
-        move(MoverType.SELF, new Vec3(horizontal.x, dy, horizontal.z));
+        move(MoverType.SELF, new Vec3(horizontal.x, climbed ? 0.0D : dy, horizontal.z));
         if (horizontalCollision) speed = 0.0D;
-        setDeltaMovement(look.x * speed, onGround() ? 0.0D : dy, look.z * speed);
+        setDeltaMovement(look.x * speed, climbed ? 0.0D : (onGround() ? 0.0D : dy), look.z * speed);
     }
 
     // ── rider ─────────────────────────────────────────────────────────────
@@ -196,7 +198,9 @@ public class CardboardBoxEntity extends Entity {
     @Override
     protected void positionRider(Entity passenger, Entity.MoveFunction move) {
         if (!hasPassenger(passenger)) return;
-        move.accept(passenger, getX(), getY() - 0.55D, getZ());
+        // sit a little towards the back of the box
+        float yawRad = getYRot() * Mth.DEG_TO_RAD;
+        move.accept(passenger, getX() + Mth.sin(yawRad) * 0.14D, getY() - 0.58D, getZ() - Mth.cos(yawRad) * 0.14D);
         float turn = Mth.wrapDegrees(getYRot() - yRotO);
         passenger.setYRot(passenger.getYRot() + turn);
         passenger.setYHeadRot(passenger.getYHeadRot() + turn);

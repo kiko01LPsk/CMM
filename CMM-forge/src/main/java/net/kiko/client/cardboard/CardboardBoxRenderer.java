@@ -19,7 +19,7 @@ public class CardboardBoxRenderer extends EntityRenderer<CardboardBoxEntity> {
     public CardboardBoxRenderer(EntityRendererProvider.Context context) {
         super(context);
         this.context = context;
-        this.shadowRadius = 0.6F;
+        this.shadowRadius = 0.5F;
     }
 
     @Override
@@ -27,6 +27,7 @@ public class CardboardBoxRenderer extends EntityRenderer<CardboardBoxEntity> {
                        MultiBufferSource buffer, int light) {
         poseStack.pushPose();
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - yaw));
+        poseStack.scale(0.8F, 0.8F, 0.8F);
         poseStack.translate(-0.5D, 0.0D, -0.5D);
         context.getBlockRenderDispatcher().renderSingleBlock(
                 ModBlocks.CARDBOARD_BOX_OPEN.get().defaultBlockState(), poseStack, buffer, light, OverlayTexture.NO_OVERLAY);
@@ -36,6 +37,8 @@ public class CardboardBoxRenderer extends EntityRenderer<CardboardBoxEntity> {
 
     @Override
     public ResourceLocation getTextureLocation(CardboardBoxEntity entity) {
-        return TextureAtlas.LOCATION_BLOCKS;
+        return TEXTURE_ATLAS;
     }
+
+    private static final ResourceLocation TEXTURE_ATLAS = TextureAtlas.LOCATION_BLOCKS;
 }

@@ -64,7 +64,7 @@ public final class ModEntities {
 
     public static final RegistryObject<EntityType<net.kiko.cardboard.CardboardBoxEntity>> CARDBOARD_BOX = ENTITIES.register("cardboard_box_car",
             () -> EntityType.Builder.<net.kiko.cardboard.CardboardBoxEntity>of(net.kiko.cardboard.CardboardBoxEntity::new, MobCategory.MISC)
-                    .sized(1.0F, 1.0F)
+                    .sized(0.85F, 0.85F)
                     .clientTrackingRange(10)
                     .updateInterval(2)
                     .build(new ResourceLocation(KikoMod.MOD_ID, "cardboard_box_car").toString()));
