@@ -1,0 +1,1 @@
+{"variants": {"facing=north": {"model": "kiko:block/wall_book_display"}, "facing=east": {"model": "kiko:block/wall_book_display", "y": 90}, "facing=south": {"model": "kiko:block/wall_book_display", "y": 180}, "facing=west": {"model": "kiko:block/wall_book_display", "y": 270}}}

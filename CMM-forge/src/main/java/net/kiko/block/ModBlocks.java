@@ -105,6 +105,36 @@ public class ModBlocks {
     public static final RegistryObject<Block> LARGE_MONEY_PILE = block("large_money_pile",
             () -> new MoneyPileBlock(BlockBehaviour.Properties.of().noOcclusion().strength(5.0F).sound(SoundType.WOOL),
                     Block.box(0.5, 0, 0.5, 15.5, 12, 15.5)));
+    public static final RegistryObject<Block> DISPLAY_CASE_WOOD = block("display_case_wood",
+            () -> new DisplayCaseBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.5F).sound(SoundType.GLASS)));
+    public static final RegistryObject<Block> DISPLAY_CASE_STONE = block("display_case_stone",
+            () -> new DisplayCaseBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.5F).sound(SoundType.GLASS)));
+    public static final RegistryObject<Block> DISPLAY_CASE_GOLD = block("display_case_gold",
+            () -> new DisplayCaseBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.5F).sound(SoundType.GLASS)));
+    public static final RegistryObject<Block> DISPLAY_CASE_TABLE = block("display_case_table",
+            () -> new DisplayCaseBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.5F).sound(SoundType.GLASS)));
+    public static final RegistryObject<Block> DISPLAY_CASE_COUNTER = block("display_case_counter",
+            () -> new DisplayCaseBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.5F).sound(SoundType.GLASS)));
+    public static final RegistryObject<Block> DISPLAY_CASE_TALL_WOOD = block("display_case_tall_wood",
+            () -> new DisplayCaseTallBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.5F).sound(SoundType.GLASS)));
+    public static final RegistryObject<Block> DISPLAY_CASE_TALL_STONE = block("display_case_tall_stone",
+            () -> new DisplayCaseTallBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.5F).sound(SoundType.GLASS)));
+    public static final RegistryObject<Block> DISPLAY_PLATE = block("display_plate",
+            () -> new DisplayCaseBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.0F).sound(SoundType.WOOD),
+                    Block.box(1, 0, 1, 15, 2, 15), 0.45, 0.5F));
+    public static final RegistryObject<Block> WALL_BOOK_DISPLAY = block("wall_book_display",
+            () -> new WallBookDisplayBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.0F).sound(SoundType.WOOD)));
+    public static final RegistryObject<BlockEntityType<DisplayCaseBlockEntity>> DISPLAY_CASE_ENTITY =
+            BLOCK_ENTITIES.register("display_case",
+                    () -> BlockEntityType.Builder.of(DisplayCaseBlockEntity::new,
+                            DISPLAY_CASE_WOOD.get(),
+                            DISPLAY_CASE_STONE.get(),
+                            DISPLAY_CASE_GOLD.get(),
+                            DISPLAY_CASE_TABLE.get(),
+                            DISPLAY_CASE_COUNTER.get(),
+                            DISPLAY_CASE_TALL_WOOD.get(), DISPLAY_CASE_TALL_STONE.get(),
+                            DISPLAY_PLATE.get(), WALL_BOOK_DISPLAY.get()).build(null));
+
     public static final RegistryObject<Block> MJOLNIR_BLOCK = BLOCKS.register("mjolnir_block", MjolnirBlock::new);
 
     public static final RegistryObject<BlockEntityType<MjolnirBlockEntity>> MJOLNIR_BLOCK_ENTITY =

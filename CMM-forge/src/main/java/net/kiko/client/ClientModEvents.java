@@ -56,6 +56,7 @@ public final class ClientModEvents {
         event.registerEntityRenderer(ModEntities.THROWN_CHAIR.get(), net.kiko.client.chair.ThrownChairRenderer::new);
         event.registerEntityRenderer(ModEntities.THROWN_MJOLNIR.get(), ThrownMjolnirRenderer::new);
         event.registerEntityRenderer(ModEntities.KIKO_TRIDENT.get(), net.kiko.client.trident.ThrownKikoTridentRenderer::new);
+        event.registerBlockEntityRenderer(ModBlocks.DISPLAY_CASE_ENTITY.get(), net.kiko.client.display.DisplayCaseRenderer::new);
         event.registerBlockEntityRenderer(ModBlocks.MJOLNIR_BLOCK_ENTITY.get(), MjolnirBlockRenderer::new);
         event.registerBlockEntityRenderer(ModBlocks.MONITOR_ENTITY.get(), net.kiko.client.screen.MonitorRenderer::new);
     }
@@ -131,6 +132,10 @@ public final class ClientModEvents {
             ItemProperties.register(ModItems.SPEAR_GOLD.get(), new ResourceLocation(KikoMod.MOD_ID, "throwing"),
                     (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
             ItemProperties.register(ModItems.SPEAR_NETHERITE.get(), new ResourceLocation(KikoMod.MOD_ID, "throwing"),
+                    (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
+            ItemProperties.register(ModItems.MJOLNIR.get(), new ResourceLocation(KikoMod.MOD_ID, "throwing"),
+                    (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
+            ItemProperties.register(ModItems.PLASTIC_CHAIR.get(), new ResourceLocation(KikoMod.MOD_ID, "throwing"),
                     (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
             // Captain shield: blocking pose, same as the vanilla shield.
             ItemProperties.register(ModItems.CAPTAIN_SHIELD.get(),

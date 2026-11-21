@@ -15170,6 +15170,12 @@
         "kiko:flying": 1
       },
       "model": "kiko:item/mjolnir_fly"
+    },
+    {
+      "predicate": {
+        "kiko:throwing": 1
+      },
+      "model": "kiko:item/mjolnir_throwing"
     }
   ]
 }
