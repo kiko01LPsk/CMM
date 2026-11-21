@@ -124,7 +124,7 @@ public class RevolverItem extends OneHandGunItem {
 
         Vec3 muzzle = eye.add(look.scale(0.8D));
         level.sendParticles(ParticleTypes.SMOKE, muzzle.x, muzzle.y - 0.15D, muzzle.z, 4, 0.03D, 0.03D, 0.03D, 0.01D);
-        level.sendParticles(ParticleTypes.FLASH, muzzle.x, muzzle.y - 0.15D, muzzle.z, 1, 0, 0, 0, 0);
+        level.sendParticles(ParticleTypes.FLAME, muzzle.x, muzzle.y - 0.15D, muzzle.z, 6, 0.04D, 0.04D, 0.04D, 0.02D);
 
         level.playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.GENERIC_EXPLODE, SoundSource.PLAYERS, 0.5F, 2.0F);

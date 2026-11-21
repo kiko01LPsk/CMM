@@ -2,6 +2,10 @@ package net.kiko.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -48,8 +52,8 @@ public class BloodDustBlock extends Block {
     public BloodDustBlock(Properties properties) {
         super(properties);
         registerDefaultState(stateDefinition.any()
-                .setValue(NORTH, RedstoneSide.SIDE).setValue(EAST, RedstoneSide.SIDE)
-                .setValue(SOUTH, RedstoneSide.SIDE).setValue(WEST, RedstoneSide.SIDE));
+                .setValue(NORTH, RedstoneSide.NONE).setValue(EAST, RedstoneSide.NONE)
+                .setValue(SOUTH, RedstoneSide.NONE).setValue(WEST, RedstoneSide.NONE));
     }
 
     @Override
@@ -107,7 +111,9 @@ public class BloodDustBlock extends Block {
             if (found[i] != RedstoneSide.NONE) count++;
         }
         if (count == 0) {
-            for (int i = 0; i < 4; i++) found[i] = RedstoneSide.SIDE;
+            // Alone: keep the current look (dot or cross), so it can be toggled by clicking.
+            RedstoneSide keep = isCross(state) ? RedstoneSide.SIDE : RedstoneSide.NONE;
+            for (int i = 0; i < 4; i++) found[i] = keep;
         } else if (count == 1) {
             for (int i = 0; i < 4; i++) {
                 if (found[i] != RedstoneSide.NONE && found[(i + 2) % 4] == RedstoneSide.NONE) {
@@ -118,6 +124,34 @@ public class BloodDustBlock extends Block {
         }
         for (int i = 0; i < 4; i++) state = state.setValue(prop(SIDES[i]), found[i]);
         return state;
+    }
+
+    private static boolean isCross(BlockState state) {
+        return state.getValue(NORTH) == RedstoneSide.SIDE && state.getValue(EAST) == RedstoneSide.SIDE
+                && state.getValue(SOUTH) == RedstoneSide.SIDE && state.getValue(WEST) == RedstoneSide.SIDE;
+    }
+
+    private static boolean isDot(BlockState state) {
+        return state.getValue(NORTH) == RedstoneSide.NONE && state.getValue(EAST) == RedstoneSide.NONE
+                && state.getValue(SOUTH) == RedstoneSide.NONE && state.getValue(WEST) == RedstoneSide.NONE;
+    }
+
+    /** Click a dot or cross to switch between them, like redstone in newer versions. */
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+                                 InteractionHand hand, BlockHitResult hit) {
+        if (!player.getAbilities().mayBuild || !(isDot(state) || isCross(state))) {
+            return InteractionResult.PASS;
+        }
+        BlockState base = isCross(state) ? defaultBlockState()
+                : defaultBlockState().setValue(NORTH, RedstoneSide.SIDE).setValue(EAST, RedstoneSide.SIDE)
+                        .setValue(SOUTH, RedstoneSide.SIDE).setValue(WEST, RedstoneSide.SIDE);
+        BlockState next = connectionState(level, base, pos);
+        if (next != state) {
+            if (!level.isClientSide) level.setBlock(pos, next, 3);
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        return InteractionResult.PASS;
     }
 
     @Override

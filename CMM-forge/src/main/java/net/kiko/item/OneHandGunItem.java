@@ -1,6 +1,10 @@
 package net.kiko.item;
 
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import java.util.function.Consumer;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -20,7 +24,7 @@ public class OneHandGunItem extends Item {
 
     @Override
     public UseAnim getUseAnimation(ItemStack stack) {
-        return UseAnim.TOOT_HORN;
+        return UseAnim.NONE; // normal first-person view; the raised arm comes from getArmPose below
     }
 
     @Override
@@ -33,5 +37,19 @@ public class OneHandGunItem extends Item {
         ItemStack stack = player.getItemInHand(hand);
         player.startUsingItem(hand);
         return InteractionResultHolder.consume(stack);
+    }
+
+    /** Third-person arm pose while holding right-click; first person stays unchanged. */
+    @Override
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+        consumer.accept(new IClientItemExtensions() {
+            @Override
+            public HumanoidModel.ArmPose getArmPose(LivingEntity entity, InteractionHand hand, ItemStack stack) {
+                if (entity.isUsingItem() && entity.getUsedItemHand() == hand) {
+                    return HumanoidModel.ArmPose.TOOT_HORN;
+                }
+                return null;
+            }
+        });
     }
 }
