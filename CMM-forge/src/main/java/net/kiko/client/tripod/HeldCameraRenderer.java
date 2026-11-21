@@ -5,7 +5,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -33,7 +32,7 @@ public class HeldCameraRenderer extends BlockEntityWithoutLevelRenderer {
     private static final float CX = -0.75F, CY = 20.9F, CZ = -0.8F;
     /** Where the body sits in the item cube (pixels): the same spot as the small camera. */
     private static final float HX = 8.0F, HY = 4.5F, HZ = 12.0F;
-    private static final float SCALE = 0.7F;
+    private static final float SCALE = 1.2F;
 
     private List<float[]> triangles;
 
@@ -64,8 +63,6 @@ public class HeldCameraRenderer extends BlockEntityWithoutLevelRenderer {
         poseStack.pushPose();
         poseStack.translate(HX / 16.0F, HY / 16.0F, HZ / 16.0F);
         poseStack.scale(SCALE, SCALE, SCALE);
-        // the mesh looks towards -Z; the small camera looks towards +Z
-        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
         poseStack.translate(-CX / 16.0F, -CY / 16.0F, -CZ / 16.0F);
         PoseStack.Pose pose = poseStack.last();
         VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutoutNoCull(TEXTURE));

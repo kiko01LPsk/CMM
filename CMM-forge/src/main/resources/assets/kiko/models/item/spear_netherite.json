@@ -22,5 +22,13 @@
     "layer0": "kiko:item/spear_netherite"
    }
   }
- }
+ },
+ "overrides": [
+  {
+   "predicate": {
+    "kiko:throwing": 1
+   },
+   "model": "kiko:item/spear_netherite_throwing"
+  }
+ ]
 }

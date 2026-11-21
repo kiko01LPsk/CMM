@@ -1,0 +1,26 @@
+{
+ "loader": "forge:separate_transforms",
+ "base": {
+  "parent": "kiko:item/spear_iron_3d_throwing"
+ },
+ "perspectives": {
+  "gui": {
+   "parent": "item/generated",
+   "textures": {
+    "layer0": "kiko:item/spear_iron"
+   }
+  },
+  "ground": {
+   "parent": "item/generated",
+   "textures": {
+    "layer0": "kiko:item/spear_iron"
+   }
+  },
+  "fixed": {
+   "parent": "item/generated",
+   "textures": {
+    "layer0": "kiko:item/spear_iron"
+   }
+  }
+ }
+}

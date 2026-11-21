@@ -436,7 +436,6 @@
   "item.kiko.spear_gold": "Gold spear",
   "item.kiko.spear_netherite": "Netherite spear",
   "item.kiko.studio_camera": "Studio camera (handheld)",
-  "item.kiko.dollar_blank": "Blank Dollar",
   "item.kiko.dollar_one": "One Dollar",
   "item.kiko.dollar_two": "Two Dollars",
   "item.kiko.dollar_five": "Five Dollars",
@@ -450,15 +449,6 @@
   "item.kiko.cent_ten": "Dime",
   "item.kiko.cent_quarter": "Quarter",
   "item.kiko.peso": "Peso",
-  "item.kiko.ce": "Per",
-  "item.kiko.mold_blank": "Mold Blank",
-  "item.kiko.mold_one": "Mold One",
-  "item.kiko.mold_two": "Mold Two",
-  "item.kiko.mold_five": "Mold Five",
-  "item.kiko.mold_ten": "Mold Ten",
-  "item.kiko.mold_twenty": "Mold Twenty",
-  "item.kiko.mold_fifty": "Mold Fifty",
-  "item.kiko.mold_hundred": "Mold Hundred",
   "block.kiko.small_money_pile": "Small Money Pile",
   "block.kiko.large_money_pile": "Large Money Pile"
 }

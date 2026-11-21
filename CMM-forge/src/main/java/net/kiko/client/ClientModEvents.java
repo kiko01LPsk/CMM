@@ -115,6 +115,23 @@ public final class ClientModEvents {
             ItemProperties.register(ModItems.MJOLNIR.get(),
                     new ResourceLocation(KikoMod.MOD_ID, "flying"),
                     (stack, level, entity, seed) -> entity != null && MjolnirItem.isFlying(stack) ? 1.0F : 0.0F);
+            // Tridents and spears: separate model while the throw is being charged (flipped to point forward).
+            ItemProperties.register(ModItems.TRIDENT_DEFAULT.get(), new ResourceLocation(KikoMod.MOD_ID, "throwing"),
+                    (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
+            ItemProperties.register(ModItems.TRIDENT_IRON.get(), new ResourceLocation(KikoMod.MOD_ID, "throwing"),
+                    (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
+            ItemProperties.register(ModItems.TRIDENT_GOLD.get(), new ResourceLocation(KikoMod.MOD_ID, "throwing"),
+                    (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
+            ItemProperties.register(ModItems.TRIDENT_NETHERITE.get(), new ResourceLocation(KikoMod.MOD_ID, "throwing"),
+                    (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
+            ItemProperties.register(ModItems.SPEAR_DEFAULT.get(), new ResourceLocation(KikoMod.MOD_ID, "throwing"),
+                    (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
+            ItemProperties.register(ModItems.SPEAR_IRON.get(), new ResourceLocation(KikoMod.MOD_ID, "throwing"),
+                    (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
+            ItemProperties.register(ModItems.SPEAR_GOLD.get(), new ResourceLocation(KikoMod.MOD_ID, "throwing"),
+                    (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
+            ItemProperties.register(ModItems.SPEAR_NETHERITE.get(), new ResourceLocation(KikoMod.MOD_ID, "throwing"),
+                    (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
             // Captain shield: blocking pose, same as the vanilla shield.
             ItemProperties.register(ModItems.CAPTAIN_SHIELD.get(),
                     new ResourceLocation("blocking"),

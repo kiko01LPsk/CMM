@@ -22,5 +22,13 @@
     "layer0": "kiko:item/trident_default"
    }
   }
- }
+ },
+ "overrides": [
+  {
+   "predicate": {
+    "kiko:throwing": 1
+   },
+   "model": "kiko:item/trident_default_throwing"
+  }
+ ]
 }
