@@ -104,7 +104,6 @@ public class ThrownKikoTrident extends AbstractArrow {
         return this.tridentItem.copy();
     }
 
-    @Override
     public boolean isFoil() {
         return this.entityData.get(ID_FOIL);
     }
