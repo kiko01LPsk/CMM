@@ -60,10 +60,10 @@ public class ModItems {
 
     /** Prop: hold right-click to aim it in the bow pose, like the Rifle. */
     public static final RegistryObject<Item> MUSKET = ITEMS.register("musket",
-            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+            () -> new RifleItem(new Item.Properties().stacksTo(1), GunStats.MUSKET));
 
     public static final RegistryObject<Item> PISTOL = ITEMS.register("pistol",
-            () -> new OneHandGunItem(new Item.Properties().stacksTo(1)));
+            () -> new OneHandGunItem(new Item.Properties().stacksTo(1), GunStats.PISTOL));
 
     public static final RegistryObject<Item> GUITAR = ITEMS.register("guitar",
             () -> new GuitarItem(new Item.Properties().stacksTo(1)));
@@ -87,17 +87,17 @@ public class ModItems {
 
     // Items from the SCP pack (3D models, held like tools/weapons)
     public static final RegistryObject<Item> WILDWEST_RIFLE = ITEMS.register("wildwest_rifle",
-            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+            () -> new RifleItem(new Item.Properties().stacksTo(1), GunStats.RIFLE));
 
     public static final RegistryObject<Item> WILDWEST_SHOTGUN = ITEMS.register("wildwest_shotgun",
-            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+            () -> new RifleItem(new Item.Properties().stacksTo(1), GunStats.SHOTGUN));
 
-    /** Working revolver (see RevolverItem). */
+    /** Working revolver. */
     public static final RegistryObject<Item> REVOLVER = ITEMS.register("revolver",
-            () -> new RevolverItem(new Item.Properties().stacksTo(1)));
+            () -> new OneHandGunItem(new Item.Properties().stacksTo(1), GunStats.REVOLVER));
 
     public static final RegistryObject<Item> FN_P90 = ITEMS.register("fn_p90",
-            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+            () -> new RifleItem(new Item.Properties().stacksTo(1), GunStats.SMG));
 
     public static final RegistryObject<Item> BATON = ITEMS.register("baton",
             () -> new MeleeItem(new Item.Properties().stacksTo(1), 3.0, -2.0));
@@ -107,7 +107,7 @@ public class ModItems {
 
     /** Prop: hold right-click to raise it in the bow pose. Fires nothing. */
     public static final RegistryObject<Item> RIFLE = ITEMS.register("rifle",
-            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+            () -> new RifleItem(new Item.Properties().stacksTo(1), GunStats.RIFLE));
 
     public static final RegistryObject<Item> SAWTOOTH_PHONE = ITEMS.register("sawtooth_phone",
             () -> new Item(new Item.Properties().stacksTo(1)));
@@ -302,35 +302,35 @@ public class ModItems {
 
     // ── Warfare pack guns (props: hold right-click to aim, they fire nothing) ──
     public static final RegistryObject<Item> M870 = ITEMS.register("m870",
-            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+            () -> new RifleItem(new Item.Properties().stacksTo(1), GunStats.SHOTGUN));
 
     public static final RegistryObject<Item> M16 = ITEMS.register("m16",
-            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+            () -> new RifleItem(new Item.Properties().stacksTo(1), GunStats.ASSAULT));
 
     public static final RegistryObject<Item> RPG_7 = ITEMS.register("rpg_7",
-            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+            () -> new RifleItem(new Item.Properties().stacksTo(1), GunStats.ROCKET));
 
     public static final RegistryObject<Item> AKS_74U = ITEMS.register("aks_74u",
-            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+            () -> new RifleItem(new Item.Properties().stacksTo(1), GunStats.ASSAULT));
 
     public static final RegistryObject<Item> UMP = ITEMS.register("ump",
-            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+            () -> new RifleItem(new Item.Properties().stacksTo(1), GunStats.SMG));
 
     public static final RegistryObject<Item> SNIPER_RIFLE = ITEMS.register("sniper_rifle",
-            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+            () -> new RifleItem(new Item.Properties().stacksTo(1), GunStats.SNIPER));
 
     public static final RegistryObject<Item> GLOCK_17 = ITEMS.register("glock_17",
-            () -> new OneHandGunItem(new Item.Properties().stacksTo(1)));
+            () -> new OneHandGunItem(new Item.Properties().stacksTo(1), GunStats.PISTOL));
 
     public static final RegistryObject<Item> AK_47 = ITEMS.register("ak_47",
-            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+            () -> new RifleItem(new Item.Properties().stacksTo(1), GunStats.ASSAULT));
 
     public static final RegistryObject<Item> DESERT_EAGLE = ITEMS.register("desert_eagle",
-            () -> new OneHandGunItem(new Item.Properties().stacksTo(1)));
+            () -> new OneHandGunItem(new Item.Properties().stacksTo(1), GunStats.MAGNUM));
 
     /** Prop: hold right-click to aim it one-handed. Model from the Terramity mod. */
     public static final RegistryObject<Item> REQUIEM = ITEMS.register("requiem",
-            () -> new OneHandGunItem(new Item.Properties().stacksTo(1)));
+            () -> new OneHandGunItem(new Item.Properties().stacksTo(1), GunStats.MAGNUM));
 
     /** Right-click a mob to morph into it; the Reset morph key changes you back. */
     public static final RegistryObject<Item> MORPH_WAND = ITEMS.register("morph_wand",
@@ -341,13 +341,13 @@ public class ModItems {
             () -> new CardboardBoxItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> PKP_PECHENEG = ITEMS.register("pkp_pecheneg",
-            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+            () -> new RifleItem(new Item.Properties().stacksTo(1), GunStats.LMG));
 
     public static final RegistryObject<Item> MP5 = ITEMS.register("mp5",
-            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+            () -> new RifleItem(new Item.Properties().stacksTo(1), GunStats.SMG));
 
     public static final RegistryObject<Item> FN_FAL = ITEMS.register("fn_fal",
-            () -> new RifleItem(new Item.Properties().stacksTo(1)));
+            () -> new RifleItem(new Item.Properties().stacksTo(1), GunStats.ASSAULT));
 
 
     /** See MjolnirItem: only the worthy can lift it. */

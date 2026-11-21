@@ -18,8 +18,16 @@ import net.minecraft.world.level.Level;
  */
 public class RifleItem extends Item {
 
+    /** Firearm stats; null = a prop that does not shoot. */
+    private final GunStats stats;
+
     public RifleItem(Properties properties) {
+        this(properties, null);
+    }
+
+    public RifleItem(Properties properties, GunStats stats) {
         super(properties);
+        this.stats = stats;
     }
 
     @Override
@@ -36,7 +44,20 @@ public class RifleItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         player.startUsingItem(hand);
+        if (stats != null) GunLogic.onUse(level, player, stack, this, stats);
         return InteractionResultHolder.consume(stack);
+    }
+
+    @Override
+    public void onUseTick(Level level, net.minecraft.world.entity.LivingEntity entity, ItemStack stack, int remaining) {
+        if (stats != null && entity instanceof Player player) GunLogic.onUseTick(level, player, stack, this, stats);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @org.jetbrains.annotations.Nullable Level level,
+                                java.util.List<net.minecraft.network.chat.Component> tooltip,
+                                net.minecraft.world.item.TooltipFlag flag) {
+        GunLogic.addTooltip(stack, stats, tooltip);
     }
 
     /** Third-person arm pose while holding right-click; first person stays unchanged. */
