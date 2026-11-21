@@ -124,6 +124,34 @@ public class ModItems {
     public static final RegistryObject<Item> KEYBOARD = ITEMS.register("keyboard",
             () -> new KeyboardItem(new Item.Properties()));
 
+    public static final RegistryObject<Item> DOLLAR_BLANK = ITEMS.register("dollar_blank", () -> new Item(new Item.Properties().stacksTo(50)));
+    public static final RegistryObject<Item> DOLLAR_ONE = ITEMS.register("dollar_one", () -> new Item(new Item.Properties().stacksTo(50)));
+    public static final RegistryObject<Item> DOLLAR_TWO = ITEMS.register("dollar_two", () -> new Item(new Item.Properties().stacksTo(50)));
+    public static final RegistryObject<Item> DOLLAR_FIVE = ITEMS.register("dollar_five", () -> new Item(new Item.Properties().stacksTo(50)));
+    public static final RegistryObject<Item> DOLLAR_TEN = ITEMS.register("dollar_ten", () -> new Item(new Item.Properties().stacksTo(50)));
+    public static final RegistryObject<Item> DOLLAR_TWENTY = ITEMS.register("dollar_twenty", () -> new Item(new Item.Properties().stacksTo(50)));
+    public static final RegistryObject<Item> DOLLAR_FIFTY = ITEMS.register("dollar_fifty", () -> new Item(new Item.Properties().stacksTo(50)));
+    public static final RegistryObject<Item> DOLLAR_HUNDRED = ITEMS.register("dollar_hundred", () -> new Item(new Item.Properties().stacksTo(50)));
+    public static final RegistryObject<Item> DOLLAR_K = ITEMS.register("dollar_k", () -> new Item(new Item.Properties().stacksTo(50)));
+    public static final RegistryObject<Item> CENT_ONE = ITEMS.register("cent_one", () -> new Item(new Item.Properties().stacksTo(50)));
+    public static final RegistryObject<Item> CENT_FIVE = ITEMS.register("cent_five", () -> new Item(new Item.Properties().stacksTo(50)));
+    public static final RegistryObject<Item> CENT_TEN = ITEMS.register("cent_ten", () -> new Item(new Item.Properties().stacksTo(50)));
+    public static final RegistryObject<Item> CENT_QUARTER = ITEMS.register("cent_quarter", () -> new Item(new Item.Properties().stacksTo(50)));
+    public static final RegistryObject<Item> PESO = ITEMS.register("peso", () -> new Item(new Item.Properties().stacksTo(50)));
+    public static final RegistryObject<Item> CE = ITEMS.register("ce", () -> new Item(new Item.Properties().stacksTo(50)));
+    public static final RegistryObject<Item> MOLD_BLANK = ITEMS.register("mold_blank", () -> new Item(new Item.Properties().stacksTo(16)));
+    public static final RegistryObject<Item> MOLD_ONE = ITEMS.register("mold_one", () -> new MoneyMoldItem(new Item.Properties().durability(64)));
+    public static final RegistryObject<Item> MOLD_TWO = ITEMS.register("mold_two", () -> new MoneyMoldItem(new Item.Properties().durability(64)));
+    public static final RegistryObject<Item> MOLD_FIVE = ITEMS.register("mold_five", () -> new MoneyMoldItem(new Item.Properties().durability(64)));
+    public static final RegistryObject<Item> MOLD_TEN = ITEMS.register("mold_ten", () -> new MoneyMoldItem(new Item.Properties().durability(64)));
+    public static final RegistryObject<Item> MOLD_TWENTY = ITEMS.register("mold_twenty", () -> new MoneyMoldItem(new Item.Properties().durability(64)));
+    public static final RegistryObject<Item> MOLD_FIFTY = ITEMS.register("mold_fifty", () -> new MoneyMoldItem(new Item.Properties().durability(64)));
+    public static final RegistryObject<Item> MOLD_HUNDRED = ITEMS.register("mold_hundred", () -> new MoneyMoldItem(new Item.Properties().durability(64)));
+
+    /** The studio camera without its tripod, held in the hand like the small camera. */
+    public static final RegistryObject<Item> STUDIO_CAMERA = ITEMS.register("studio_camera",
+            () -> new HeldCameraItem(new Item.Properties().stacksTo(1)));
+
     /** A studio camera on a tripod, placed as an entity that can be turned. */
     public static final RegistryObject<Item> TRIPOD_CAMERA = ITEMS.register("tripod_camera",
             () -> new TripodCameraItem(new Item.Properties().stacksTo(16)));
@@ -438,6 +466,32 @@ public class ModItems {
                         output.accept(WHEELCHAIR.get());
                         output.accept(CARDBOARD_BOX.get());
                         output.accept(TRIPOD_CAMERA.get());
+                        output.accept(STUDIO_CAMERA.get());
+                        output.accept(MOLD_BLANK.get());
+                        output.accept(MOLD_ONE.get());
+                        output.accept(MOLD_TWO.get());
+                        output.accept(MOLD_FIVE.get());
+                        output.accept(MOLD_TEN.get());
+                        output.accept(MOLD_TWENTY.get());
+                        output.accept(MOLD_FIFTY.get());
+                        output.accept(MOLD_HUNDRED.get());
+                        output.accept(DOLLAR_BLANK.get());
+                        output.accept(DOLLAR_ONE.get());
+                        output.accept(DOLLAR_TWO.get());
+                        output.accept(DOLLAR_FIVE.get());
+                        output.accept(DOLLAR_TEN.get());
+                        output.accept(DOLLAR_TWENTY.get());
+                        output.accept(DOLLAR_FIFTY.get());
+                        output.accept(DOLLAR_HUNDRED.get());
+                        output.accept(DOLLAR_K.get());
+                        output.accept(CENT_ONE.get());
+                        output.accept(CENT_FIVE.get());
+                        output.accept(CENT_TEN.get());
+                        output.accept(CENT_QUARTER.get());
+                        output.accept(PESO.get());
+                        output.accept(CE.get());
+                        output.accept(net.kiko.block.ModBlocks.SMALL_MONEY_PILE.get());
+                        output.accept(net.kiko.block.ModBlocks.LARGE_MONEY_PILE.get());
                         output.accept(CAPTAIN_SHIELD.get());
                         output.accept(PLASTIC_CHAIR.get());
                         output.accept(FILM_REEL.get());

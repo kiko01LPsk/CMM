@@ -99,6 +99,12 @@ public class ModBlocks {
                     () -> BlockEntityType.Builder.of(ScpDrawersBlockEntity::new, SCP_DRAWERS.get()).build(null));
 
     // ── Mjolnir standing in the ground (no item of its own, the Mjolnir item places it) ──
+    public static final RegistryObject<Block> SMALL_MONEY_PILE = block("small_money_pile",
+            () -> new MoneyPileBlock(BlockBehaviour.Properties.of().noOcclusion().strength(2.0F).sound(SoundType.WOOL),
+                    Block.box(4, 0, 4, 12, 2.8, 12)));
+    public static final RegistryObject<Block> LARGE_MONEY_PILE = block("large_money_pile",
+            () -> new MoneyPileBlock(BlockBehaviour.Properties.of().noOcclusion().strength(5.0F).sound(SoundType.WOOL),
+                    Block.box(0.5, 0, 0.5, 15.5, 12, 15.5)));
     public static final RegistryObject<Block> MJOLNIR_BLOCK = BLOCKS.register("mjolnir_block", MjolnirBlock::new);
 
     public static final RegistryObject<BlockEntityType<MjolnirBlockEntity>> MJOLNIR_BLOCK_ENTITY =

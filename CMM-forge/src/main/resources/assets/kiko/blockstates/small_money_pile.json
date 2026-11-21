@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "kiko:block/small_money_pile",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "kiko:block/small_money_pile"
+    },
+    "facing=south": {
+      "model": "kiko:block/small_money_pile",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "kiko:block/small_money_pile",
+      "y": 270
+    }
+  }
+}
