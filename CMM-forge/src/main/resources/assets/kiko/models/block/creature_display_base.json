@@ -1,0 +1,84 @@
+{
+ "textures": {
+  "wood": "kiko:block/display_wood",
+  "trim": "kiko:block/display_gold",
+  "glass": "kiko:block/display_glass",
+  "particle": "kiko:block/display_wood"
+ },
+ "elements": [
+  {
+   "from": [
+    0,
+    0,
+    0
+   ],
+   "to": [
+    16,
+    14,
+    16
+   ],
+   "faces": {
+    "north": {
+     "texture": "#wood",
+     "cullface": "north"
+    },
+    "east": {
+     "texture": "#wood",
+     "cullface": "east"
+    },
+    "south": {
+     "texture": "#wood",
+     "cullface": "south"
+    },
+    "west": {
+     "texture": "#wood",
+     "cullface": "west"
+    },
+    "up": {
+     "texture": "#wood"
+    },
+    "down": {
+     "texture": "#wood",
+     "cullface": "down"
+    }
+   }
+  },
+  {
+   "from": [
+    0,
+    14,
+    0
+   ],
+   "to": [
+    16,
+    16,
+    16
+   ],
+   "faces": {
+    "north": {
+     "texture": "#trim",
+     "cullface": "north"
+    },
+    "east": {
+     "texture": "#trim",
+     "cullface": "east"
+    },
+    "south": {
+     "texture": "#trim",
+     "cullface": "south"
+    },
+    "west": {
+     "texture": "#trim",
+     "cullface": "west"
+    },
+    "up": {
+     "texture": "#trim"
+    },
+    "down": {
+     "texture": "#trim",
+     "cullface": "down"
+    }
+   }
+  }
+ ]
+}

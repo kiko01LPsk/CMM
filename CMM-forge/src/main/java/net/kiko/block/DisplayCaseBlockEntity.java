@@ -50,4 +50,11 @@ public class DisplayCaseBlockEntity extends BlockEntity {
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
+
+    /** Tall cases show their item in the upper block, so the render box reaches up. */
+    @Override
+    public net.minecraft.world.phys.AABB getRenderBoundingBox() {
+        return new net.minecraft.world.phys.AABB(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(),
+                worldPosition.getX() + 1, worldPosition.getY() + 2, worldPosition.getZ() + 1);
+    }
 }

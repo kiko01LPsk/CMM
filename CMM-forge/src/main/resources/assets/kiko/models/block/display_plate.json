@@ -68,6 +68,38 @@
      "texture": "#trim"
     }
    }
+  },
+  {
+   "from": [
+    3,
+    2,
+    3
+   ],
+   "to": [
+    13,
+    2.4,
+    13
+   ],
+   "faces": {
+    "north": {
+     "texture": "#base"
+    },
+    "east": {
+     "texture": "#base"
+    },
+    "south": {
+     "texture": "#base"
+    },
+    "west": {
+     "texture": "#base"
+    },
+    "up": {
+     "texture": "#base"
+    },
+    "down": {
+     "texture": "#base"
+    }
+   }
   }
  ]
 }

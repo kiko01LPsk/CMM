@@ -1,0 +1,29 @@
+{
+ "type": "minecraft:block",
+ "pools": [
+  {
+   "rolls": 1.0,
+   "bonus_rolls": 0.0,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "kiko:creature_display"
+    }
+   ],
+   "conditions": [
+    {
+     "condition": "minecraft:block_state_property",
+     "block": "kiko:creature_display",
+     "properties": {
+      "dx": "0",
+      "dz": "0",
+      "ly": "0"
+     }
+    },
+    {
+     "condition": "minecraft:survives_explosion"
+    }
+   ]
+  }
+ ]
+}

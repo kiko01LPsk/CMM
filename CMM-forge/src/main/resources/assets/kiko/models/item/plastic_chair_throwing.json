@@ -4,8 +4,8 @@
     "firstperson_righthand": {
       "rotation": [
         0,
-        135,
-        0
+        -45,
+        180
       ],
       "translation": [
         2,
@@ -21,8 +21,8 @@
     "firstperson_lefthand": {
       "rotation": [
         0,
-        135,
-        0
+        -45,
+        180
       ],
       "translation": [
         2,

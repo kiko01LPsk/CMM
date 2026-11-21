@@ -1,0 +1,49 @@
+{
+ "textures": {
+  "wood": "kiko:block/display_wood",
+  "trim": "kiko:block/display_gold",
+  "glass": "kiko:block/display_glass",
+  "particle": "kiko:block/display_wood"
+ },
+ "elements": [
+  {
+   "from": [
+    0,
+    0,
+    0
+   ],
+   "to": [
+    16,
+    16,
+    16
+   ],
+   "faces": {
+    "north": {
+     "texture": "#glass",
+     "cullface": "north"
+    },
+    "east": {
+     "texture": "#glass",
+     "cullface": "east"
+    },
+    "south": {
+     "texture": "#glass",
+     "cullface": "south"
+    },
+    "west": {
+     "texture": "#glass",
+     "cullface": "west"
+    },
+    "up": {
+     "texture": "#glass",
+     "cullface": "up"
+    },
+    "down": {
+     "texture": "#glass",
+     "cullface": "down"
+    }
+   }
+  }
+ ],
+ "render_type": "minecraft:translucent"
+}

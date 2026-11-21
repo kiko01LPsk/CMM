@@ -470,13 +470,13 @@ public class ModItems {
                         output.accept(CENT_TEN.get());
                         output.accept(CENT_QUARTER.get());
                         output.accept(PESO.get());
-                        output.accept(net.kiko.block.ModBlocks.DISPLAY_CASE_WOOD.get());
-                        output.accept(net.kiko.block.ModBlocks.DISPLAY_CASE_STONE.get());
-                        output.accept(net.kiko.block.ModBlocks.DISPLAY_CASE_GOLD.get());
-                        output.accept(net.kiko.block.ModBlocks.DISPLAY_CASE_TABLE.get());
-                        output.accept(net.kiko.block.ModBlocks.DISPLAY_CASE_COUNTER.get());
                         output.accept(net.kiko.block.ModBlocks.DISPLAY_CASE_TALL_WOOD.get());
                         output.accept(net.kiko.block.ModBlocks.DISPLAY_CASE_TALL_STONE.get());
+                        output.accept(net.kiko.block.ModBlocks.DISPLAY_CASE_TALL_GOLD.get());
+                        output.accept(net.kiko.block.ModBlocks.DISPLAY_CASE_TALL_TABLE.get());
+                        output.accept(net.kiko.block.ModBlocks.DISPLAY_CASE_TALL_COUNTER.get());
+                        output.accept(net.kiko.block.ModBlocks.ARMOR_DISPLAY.get());
+                        output.accept(net.kiko.block.ModBlocks.CREATURE_DISPLAY.get());
                         output.accept(net.kiko.block.ModBlocks.DISPLAY_PLATE.get());
                         output.accept(net.kiko.block.ModBlocks.WALL_BOOK_DISPLAY.get());
                         output.accept(net.kiko.block.ModBlocks.SMALL_MONEY_PILE.get());

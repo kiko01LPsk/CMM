@@ -56,6 +56,8 @@ public final class ClientModEvents {
         event.registerEntityRenderer(ModEntities.THROWN_CHAIR.get(), net.kiko.client.chair.ThrownChairRenderer::new);
         event.registerEntityRenderer(ModEntities.THROWN_MJOLNIR.get(), ThrownMjolnirRenderer::new);
         event.registerEntityRenderer(ModEntities.KIKO_TRIDENT.get(), net.kiko.client.trident.ThrownKikoTridentRenderer::new);
+        event.registerBlockEntityRenderer(ModBlocks.ARMOR_DISPLAY_ENTITY.get(), net.kiko.client.display.ArmorDisplayRenderer::new);
+        event.registerBlockEntityRenderer(ModBlocks.CREATURE_DISPLAY_ENTITY.get(), net.kiko.client.display.CreatureDisplayRenderer::new);
         event.registerBlockEntityRenderer(ModBlocks.DISPLAY_CASE_ENTITY.get(), net.kiko.client.display.DisplayCaseRenderer::new);
         event.registerBlockEntityRenderer(ModBlocks.MJOLNIR_BLOCK_ENTITY.get(), MjolnirBlockRenderer::new);
         event.registerBlockEntityRenderer(ModBlocks.MONITOR_ENTITY.get(), net.kiko.client.screen.MonitorRenderer::new);

@@ -451,13 +451,13 @@
   "item.kiko.peso": "Peso",
   "block.kiko.small_money_pile": "Small Money Pile",
   "block.kiko.large_money_pile": "Large Money Pile",
-  "block.kiko.display_case_wood": "Wooden display case",
-  "block.kiko.display_case_stone": "Stone display case",
-  "block.kiko.display_case_gold": "Golden display case",
-  "block.kiko.display_case_table": "Table display case",
-  "block.kiko.display_case_counter": "Counter display case",
   "block.kiko.display_case_tall_wood": "Tall wooden display case",
   "block.kiko.display_case_tall_stone": "Tall stone display case",
   "block.kiko.display_plate": "Display plate",
-  "block.kiko.wall_book_display": "Wall book display"
+  "block.kiko.wall_book_display": "Wall book display",
+  "block.kiko.display_case_tall_gold": "Tall golden display case",
+  "block.kiko.display_case_tall_table": "Tall table display case",
+  "block.kiko.display_case_tall_counter": "Tall counter display case",
+  "block.kiko.armor_display": "Armor display case",
+  "block.kiko.creature_display": "Creature display case"
 }

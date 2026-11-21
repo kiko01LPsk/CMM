@@ -1,0 +1,40 @@
+{
+ "variants": {
+  "dx=0,dz=0,ly=0": {
+   "model": "kiko:block/creature_display_base"
+  },
+  "dx=0,dz=0,ly=1": {
+   "model": "kiko:block/creature_display_glass"
+  },
+  "dx=0,dz=0,ly=2": {
+   "model": "kiko:block/creature_display_top"
+  },
+  "dx=0,dz=1,ly=0": {
+   "model": "kiko:block/creature_display_base"
+  },
+  "dx=0,dz=1,ly=1": {
+   "model": "kiko:block/creature_display_glass"
+  },
+  "dx=0,dz=1,ly=2": {
+   "model": "kiko:block/creature_display_top"
+  },
+  "dx=1,dz=0,ly=0": {
+   "model": "kiko:block/creature_display_base"
+  },
+  "dx=1,dz=0,ly=1": {
+   "model": "kiko:block/creature_display_glass"
+  },
+  "dx=1,dz=0,ly=2": {
+   "model": "kiko:block/creature_display_top"
+  },
+  "dx=1,dz=1,ly=0": {
+   "model": "kiko:block/creature_display_base"
+  },
+  "dx=1,dz=1,ly=1": {
+   "model": "kiko:block/creature_display_glass"
+  },
+  "dx=1,dz=1,ly=2": {
+   "model": "kiko:block/creature_display_top"
+  }
+ }
+}
