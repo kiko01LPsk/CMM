@@ -109,22 +109,12 @@ public class ModBlocks {
             () -> new DisplayCaseTallBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.5F).sound(SoundType.GLASS)));
     public static final RegistryObject<Block> DISPLAY_CASE_TALL_STONE = block("display_case_tall_stone",
             () -> new DisplayCaseTallBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.5F).sound(SoundType.GLASS)));
-    public static final RegistryObject<Block> DISPLAY_CASE_TALL_GOLD = block("display_case_tall_gold",
+    public static final RegistryObject<Block> DISPLAY_CASE_TALL_DARK = block("display_case_tall_dark",
             () -> new DisplayCaseTallBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.5F).sound(SoundType.GLASS)));
     public static final RegistryObject<Block> DISPLAY_CASE_TALL_TABLE = block("display_case_tall_table",
             () -> new DisplayCaseTallBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.5F).sound(SoundType.GLASS)));
     public static final RegistryObject<Block> DISPLAY_CASE_TALL_COUNTER = block("display_case_tall_counter",
             () -> new DisplayCaseTallBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.5F).sound(SoundType.GLASS)));
-    public static final RegistryObject<Block> ARMOR_DISPLAY = block("armor_display",
-            () -> new ArmorDisplayBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.5F).sound(SoundType.GLASS)));
-    public static final RegistryObject<BlockEntityType<ArmorDisplayBlockEntity>> ARMOR_DISPLAY_ENTITY =
-            BLOCK_ENTITIES.register("armor_display",
-                    () -> BlockEntityType.Builder.of(ArmorDisplayBlockEntity::new, ARMOR_DISPLAY.get()).build(null));
-    public static final RegistryObject<Block> CREATURE_DISPLAY = block("creature_display",
-            () -> new CreatureDisplayBlock(BlockBehaviour.Properties.of().noOcclusion().strength(2.0F).sound(SoundType.GLASS)));
-    public static final RegistryObject<BlockEntityType<CreatureDisplayBlockEntity>> CREATURE_DISPLAY_ENTITY =
-            BLOCK_ENTITIES.register("creature_display",
-                    () -> BlockEntityType.Builder.of(CreatureDisplayBlockEntity::new, CREATURE_DISPLAY.get()).build(null));
     public static final RegistryObject<Block> DISPLAY_PLATE = block("display_plate",
             () -> new DisplayCaseBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.0F).sound(SoundType.WOOD),
                     Block.box(1, 0, 1, 15, 2, 15), 0.45, 0.5F));
@@ -135,7 +125,7 @@ public class ModBlocks {
                     () -> BlockEntityType.Builder.of(DisplayCaseBlockEntity::new,
                             DISPLAY_CASE_TALL_WOOD.get(),
                             DISPLAY_CASE_TALL_STONE.get(),
-                            DISPLAY_CASE_TALL_GOLD.get(),
+                            DISPLAY_CASE_TALL_DARK.get(),
                             DISPLAY_CASE_TALL_TABLE.get(),
                             DISPLAY_CASE_TALL_COUNTER.get(),
                             DISPLAY_PLATE.get(),

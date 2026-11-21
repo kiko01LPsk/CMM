@@ -455,9 +455,7 @@
   "block.kiko.display_case_tall_stone": "Tall stone display case",
   "block.kiko.display_plate": "Display plate",
   "block.kiko.wall_book_display": "Wall book display",
-  "block.kiko.display_case_tall_gold": "Tall golden display case",
   "block.kiko.display_case_tall_table": "Tall table display case",
   "block.kiko.display_case_tall_counter": "Tall counter display case",
-  "block.kiko.armor_display": "Armor display case",
-  "block.kiko.creature_display": "Creature display case"
+  "block.kiko.display_case_tall_dark": "Tall dark display case"
 }

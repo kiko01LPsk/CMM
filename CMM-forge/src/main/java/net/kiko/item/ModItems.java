@@ -472,11 +472,9 @@ public class ModItems {
                         output.accept(PESO.get());
                         output.accept(net.kiko.block.ModBlocks.DISPLAY_CASE_TALL_WOOD.get());
                         output.accept(net.kiko.block.ModBlocks.DISPLAY_CASE_TALL_STONE.get());
-                        output.accept(net.kiko.block.ModBlocks.DISPLAY_CASE_TALL_GOLD.get());
+                        output.accept(net.kiko.block.ModBlocks.DISPLAY_CASE_TALL_DARK.get());
                         output.accept(net.kiko.block.ModBlocks.DISPLAY_CASE_TALL_TABLE.get());
                         output.accept(net.kiko.block.ModBlocks.DISPLAY_CASE_TALL_COUNTER.get());
-                        output.accept(net.kiko.block.ModBlocks.ARMOR_DISPLAY.get());
-                        output.accept(net.kiko.block.ModBlocks.CREATURE_DISPLAY.get());
                         output.accept(net.kiko.block.ModBlocks.DISPLAY_PLATE.get());
                         output.accept(net.kiko.block.ModBlocks.WALL_BOOK_DISPLAY.get());
                         output.accept(net.kiko.block.ModBlocks.SMALL_MONEY_PILE.get());
