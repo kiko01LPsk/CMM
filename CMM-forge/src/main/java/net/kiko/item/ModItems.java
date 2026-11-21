@@ -147,6 +147,30 @@ public class ModItems {
     public static final RegistryObject<Item> ZEME_NIKOHO = ITEMS.register("zeme_nikoho",
             () -> new Item(new Item.Properties()));
 
+    public static final RegistryObject<Item> TRIDENT_DEFAULT = ITEMS.register("trident_default",
+            () -> new net.kiko.trident.KikoTridentItem(new Item.Properties().durability(250)));
+
+    public static final RegistryObject<Item> TRIDENT_IRON = ITEMS.register("trident_iron",
+            () -> new net.kiko.trident.KikoTridentItem(new Item.Properties().durability(250)));
+
+    public static final RegistryObject<Item> TRIDENT_GOLD = ITEMS.register("trident_gold",
+            () -> new net.kiko.trident.KikoTridentItem(new Item.Properties().durability(250)));
+
+    public static final RegistryObject<Item> TRIDENT_NETHERITE = ITEMS.register("trident_netherite",
+            () -> new net.kiko.trident.KikoTridentItem(new Item.Properties().durability(250)));
+
+    public static final RegistryObject<Item> SPEAR_DEFAULT = ITEMS.register("spear_default",
+            () -> new net.kiko.trident.KikoTridentItem(new Item.Properties().durability(250)));
+
+    public static final RegistryObject<Item> SPEAR_IRON = ITEMS.register("spear_iron",
+            () -> new net.kiko.trident.KikoTridentItem(new Item.Properties().durability(250)));
+
+    public static final RegistryObject<Item> SPEAR_GOLD = ITEMS.register("spear_gold",
+            () -> new net.kiko.trident.KikoTridentItem(new Item.Properties().durability(250)));
+
+    public static final RegistryObject<Item> SPEAR_NETHERITE = ITEMS.register("spear_netherite",
+            () -> new net.kiko.trident.KikoTridentItem(new Item.Properties().durability(250)));
+
     // ── Deer (ported from the Deer Mod by Arisuwu Mei) ────────────────────────
     public static final RegistryObject<Item> VENISON = ITEMS.register("venison",
             () -> new Item(new Item.Properties().food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(3).saturationMod(0.3F).build())));
@@ -462,6 +486,14 @@ public class ModItems {
                         output.accept(FUNKY_GLASSES_IRON.get());
                         output.accept(FUNKY_GLASSES_GOLD.get());
                         output.accept(FUNKY_GLASSES_NETHERITE.get());
+                        output.accept(TRIDENT_DEFAULT.get());
+                        output.accept(TRIDENT_IRON.get());
+                        output.accept(TRIDENT_GOLD.get());
+                        output.accept(TRIDENT_NETHERITE.get());
+                        output.accept(SPEAR_DEFAULT.get());
+                        output.accept(SPEAR_IRON.get());
+                        output.accept(SPEAR_GOLD.get());
+                        output.accept(SPEAR_NETHERITE.get());
                         output.accept(MONOCLE.get());
                         output.accept(REGGAE_HAT.get());
                         output.accept(VEST.get());

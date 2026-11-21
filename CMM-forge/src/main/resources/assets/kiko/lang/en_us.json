@@ -426,5 +426,13 @@
   "item.kiko.funky_glasses_iron": "Round silver glasses",
   "item.kiko.funky_glasses_gold": "Heart glasses",
   "item.kiko.funky_glasses_netherite": "Monocle + moustache",
-  "item.kiko.monocle": "Monocle"
+  "item.kiko.monocle": "Monocle",
+  "item.kiko.trident_default": "Default trident",
+  "item.kiko.trident_iron": "Iron trident",
+  "item.kiko.trident_gold": "Gold trident",
+  "item.kiko.trident_netherite": "Netherite trident",
+  "item.kiko.spear_default": "Default spear",
+  "item.kiko.spear_iron": "Iron spear",
+  "item.kiko.spear_gold": "Gold spear",
+  "item.kiko.spear_netherite": "Netherite spear"
 }

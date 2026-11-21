@@ -75,6 +75,13 @@ public final class ModEntities {
                     .clientTrackingRange(10)
                     .build(new ResourceLocation(KikoMod.MOD_ID, "deer").toString()));
 
+    public static final RegistryObject<EntityType<net.kiko.trident.ThrownKikoTrident>> KIKO_TRIDENT = ENTITIES.register("kiko_trident",
+            () -> EntityType.Builder.<net.kiko.trident.ThrownKikoTrident>of(net.kiko.trident.ThrownKikoTrident::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(4)
+                    .updateInterval(20)
+                    .build(new ResourceLocation(KikoMod.MOD_ID, "kiko_trident").toString()));
+
     private ModEntities() {}
 
     public static void register(IEventBus eventBus) {

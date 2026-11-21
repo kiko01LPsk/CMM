@@ -1,0 +1,26 @@
+{
+ "loader": "forge:separate_transforms",
+ "base": {
+  "parent": "kiko:item/trident_netherite_3d"
+ },
+ "perspectives": {
+  "gui": {
+   "parent": "item/generated",
+   "textures": {
+    "layer0": "kiko:item/trident_netherite"
+   }
+  },
+  "ground": {
+   "parent": "item/generated",
+   "textures": {
+    "layer0": "kiko:item/trident_netherite"
+   }
+  },
+  "fixed": {
+   "parent": "item/generated",
+   "textures": {
+    "layer0": "kiko:item/trident_netherite"
+   }
+  }
+ }
+}

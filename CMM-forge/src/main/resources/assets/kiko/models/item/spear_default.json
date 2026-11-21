@@ -1,0 +1,26 @@
+{
+ "loader": "forge:separate_transforms",
+ "base": {
+  "parent": "kiko:item/spear_default_3d"
+ },
+ "perspectives": {
+  "gui": {
+   "parent": "item/generated",
+   "textures": {
+    "layer0": "kiko:item/spear_default"
+   }
+  },
+  "ground": {
+   "parent": "item/generated",
+   "textures": {
+    "layer0": "kiko:item/spear_default"
+   }
+  },
+  "fixed": {
+   "parent": "item/generated",
+   "textures": {
+    "layer0": "kiko:item/spear_default"
+   }
+  }
+ }
+}
