@@ -44,6 +44,7 @@ public class CreatureDisplayBlockEntity extends BlockEntity {
     public CompoundTag getUpdateTag() {
         CompoundTag tag = new CompoundTag();
         saveAdditional(tag);
+        tag.putBoolean("Synced", true); // an empty tag would be ignored by the client, so a removed item would stay visible
         return tag;
     }
 
