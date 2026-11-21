@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "kiko:deer_crackers"
+    },
+    "E": {
+      "item": "minecraft:egg"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "CEC",
+    "CCC"
+  ],
+  "result": {
+    "item": "kiko:deer_spawn_egg"
+  },
+  "show_notification": true
+}

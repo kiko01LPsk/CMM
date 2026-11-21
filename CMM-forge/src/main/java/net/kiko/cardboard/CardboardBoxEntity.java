@@ -94,7 +94,7 @@ public class CardboardBoxEntity extends Entity {
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (level().isClientSide || isRemoved()) return false;
-        if (source.getEntity() instanceof Player player && !hasPassenger(player)) {
+        if (source.getEntity() instanceof Player player) {
             if (!player.getAbilities().instabuild) {
                 level().addFreshEntity(new ItemEntity(level(), getX(), getY() + 0.3D, getZ(),
                         new ItemStack(ModItems.CARDBOARD_BOX.get())));

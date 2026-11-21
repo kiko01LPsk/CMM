@@ -1,0 +1,33 @@
+{
+ "textures": {
+  "cross": "kiko:block/blood_dust_cross",
+  "line": "kiko:block/blood_dust_line",
+  "particle": "kiko:block/blood_dust_cross"
+ },
+ "elements": [
+  {
+   "from": [
+    3,
+    0.25,
+    3
+   ],
+   "to": [
+    13,
+    0.25,
+    13
+   ],
+   "faces": {
+    "up": {
+     "uv": [
+      3,
+      3,
+      13,
+      13
+     ],
+     "texture": "#cross",
+     "tintindex": 0
+    }
+   }
+  }
+ ]
+}

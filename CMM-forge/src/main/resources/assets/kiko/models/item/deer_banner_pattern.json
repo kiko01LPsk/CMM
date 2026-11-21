@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/piglin_banner_pattern",
+    "layer1": "kiko:item/deer_banner_pattern_overlay"
+  }
+}

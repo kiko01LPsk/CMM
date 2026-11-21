@@ -17,6 +17,9 @@ public class ModPaintings {
     public static final DeferredRegister<PaintingVariant> PAINTINGS =
             DeferredRegister.create(ForgeRegistries.PAINTING_VARIANTS, KikoMod.MOD_ID);
 
+    public static final RegistryObject<PaintingVariant> LUVDEER =
+            PAINTINGS.register("luvdeer", () -> new PaintingVariant(16, 16));  // 1 x 1 blocks (Deer Mod)
+
     public static final RegistryObject<PaintingVariant> TV =
             PAINTINGS.register("tv", () -> new PaintingVariant(64, 32));       // 4 x 2 blocks
 

@@ -47,6 +47,7 @@ public final class ClientModEvents {
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(net.minecraft.world.entity.EntityType.PAINTING, TransparentPaintingRenderer::new);
         event.registerEntityRenderer(ModEntities.MANNEQUIN.get(), MannequinRenderer::new);
+        event.registerEntityRenderer(ModEntities.DEER.get(), net.kiko.client.deer.DeerRenderer::new);
         event.registerEntityRenderer(ModEntities.KEYBOARD.get(), KeyboardRenderer::new);
         event.registerEntityRenderer(ModEntities.TRIPOD_CAMERA.get(), net.kiko.client.tripod.TripodCameraRenderer::new);
         event.registerEntityRenderer(ModEntities.WHEELCHAIR.get(), net.kiko.client.wheelchair.WheelchairRenderer::new);
@@ -58,9 +59,23 @@ public final class ClientModEvents {
         event.registerBlockEntityRenderer(ModBlocks.MONITOR_ENTITY.get(), net.kiko.client.screen.MonitorRenderer::new);
     }
 
+    /** Blood dust textures are white and get their colour here (dark red / bright red). */
+    @SubscribeEvent
+    public static void onBlockColors(net.minecraftforge.client.event.RegisterColorHandlersEvent.Block event) {
+        event.register((state, level, pos, tint) -> 0x8A0A0A, ModBlocks.BLOOD_DUST.get());
+        event.register((state, level, pos, tint) -> 0xFF2A2A, ModBlocks.GLOWING_BLOOD_DUST.get());
+    }
+
+    @SubscribeEvent
+    public static void onItemColors(net.minecraftforge.client.event.RegisterColorHandlersEvent.Item event) {
+        event.register((stack, tint) -> 0x8A0A0A, ModBlocks.BLOOD_DUST.get().asItem());
+        event.register((stack, tint) -> 0xFF2A2A, ModBlocks.GLOWING_BLOOD_DUST.get().asItem());
+    }
+
     @SubscribeEvent
     public static void onRegisterLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         net.kiko.client.mannequin.MannequinLayers.register(event);
+        event.registerLayerDefinition(net.kiko.client.deer.DeerModel.LAYER, net.kiko.client.deer.DeerModel::createLayer);
         event.registerLayerDefinition(net.kiko.client.drone.DroneModel.LAYER, net.kiko.client.drone.DroneModel::createLayer);
     }
 

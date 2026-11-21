@@ -92,9 +92,9 @@ public class ModItems {
     public static final RegistryObject<Item> WILDWEST_SHOTGUN = ITEMS.register("wildwest_shotgun",
             () -> new RifleItem(new Item.Properties().stacksTo(1)));
 
-    /** One-handed prop: hold right-click to raise it in the horn pose. Fires nothing. */
+    /** Working revolver (see RevolverItem). */
     public static final RegistryObject<Item> REVOLVER = ITEMS.register("revolver",
-            () -> new OneHandGunItem(new Item.Properties().stacksTo(1)));
+            () -> new RevolverItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> FN_P90 = ITEMS.register("fn_p90",
             () -> new RifleItem(new Item.Properties().stacksTo(1)));
@@ -146,6 +146,36 @@ public class ModItems {
 
     public static final RegistryObject<Item> ZEME_NIKOHO = ITEMS.register("zeme_nikoho",
             () -> new Item(new Item.Properties()));
+
+    // ── Deer (ported from the Deer Mod by Arisuwu Mei) ────────────────────────
+    public static final RegistryObject<Item> VENISON = ITEMS.register("venison",
+            () -> new Item(new Item.Properties().food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(3).saturationMod(0.3F).build())));
+
+    public static final RegistryObject<Item> COOKED_VENISON = ITEMS.register("cooked_venison",
+            () -> new Item(new Item.Properties().food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(8).saturationMod(0.8F).build())));
+
+    public static final RegistryObject<Item> ANTLERS = ITEMS.register("antlers",
+            () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> DEER_CRACKERS = ITEMS.register("deer_crackers",
+            () -> new Item(new Item.Properties().food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(2).saturationMod(0.2F).build())));
+
+    public static final RegistryObject<Item> DEER_CRACKERS_ON_A_STICK = ITEMS.register("deer_crackers_on_a_stick",
+            () -> new net.kiko.deer.DeerCrackersOnAStickItem(new Item.Properties().durability(100),
+                    net.kiko.mannequin.ModEntities.DEER::get, 4));
+
+    public static final RegistryObject<Item> DEER_BANNER_PATTERN = ITEMS.register("deer_banner_pattern",
+            () -> new net.minecraft.world.item.BannerPatternItem(
+                    net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BANNER_PATTERN,
+                            new net.minecraft.resources.ResourceLocation(KikoMod.MOD_ID, "pattern_item/deer")),
+                    new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> DEER_SPAWN_EGG = ITEMS.register("deer_spawn_egg",
+            () -> new net.minecraftforge.common.ForgeSpawnEggItem(net.kiko.mannequin.ModEntities.DEER,
+                    0xB87339, 0xFAE6C8, new Item.Properties()));
+
+    public static final RegistryObject<Item> PAINTING_LUVDEER = ITEMS.register("painting_luvdeer",
+            () -> new KikoPaintingItem(ModPaintings.LUVDEER.getId(), new Item.Properties()));
 
     // ── Paintings (each places one specific painting, see ModPaintings) ───────
 
@@ -240,6 +270,21 @@ public class ModItems {
 
     public static final RegistryObject<Item> SUNGLASSES2 = ITEMS.register("sunglasses2",
             () -> new ArmorItem(ModArmorMaterials.SUNGLASSES2, ArmorItem.Type.HELMET, new Item.Properties()));
+
+    public static final RegistryObject<Item> FUNKY_GLASSES_LEATHER = ITEMS.register("funky_glasses_leather",
+            () -> new ArmorItem(ModArmorMaterials.FUNKY_LEATHER, ArmorItem.Type.HELMET, new Item.Properties()));
+
+    public static final RegistryObject<Item> FUNKY_GLASSES_IRON = ITEMS.register("funky_glasses_iron",
+            () -> new ArmorItem(ModArmorMaterials.FUNKY_IRON, ArmorItem.Type.HELMET, new Item.Properties()));
+
+    public static final RegistryObject<Item> FUNKY_GLASSES_GOLD = ITEMS.register("funky_glasses_gold",
+            () -> new ArmorItem(ModArmorMaterials.FUNKY_GOLD, ArmorItem.Type.HELMET, new Item.Properties()));
+
+    public static final RegistryObject<Item> FUNKY_GLASSES_NETHERITE = ITEMS.register("funky_glasses_netherite",
+            () -> new ArmorItem(ModArmorMaterials.FUNKY_NETHERITE, ArmorItem.Type.HELMET, new Item.Properties()));
+
+    public static final RegistryObject<Item> MONOCLE = ITEMS.register("monocle",
+            () -> new ArmorItem(ModArmorMaterials.MONOCLE, ArmorItem.Type.HELMET, new Item.Properties()));
 
     public static final RegistryObject<Item> REGGAE_HAT = ITEMS.register("reggae_hat",
             () -> new ArmorItem(ModArmorMaterials.REGGAE_HAT, ArmorItem.Type.HELMET, new Item.Properties()));
@@ -378,6 +423,14 @@ public class ModItems {
                         output.accept(PAINTING_FOAM.get().getDefaultInstance());
                         output.accept(PAINTING_FOAM_SMALL.get().getDefaultInstance());
                         output.accept(PAINTING_PATA.get().getDefaultInstance());
+                        output.accept(PAINTING_LUVDEER.get().getDefaultInstance());
+                        output.accept(DEER_SPAWN_EGG.get());
+                        output.accept(VENISON.get());
+                        output.accept(COOKED_VENISON.get());
+                        output.accept(ANTLERS.get());
+                        output.accept(DEER_CRACKERS.get());
+                        output.accept(DEER_CRACKERS_ON_A_STICK.get());
+                        output.accept(DEER_BANNER_PATTERN.get());
                         output.accept(PAINTING_KAPPER.get().getDefaultInstance());
                         output.accept(PAINTING_CAM.get().getDefaultInstance());
                         output.accept(PAINTING_OLD_LOGO.get().getDefaultInstance());
@@ -405,6 +458,11 @@ public class ModItems {
                         output.accept(SONIC_SUNGLASSES.get());
                         output.accept(LOKI_CROWN.get());
                         output.accept(DRONE.get());
+                        output.accept(FUNKY_GLASSES_LEATHER.get());
+                        output.accept(FUNKY_GLASSES_IRON.get());
+                        output.accept(FUNKY_GLASSES_GOLD.get());
+                        output.accept(FUNKY_GLASSES_NETHERITE.get());
+                        output.accept(MONOCLE.get());
                         output.accept(REGGAE_HAT.get());
                         output.accept(VEST.get());
                         output.accept(ZAKAROVA_HELMA.get());

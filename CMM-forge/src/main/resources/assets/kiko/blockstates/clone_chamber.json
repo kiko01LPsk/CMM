@@ -1,0 +1,238 @@
+{
+ "variants": {
+  "facing=north,part=lower,stage=0": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=north,part=upper,stage=0": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=north,part=middle,stage=0": {
+   "model": "kiko:block/clone_chamber_0"
+  },
+  "facing=north,part=lower,stage=1": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=north,part=upper,stage=1": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=north,part=middle,stage=1": {
+   "model": "kiko:block/clone_chamber_1"
+  },
+  "facing=north,part=lower,stage=2": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=north,part=upper,stage=2": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=north,part=middle,stage=2": {
+   "model": "kiko:block/clone_chamber_2"
+  },
+  "facing=north,part=lower,stage=3": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=north,part=upper,stage=3": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=north,part=middle,stage=3": {
+   "model": "kiko:block/clone_chamber_3"
+  },
+  "facing=north,part=lower,stage=4": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=north,part=upper,stage=4": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=north,part=middle,stage=4": {
+   "model": "kiko:block/clone_chamber_4"
+  },
+  "facing=north,part=lower,stage=5": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=north,part=upper,stage=5": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=north,part=middle,stage=5": {
+   "model": "kiko:block/clone_chamber_5"
+  },
+  "facing=east,part=lower,stage=0": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=east,part=upper,stage=0": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=east,part=middle,stage=0": {
+   "model": "kiko:block/clone_chamber_0",
+   "y": 90
+  },
+  "facing=east,part=lower,stage=1": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=east,part=upper,stage=1": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=east,part=middle,stage=1": {
+   "model": "kiko:block/clone_chamber_1",
+   "y": 90
+  },
+  "facing=east,part=lower,stage=2": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=east,part=upper,stage=2": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=east,part=middle,stage=2": {
+   "model": "kiko:block/clone_chamber_2",
+   "y": 90
+  },
+  "facing=east,part=lower,stage=3": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=east,part=upper,stage=3": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=east,part=middle,stage=3": {
+   "model": "kiko:block/clone_chamber_3",
+   "y": 90
+  },
+  "facing=east,part=lower,stage=4": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=east,part=upper,stage=4": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=east,part=middle,stage=4": {
+   "model": "kiko:block/clone_chamber_4",
+   "y": 90
+  },
+  "facing=east,part=lower,stage=5": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=east,part=upper,stage=5": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=east,part=middle,stage=5": {
+   "model": "kiko:block/clone_chamber_5",
+   "y": 90
+  },
+  "facing=south,part=lower,stage=0": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=south,part=upper,stage=0": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=south,part=middle,stage=0": {
+   "model": "kiko:block/clone_chamber_0",
+   "y": 180
+  },
+  "facing=south,part=lower,stage=1": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=south,part=upper,stage=1": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=south,part=middle,stage=1": {
+   "model": "kiko:block/clone_chamber_1",
+   "y": 180
+  },
+  "facing=south,part=lower,stage=2": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=south,part=upper,stage=2": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=south,part=middle,stage=2": {
+   "model": "kiko:block/clone_chamber_2",
+   "y": 180
+  },
+  "facing=south,part=lower,stage=3": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=south,part=upper,stage=3": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=south,part=middle,stage=3": {
+   "model": "kiko:block/clone_chamber_3",
+   "y": 180
+  },
+  "facing=south,part=lower,stage=4": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=south,part=upper,stage=4": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=south,part=middle,stage=4": {
+   "model": "kiko:block/clone_chamber_4",
+   "y": 180
+  },
+  "facing=south,part=lower,stage=5": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=south,part=upper,stage=5": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=south,part=middle,stage=5": {
+   "model": "kiko:block/clone_chamber_5",
+   "y": 180
+  },
+  "facing=west,part=lower,stage=0": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=west,part=upper,stage=0": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=west,part=middle,stage=0": {
+   "model": "kiko:block/clone_chamber_0",
+   "y": 270
+  },
+  "facing=west,part=lower,stage=1": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=west,part=upper,stage=1": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=west,part=middle,stage=1": {
+   "model": "kiko:block/clone_chamber_1",
+   "y": 270
+  },
+  "facing=west,part=lower,stage=2": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=west,part=upper,stage=2": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=west,part=middle,stage=2": {
+   "model": "kiko:block/clone_chamber_2",
+   "y": 270
+  },
+  "facing=west,part=lower,stage=3": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=west,part=upper,stage=3": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=west,part=middle,stage=3": {
+   "model": "kiko:block/clone_chamber_3",
+   "y": 270
+  },
+  "facing=west,part=lower,stage=4": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=west,part=upper,stage=4": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=west,part=middle,stage=4": {
+   "model": "kiko:block/clone_chamber_4",
+   "y": 270
+  },
+  "facing=west,part=lower,stage=5": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=west,part=upper,stage=5": {
+   "model": "kiko:block/clone_chamber_invisible"
+  },
+  "facing=west,part=middle,stage=5": {
+   "model": "kiko:block/clone_chamber_5",
+   "y": 270
+  }
+ }
+}

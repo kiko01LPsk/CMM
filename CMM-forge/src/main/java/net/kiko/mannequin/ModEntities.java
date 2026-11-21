@@ -69,6 +69,12 @@ public final class ModEntities {
                     .updateInterval(2)
                     .build(new ResourceLocation(KikoMod.MOD_ID, "cardboard_box_car").toString()));
 
+    public static final RegistryObject<EntityType<net.kiko.deer.DeerEntity>> DEER = ENTITIES.register("deer",
+            () -> EntityType.Builder.<net.kiko.deer.DeerEntity>of(net.kiko.deer.DeerEntity::new, MobCategory.CREATURE)
+                    .sized(0.9F, 1.5F)
+                    .clientTrackingRange(10)
+                    .build(new ResourceLocation(KikoMod.MOD_ID, "deer").toString()));
+
     private ModEntities() {}
 
     public static void register(IEventBus eventBus) {

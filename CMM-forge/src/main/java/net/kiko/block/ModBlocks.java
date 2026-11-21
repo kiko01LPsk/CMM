@@ -200,8 +200,23 @@ public class ModBlocks {
             () -> new CardboardPropBlock(cardboard(), 2, 0, 0, 14, 8, 16));
     public static final RegistryObject<Block> CARDBOARD_BOX_STACK_1 = block("cardboard_box_stack_1",
             () -> new CardboardPropBlock(cardboard(), 0, 0, 0, 16, 24, 16));
+    /** 3-block-tall clone chamber with 6 stages (model from the Desolation pack). */
+    public static final RegistryObject<Block> CLONE_CHAMBER = block("clone_chamber",
+            () -> new CloneChamberBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL).strength(2.0F, 6.0F).sound(SoundType.GLASS).noOcclusion()));
+
     public static final RegistryObject<Block> CARDBOARD_BOX_STACK_2 = block("cardboard_box_stack_2",
             () -> new CardboardPropBlock(cardboard(), 0, 0, 0, 16, 32, 16));
+
+    // ── Blood dust: lays like redstone wire but is purely decorative (no signal) ──
+    public static final RegistryObject<Block> BLOOD_DUST = block("blood_dust",
+            () -> new BloodDustBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED)
+                    .noCollission().noOcclusion().instabreak().sound(SoundType.WOOL)),
+            b -> new net.kiko.item.LoreBlockItem(b, new Item.Properties(), "LostFlash Production"));
+    public static final RegistryObject<Block> GLOWING_BLOOD_DUST = block("glowing_blood_dust",
+            () -> new BloodDustBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED)
+                    .noCollission().noOcclusion().instabreak().sound(SoundType.WOOL).lightLevel(s -> 7)),
+            b -> new net.kiko.item.LoreBlockItem(b, new Item.Properties(), "LostFlash Production"));
 
     // ── Monitor: joins with its neighbours into one big screen that plays a link ──
     public static final RegistryObject<Block> MONITOR = block("monitor",

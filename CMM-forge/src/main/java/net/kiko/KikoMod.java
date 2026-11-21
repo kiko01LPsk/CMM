@@ -27,6 +27,7 @@ public class KikoMod {
         ModPaintings.register(modEventBus);
         ModSounds.register(modEventBus);
         ModEntities.register(modEventBus);
+        net.kiko.deer.ModDeer.register(modEventBus);
         modEventBus.addListener(this::commonSetup);
 
         LOGGER.info("Kiko mod initialized!");
