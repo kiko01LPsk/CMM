@@ -199,6 +199,12 @@ public class ModItems {
     public static final RegistryObject<Item> ANTLERS = ITEMS.register("antlers",
             () -> new Item(new Item.Properties()));
 
+    public static final RegistryObject<Item> WHITE_ENERGY_DRINK = ITEMS.register("white_energy_drink",
+            () -> new EnergyDrinkItem(new Item.Properties().stacksTo(16).food(new net.minecraft.world.food.FoodProperties.Builder()
+                    .nutrition(1).saturationMod(0.1F).alwaysEat()
+                    .effect(() -> new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.MOVEMENT_SPEED, 1200, 1), 1.0F)
+                    .effect(() -> new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.DIG_SPEED, 1200, 0), 1.0F)
+                    .build())));
     public static final RegistryObject<Item> DEER_CRACKERS = ITEMS.register("deer_crackers",
             () -> new Item(new Item.Properties().food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(2).saturationMod(0.2F).build())));
 
@@ -470,6 +476,7 @@ public class ModItems {
                         output.accept(CENT_TEN.get());
                         output.accept(CENT_QUARTER.get());
                         output.accept(PESO.get());
+                        output.accept(net.kiko.block.ModBlocks.ORANGE_PORTAL.get());
                         output.accept(net.kiko.block.ModBlocks.DISPLAY_CASE_TALL_WOOD.get());
                         output.accept(net.kiko.block.ModBlocks.DISPLAY_CASE_TALL_STONE.get());
                         output.accept(net.kiko.block.ModBlocks.DISPLAY_CASE_TALL_DARK.get());
@@ -494,6 +501,7 @@ public class ModItems {
                         output.accept(COOKED_VENISON.get());
                         output.accept(ANTLERS.get());
                         output.accept(DEER_CRACKERS.get());
+                        output.accept(WHITE_ENERGY_DRINK.get());
                         output.accept(DEER_CRACKERS_ON_A_STICK.get());
                         output.accept(DEER_BANNER_PATTERN.get());
                         output.accept(PAINTING_KAPPER.get().getDefaultInstance());
