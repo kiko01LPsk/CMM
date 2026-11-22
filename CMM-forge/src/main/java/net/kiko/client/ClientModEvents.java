@@ -106,6 +106,8 @@ public final class ClientModEvents {
                     new ResourceLocation(KikoMod.MOD_ID, "mode"),
                     (stack, level, entity, seed) -> (float) SonicScrewdriverItem.getMode(stack).ordinal());
             // Mjolnir: 12 spin frames while spinning in the hand, one pose while flying (see models/item/mjolnir.json).
+            ItemProperties.register(ModItems.GODSPEAR.get(), new ResourceLocation(KikoMod.MOD_ID, "throwing"),
+                    (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
             ItemProperties.register(ModItems.MJOLNIR.get(),
                     new ResourceLocation(KikoMod.MOD_ID, "spin"),
                     (stack, level, entity, seed) -> {

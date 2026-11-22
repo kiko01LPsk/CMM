@@ -189,6 +189,9 @@ public class ModItems {
     public static final RegistryObject<Item> SPEAR_NETHERITE = ITEMS.register("spear_netherite",
             () -> new net.kiko.trident.KikoTridentItem(new Item.Properties().durability(250)));
 
+    public static final RegistryObject<Item> GODSPEAR = ITEMS.register("godspear",
+            () -> new net.kiko.trident.GodspearItem(new Item.Properties().stacksTo(1).rarity(net.minecraft.world.item.Rarity.EPIC).fireResistant()));
+
     // ── Deer (ported from the Deer Mod by Arisuwu Mei) ────────────────────────
     public static final RegistryObject<Item> VENISON = ITEMS.register("venison",
             () -> new Item(new Item.Properties().food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(3).saturationMod(0.3F).build())));
@@ -542,6 +545,7 @@ public class ModItems {
                         output.accept(SPEAR_DEFAULT.get());
                         output.accept(SPEAR_IRON.get());
                         output.accept(SPEAR_GOLD.get());
+                        output.accept(GODSPEAR.get());
                         output.accept(SPEAR_NETHERITE.get());
                         output.accept(MONOCLE.get());
                         output.accept(REGGAE_HAT.get());

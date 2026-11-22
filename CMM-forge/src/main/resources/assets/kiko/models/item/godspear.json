@@ -1,0 +1,34 @@
+{
+ "loader": "forge:separate_transforms",
+ "base": {
+  "parent": "kiko:item/godspear_3d"
+ },
+ "perspectives": {
+  "gui": {
+   "parent": "item/generated",
+   "textures": {
+    "layer0": "kiko:item/godspear"
+   }
+  },
+  "ground": {
+   "parent": "item/generated",
+   "textures": {
+    "layer0": "kiko:item/godspear"
+   }
+  },
+  "fixed": {
+   "parent": "item/generated",
+   "textures": {
+    "layer0": "kiko:item/godspear"
+   }
+  }
+ },
+ "overrides": [
+  {
+   "predicate": {
+    "kiko:throwing": 1
+   },
+   "model": "kiko:item/godspear_throwing"
+  }
+ ]
+}

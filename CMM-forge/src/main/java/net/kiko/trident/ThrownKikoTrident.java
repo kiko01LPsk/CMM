@@ -42,7 +42,9 @@ public class ThrownKikoTrident extends AbstractArrow {
     public ThrownKikoTrident(Level level, LivingEntity owner, ItemStack stack) {
         super(ModEntities.KIKO_TRIDENT.get(), owner, level);
         this.tridentItem = stack.copy();
-        this.entityData.set(ID_LOYALTY, (byte) EnchantmentHelper.getLoyalty(stack));
+        int loyalty = EnchantmentHelper.getLoyalty(stack);
+        if (stack.getItem() instanceof GodspearItem) loyalty = Math.max(loyalty, GodspearItem.LOYALTY); // always returns
+        this.entityData.set(ID_LOYALTY, (byte) loyalty);
         this.entityData.set(ID_FOIL, stack.hasFoil());
         this.entityData.set(ID_STACK, stack.copy());
     }
@@ -116,7 +118,7 @@ public class ThrownKikoTrident extends AbstractArrow {
     @Override
     protected void onHitEntity(EntityHitResult result) {
         Entity target = result.getEntity();
-        float damage = 8.0F;
+        float damage = this.tridentItem.getItem() instanceof GodspearItem ? GodspearItem.THROWN_DAMAGE : 8.0F;
         if (target instanceof LivingEntity living) {
             damage += EnchantmentHelper.getDamageBonus(this.tridentItem, living.getMobType());
         }
