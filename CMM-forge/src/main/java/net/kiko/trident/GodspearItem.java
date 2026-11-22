@@ -2,7 +2,13 @@ package net.kiko.trident;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -30,5 +36,19 @@ public class GodspearItem extends KikoTridentItem {
     @Override
     public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot slot) {
         return slot == EquipmentSlot.MAINHAND ? attributes : super.getDefaultAttributeModifiers(slot);
+    }
+
+    /**
+     * The vanilla trident refuses to be thrown once its damage reaches "max damage minus one", which is always true
+     * for an item without durability. The Godspear never breaks, so it starts the throw itself.
+     */
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        if (EnchantmentHelper.getRiptide(stack) > 0 && !player.isInWaterOrRain()) {
+            return InteractionResultHolder.fail(stack);
+        }
+        player.startUsingItem(hand);
+        return InteractionResultHolder.consume(stack);
     }
 }
