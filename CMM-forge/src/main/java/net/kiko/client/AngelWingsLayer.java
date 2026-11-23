@@ -18,6 +18,12 @@ public class AngelWingsLayer<T extends LivingEntity, M extends EntityModel<T>> e
         super(parent, models);
     }
 
+    /** The vanilla layer only draws for the real elytra, so the wings have to be allowed here. */
+    @Override
+    public boolean shouldRender(ItemStack stack, T entity) {
+        return stack.getItem() instanceof AngelWingsItem || super.shouldRender(stack, entity);
+    }
+
     @Override
     public ResourceLocation getElytraTexture(ItemStack stack, T entity) {
         if (stack.getItem() instanceof AngelWingsItem) return TEXTURE;
