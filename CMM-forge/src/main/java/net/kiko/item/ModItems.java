@@ -345,6 +345,15 @@ public class ModItems {
             () -> new net.minecraft.world.item.SwordItem(net.minecraft.world.item.Tiers.NETHERITE, 3, -2.4F,
                     new Item.Properties().fireResistant()));
 
+    public static final RegistryObject<Item> PIPE_WRENCH = ITEMS.register("pipe_wrench",
+            () -> new net.minecraft.world.item.SwordItem(net.minecraft.world.item.Tiers.STONE, 3, -2.4F, new Item.Properties()));
+    public static final RegistryObject<Item> SLEDGEHAMMER = ITEMS.register("sledgehammer",
+            () -> new net.minecraft.world.item.SwordItem(net.minecraft.world.item.Tiers.IRON, 3, -2.4F, new Item.Properties()));
+    public static final RegistryObject<Item> FIRE_AXE = ITEMS.register("fire_axe",
+            () -> new net.minecraft.world.item.AxeItem(net.minecraft.world.item.Tiers.GOLD, 6.0F, -3.0F, new Item.Properties()));
+    public static final RegistryObject<Item> CIRCULAR_SAW_AXE = ITEMS.register("circular_saw_axe",
+            () -> new net.minecraft.world.item.AxeItem(net.minecraft.world.item.Tiers.IRON, 5.0F, -3.1F, new Item.Properties()));
+
     public static final RegistryObject<Item> MOUSE_EARS = ITEMS.register("mouse_ears",
             () -> new MouseEarsItem(new Item.Properties()));
     public static final RegistryObject<Item> MONOCLE = ITEMS.register("monocle",
@@ -561,6 +570,10 @@ public class ModItems {
                         output.accept(SPEAR_NETHERITE.get());
                         output.accept(MONOCLE.get());
                         output.accept(MOUSE_EARS.get());
+                        output.accept(PIPE_WRENCH.get());
+                        output.accept(SLEDGEHAMMER.get());
+                        output.accept(FIRE_AXE.get());
+                        output.accept(CIRCULAR_SAW_AXE.get());
                         output.accept(COMPASS.get());
                         output.accept(HEART_OF_THE_SEA.get());
                         output.accept(NETHERITE_SWORD.get());
