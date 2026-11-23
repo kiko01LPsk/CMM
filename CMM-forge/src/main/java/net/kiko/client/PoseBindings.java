@@ -70,10 +70,21 @@ public final class PoseBindings {
     /** Forget the local pose (used when leaving a world). Does not send anything. */
     public static void clear() {
         active = null;
+        aimPose = PoseState.NONE;
+    }
+
+    /** Set by the sniper rifle while aiming: the main arm is raised in the bow pose (unless a pose key is active). */
+    private static PoseState aimPose = PoseState.NONE;
+
+    public static void setAimPose(PoseState pose) {
+        if (aimPose.equals(pose)) return;
+        aimPose = pose;
+        ModNetwork.CHANNEL.sendToServer(new PoseC2SPacket(localState()));
     }
 
     public static PoseState localState() {
-        return active == null ? PoseState.NONE : new PoseState(active.right(), active.left());
+        if (active != null) return new PoseState(active.right(), active.left());
+        return aimPose;
     }
 
     public static ArmPose toArmPose(PoseKind kind) {

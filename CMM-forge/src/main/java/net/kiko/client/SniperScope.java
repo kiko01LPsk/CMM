@@ -42,6 +42,12 @@ public final class SniperScope {
             if (mc.screen == null && holdingSniper(mc)) aiming = !aiming;
         }
         if (!holdingSniper(mc) || mc.screen != null) aiming = false;
+        if (mc.player != null) {
+            boolean left = mc.player.getMainArm() == net.minecraft.world.entity.HumanoidArm.LEFT;
+            PoseBindings.setAimPose(!aiming ? net.kiko.pose.PoseState.NONE
+                    : left ? new net.kiko.pose.PoseState(net.kiko.pose.PoseKind.NONE, net.kiko.pose.PoseKind.BOW)
+                           : new net.kiko.pose.PoseState(net.kiko.pose.PoseKind.BOW, net.kiko.pose.PoseKind.NONE));
+        }
         float target = aiming ? 1.0F : 0.0F;
         amount += (target - amount) * 0.35F;
         if (Math.abs(target - amount) < 0.01F) amount = target;
