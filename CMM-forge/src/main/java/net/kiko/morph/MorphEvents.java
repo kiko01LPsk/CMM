@@ -25,10 +25,11 @@ public final class MorphEvents {
         return player.getPersistentData().getString(TAG);
     }
 
-    public static void set(ServerPlayer player, EntityType<?> type) {
-        var key = ForgeRegistries.ENTITY_TYPES.getKey(type);
+    /** A baby target is stored as "id#baby" so the morph is drawn as the baby variant. */
+    public static void set(ServerPlayer player, net.minecraft.world.entity.LivingEntity target) {
+        var key = ForgeRegistries.ENTITY_TYPES.getKey(target.getType());
         if (key == null) return;
-        apply(player, key.toString());
+        apply(player, key + (target.isBaby() ? "#baby" : ""));
     }
 
     public static void clear(ServerPlayer player) {
@@ -52,7 +53,7 @@ public final class MorphEvents {
         if (event.getTarget() instanceof net.minecraft.world.entity.player.Player
                 || !(event.getTarget() instanceof net.minecraft.world.entity.LivingEntity target)) return;
         if (event.getEntity() instanceof ServerPlayer sp) {
-            set(sp, target.getType());
+            set(sp, target);
             sp.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.kiko.morphed",
                     target.getType().getDescription()), true);
             sp.level().playSound(null, sp.blockPosition(), net.minecraft.sounds.SoundEvents.ENCHANTMENT_TABLE_USE,

@@ -87,11 +87,27 @@ public final class ClientModEvents {
     public static void onAddLayers(EntityRenderersEvent.AddLayers event) {
         for (String skin : event.getSkins()) {
             if (event.getSkin(skin) instanceof PlayerRenderer renderer) {
+                swapElytraLayer(renderer, event.getEntityModels());
                 renderer.addLayer(new WalkmanLayer(renderer));
                 renderer.addLayer(new net.kiko.client.guitar.GuitarBackLayer(renderer));
                 renderer.addLayer(new net.kiko.client.shield.ShieldBackLayer(renderer));
                 renderer.addLayer(new SunglassesLensLayer<>(renderer, event.getEntityModels()));
             }
+        }
+    }
+
+    /** Replaces the vanilla elytra layer with one that can show the Angel wings texture. */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private static void swapElytraLayer(PlayerRenderer renderer, net.minecraft.client.model.geom.EntityModelSet models) {
+        try {
+            java.util.List<net.minecraft.client.renderer.entity.layers.RenderLayer> layers =
+                    net.minecraftforge.fml.util.ObfuscationReflectionHelper.getPrivateValue(
+                            net.minecraft.client.renderer.entity.LivingEntityRenderer.class, renderer, "f_115291_");
+            if (layers == null) return;
+            layers.removeIf(l -> l.getClass() == net.minecraft.client.renderer.entity.layers.ElytraLayer.class);
+            renderer.addLayer(new AngelWingsLayer(renderer, models));
+        } catch (Throwable t) {
+            KikoMod.LOGGER.warn("Could not swap the elytra layer, Angel wings will use the plain elytra texture", t);
         }
     }
 

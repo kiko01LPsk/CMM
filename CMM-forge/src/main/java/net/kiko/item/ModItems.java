@@ -334,6 +334,9 @@ public class ModItems {
     public static final RegistryObject<Item> FUNKY_GLASSES_NETHERITE = ITEMS.register("funky_glasses_netherite",
             () -> new ArmorItem(ModArmorMaterials.FUNKY_NETHERITE, ArmorItem.Type.HELMET, new Item.Properties()));
 
+    public static final RegistryObject<Item> ANGEL_WINGS = ITEMS.register("angel_wings",
+            () -> new AngelWingsItem(new Item.Properties().stacksTo(1).rarity(net.minecraft.world.item.Rarity.EPIC)));
+
     public static final RegistryObject<Item> MOUSE_EARS = ITEMS.register("mouse_ears",
             () -> new MouseEarsItem(new Item.Properties()));
     public static final RegistryObject<Item> MONOCLE = ITEMS.register("monocle",
@@ -550,6 +553,7 @@ public class ModItems {
                         output.accept(SPEAR_NETHERITE.get());
                         output.accept(MONOCLE.get());
                         output.accept(MOUSE_EARS.get());
+                        output.accept(ANGEL_WINGS.get());
                         output.accept(REGGAE_HAT.get());
                         output.accept(VEST.get());
                         output.accept(ZAKAROVA_HELMA.get());

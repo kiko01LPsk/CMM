@@ -26,7 +26,7 @@ public class MorphWandItem extends Item {
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
         if (target instanceof Player) return InteractionResult.PASS;
         if (player instanceof ServerPlayer sp) {
-            MorphEvents.set(sp, target.getType());
+            MorphEvents.set(sp, target);
             sp.displayClientMessage(Component.translatable("message.kiko.morphed", target.getType().getDescription()), true);
             sp.level().playSound(null, sp.blockPosition(), net.minecraft.sounds.SoundEvents.ENCHANTMENT_TABLE_USE,
                     net.minecraft.sounds.SoundSource.PLAYERS, 1.0F, 1.2F);

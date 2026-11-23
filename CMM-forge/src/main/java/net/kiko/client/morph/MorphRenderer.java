@@ -48,9 +48,14 @@ public final class MorphRenderer {
         d = new Dummy();
         d.id = id;
         try {
-            EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(id));
+            boolean baby = id.endsWith("#baby");
+            String plain = baby ? id.substring(0, id.length() - 5) : id;
+            EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(plain));
             Entity e = type == null ? null : type.create(player.level());
-            if (e instanceof LivingEntity living) d.entity = living;
+            if (e instanceof LivingEntity living) {
+                d.entity = living;
+                if (baby && living instanceof net.minecraft.world.entity.Mob mob) mob.setBaby(true);
+            }
         } catch (Throwable t) {
             d.entity = null;
         }
