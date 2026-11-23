@@ -26,9 +26,9 @@ import net.minecraftforge.network.NetworkHooks;
 /** A cardboard box you can sit in and drive like a car: W/S accelerate and reverse, A/D steer, sneak to get out. */
 public class CardboardBoxEntity extends Entity {
 
-    private static final double MAX_FORWARD = 0.58D;
-    private static final double MAX_BACKWARD = 0.14D;
-    private static final double ACCEL = 0.025D;
+    private static final double MAX_FORWARD = 0.78D;
+    private static final double MAX_BACKWARD = 0.2D;
+    private static final double ACCEL = 0.035D;
     private static final double BRAKE = 0.03D;
     private static final float TURN = 5.0F;
 
