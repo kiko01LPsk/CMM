@@ -1,9 +1,9 @@
 {
  "textures": {
-  "base": "kiko:block/display_wood",
-  "trim": "kiko:block/display_gold",
-  "glass": "kiko:block/display_glass",
-  "particle": "kiko:block/display_wood"
+  "base": "minecraft:block/spruce_planks",
+  "trim": "minecraft:block/gold_block",
+  "glass": "minecraft:block/glass",
+  "particle": "minecraft:block/spruce_planks"
  },
  "elements": [
   {

@@ -1,9 +1,9 @@
 {
  "textures": {
-  "base": "kiko:block/display_stone",
-  "trim": "kiko:block/display_stone_dark",
-  "glass": "kiko:block/display_glass",
-  "particle": "kiko:block/display_stone"
+  "base": "minecraft:block/stone_bricks",
+  "trim": "minecraft:block/deepslate_bricks",
+  "glass": "minecraft:block/glass",
+  "particle": "minecraft:block/stone_bricks"
  },
  "elements": [
   {

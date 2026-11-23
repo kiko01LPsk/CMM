@@ -1,9 +1,9 @@
 {
  "textures": {
-  "base": "kiko:block/display_dark",
-  "trim": "kiko:block/display_silver",
-  "glass": "kiko:block/display_glass",
-  "particle": "kiko:block/display_dark"
+  "base": "minecraft:block/dark_oak_planks",
+  "trim": "minecraft:block/iron_block",
+  "glass": "minecraft:block/glass",
+  "particle": "minecraft:block/dark_oak_planks"
  },
  "render_type": "minecraft:translucent",
  "elements": [

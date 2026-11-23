@@ -1,8 +1,8 @@
 {
  "textures": {
-  "base": "kiko:block/display_plate_wood",
-  "trim": "kiko:block/display_plate_gold",
-  "particle": "kiko:block/display_plate_wood"
+  "base": "minecraft:block/spruce_planks",
+  "trim": "minecraft:block/gold_block",
+  "particle": "minecraft:block/spruce_planks"
  },
  "elements": [
   {
