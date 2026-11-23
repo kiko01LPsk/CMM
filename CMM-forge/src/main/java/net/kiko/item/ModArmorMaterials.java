@@ -18,6 +18,7 @@ public enum ModArmorMaterials implements ArmorMaterial {
     FUNKY_IRON("kiko_funky_iron", 5, new int[]{1, 1, 1, 1}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0f, 0.0f),
     FUNKY_GOLD("kiko_funky_gold", 5, new int[]{1, 1, 1, 1}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0f, 0.0f),
     FUNKY_NETHERITE("kiko_funky_netherite", 5, new int[]{1, 1, 1, 1}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0f, 0.0f),
+    MOUSE_EARS("kiko_mouse_ears", 5, new int[]{0, 0, 0, 0}, 0, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0f, 0.0f),
     MONOCLE("kiko_monocle", 5, new int[]{1, 1, 1, 1}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0f, 0.0f),
     REGGAE_HAT("kiko_reggae_hat", 5,  new int[]{1, 1, 1, 1}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0f, 0.0f),
     VEST("kiko_vest",             8,  new int[]{1, 3, 5, 1},  8, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0f, 0.0f),

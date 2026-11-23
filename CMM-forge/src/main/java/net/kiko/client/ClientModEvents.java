@@ -77,6 +77,7 @@ public final class ClientModEvents {
     @SubscribeEvent
     public static void onRegisterLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         net.kiko.client.mannequin.MannequinLayers.register(event);
+        event.registerLayerDefinition(net.kiko.client.hat.MouseEarsModel.LAYER, net.kiko.client.hat.MouseEarsModel::createLayer);
         event.registerLayerDefinition(net.kiko.client.deer.DeerModel.LAYER, net.kiko.client.deer.DeerModel::createLayer);
         event.registerLayerDefinition(net.kiko.client.drone.DroneModel.LAYER, net.kiko.client.drone.DroneModel::createLayer);
     }

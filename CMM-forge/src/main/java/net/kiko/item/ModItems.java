@@ -334,6 +334,8 @@ public class ModItems {
     public static final RegistryObject<Item> FUNKY_GLASSES_NETHERITE = ITEMS.register("funky_glasses_netherite",
             () -> new ArmorItem(ModArmorMaterials.FUNKY_NETHERITE, ArmorItem.Type.HELMET, new Item.Properties()));
 
+    public static final RegistryObject<Item> MOUSE_EARS = ITEMS.register("mouse_ears",
+            () -> new MouseEarsItem(new Item.Properties()));
     public static final RegistryObject<Item> MONOCLE = ITEMS.register("monocle",
             () -> new ArmorItem(ModArmorMaterials.MONOCLE, ArmorItem.Type.HELMET, new Item.Properties()));
 
@@ -545,9 +547,9 @@ public class ModItems {
                         output.accept(SPEAR_DEFAULT.get());
                         output.accept(SPEAR_IRON.get());
                         output.accept(SPEAR_GOLD.get());
-                        output.accept(GODSPEAR.get());
                         output.accept(SPEAR_NETHERITE.get());
                         output.accept(MONOCLE.get());
+                        output.accept(MOUSE_EARS.get());
                         output.accept(REGGAE_HAT.get());
                         output.accept(VEST.get());
                         output.accept(ZAKAROVA_HELMA.get());
