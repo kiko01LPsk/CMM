@@ -337,6 +337,14 @@ public class ModItems {
     public static final RegistryObject<Item> ANGEL_WINGS = ITEMS.register("angel_wings",
             () -> new AngelWingsItem(new Item.Properties().stacksTo(1).rarity(net.minecraft.world.item.Rarity.EPIC)));
 
+    public static final RegistryObject<Item> COMPASS = ITEMS.register("compass",
+            () -> new net.minecraft.world.item.CompassItem(new Item.Properties()));
+    public static final RegistryObject<Item> HEART_OF_THE_SEA = ITEMS.register("heart_of_the_sea",
+            () -> new Item(new Item.Properties().rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> NETHERITE_SWORD = ITEMS.register("netherite_sword",
+            () -> new net.minecraft.world.item.SwordItem(net.minecraft.world.item.Tiers.NETHERITE, 3, -2.4F,
+                    new Item.Properties().fireResistant()));
+
     public static final RegistryObject<Item> MOUSE_EARS = ITEMS.register("mouse_ears",
             () -> new MouseEarsItem(new Item.Properties()));
     public static final RegistryObject<Item> MONOCLE = ITEMS.register("monocle",
@@ -553,6 +561,9 @@ public class ModItems {
                         output.accept(SPEAR_NETHERITE.get());
                         output.accept(MONOCLE.get());
                         output.accept(MOUSE_EARS.get());
+                        output.accept(COMPASS.get());
+                        output.accept(HEART_OF_THE_SEA.get());
+                        output.accept(NETHERITE_SWORD.get());
                         output.accept(ANGEL_WINGS.get());
                         output.accept(REGGAE_HAT.get());
                         output.accept(VEST.get());

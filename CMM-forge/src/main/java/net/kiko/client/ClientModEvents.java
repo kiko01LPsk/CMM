@@ -41,6 +41,7 @@ public final class ClientModEvents {
         event.register(MjolnirClient.LIGHTNING);
         event.register(net.kiko.client.sunglasses.SonicSunglassesClient.USE);
         event.register(net.kiko.client.morph.MorphRenderer.RESET);
+        event.register(SniperScope.AIM);
     }
 
     @SubscribeEvent
@@ -115,6 +116,15 @@ public final class ClientModEvents {
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             net.kiko.screen.video.VideoTools.init(net.minecraft.client.Minecraft.getInstance().gameDirectory.toPath());
+            // Compass: points at world spawn (or the lodestone) like the vanilla one.
+            ItemProperties.register(ModItems.COMPASS.get(), new ResourceLocation("angle"),
+                    new net.minecraft.client.renderer.item.CompassItemPropertyFunction((level, stack, entity) -> {
+                        if (net.minecraft.world.item.CompassItem.isLodestoneCompass(stack)) {
+                            return net.minecraft.world.item.CompassItem.getLodestonePosition(stack.getOrCreateTag());
+                        }
+                        return level.dimensionType().natural()
+                                ? net.minecraft.core.GlobalPos.of(level.dimension(), level.getSharedSpawnPos()) : null;
+                    }));
             ItemProperties.register(ModItems.CLOCK.get(),
                     new ResourceLocation(KikoMod.MOD_ID, "time"),
                     ClientModEvents::clockTime);
