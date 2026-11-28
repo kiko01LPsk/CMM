@@ -229,6 +229,11 @@
   "subtitles.kiko.mjolnir_spin": "Mjolnir spins",
   "subtitles.kiko.mjolnir_drop": "Mjolnir lands",
   "item.kiko.walkman": "Walkman",
+  "item.kiko.one_ring": "One Ring",
+  "item.kiko.cassette_awesome_mix_vol_2": "Awesome Mix Vol. 2",
+  "item.kiko.cassette_brainrot_mix": "Brainrot Mix",
+  "item.kiko.cassette_cosmic_mix_vol_1": "Cosmic Mix Vol. 1",
+  "item.kiko.cassette_awesome_mix_vol_3": "Awesome Mix Vol. 3",
   "item.kiko.cassette_awesome_mix_vol_1": "Awesome Mix Vol. 1",
   "item.kiko.cassette_man_who_sold_the_world": "From the man who sold the world",
   "screen.kiko.mannequin.tab.poses": "Poses",
@@ -496,5 +501,9 @@
   "screen.kiko.walkman.forward": ">>",
   "screen.kiko.walkman.next": "Skip",
   "screen.kiko.walkman.previous": "Prev",
-  "screen.kiko.walkman.cassette": "Cassette"
+  "screen.kiko.walkman.cassette": "Cassette",
+  "screen.kiko.walkman.speaker_on": "Speaker: on",
+  "screen.kiko.walkman.speaker_off": "Speaker: off",
+  "screen.kiko.walkman.volume": "Volume: %s%%",
+  "key.kiko.walkman_open": "Open walkman"
 }

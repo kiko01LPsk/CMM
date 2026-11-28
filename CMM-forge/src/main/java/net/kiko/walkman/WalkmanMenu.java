@@ -5,7 +5,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -25,13 +24,14 @@ public class WalkmanMenu extends AbstractContainerMenu {
     public static final TagKey<Item> CASSETTES = TagKey.create(Registries.ITEM, new ResourceLocation(KikoMod.MOD_ID, "cassettes"));
 
     // button ids (see clickMenuButton)
-    public static final int PLAY_PAUSE = 0, STOP = 1, BACK = 2, FORWARD = 3, NEXT = 4, PREVIOUS = 5;
+    public static final int PLAY_PAUSE = 0, STOP = 1, BACK = 2, FORWARD = 3, NEXT = 4, PREVIOUS = 5, SPEAKER = 6;
     /** How far the forward / back buttons jump, in ticks (5 seconds). */
     public static final int SEEK_TICKS = 100;
 
     private boolean loading;
     private final Player player;
-    private final InteractionHand hand;
+    /** Where the walkman is in the player inventory (hotbar/main 0-35, armor 36-39, offhand 40). */
+    private final int slotIndex;
     private final Container cassette = new SimpleContainer(1) {
         @Override
         public void setChanged() {
@@ -40,10 +40,10 @@ public class WalkmanMenu extends AbstractContainerMenu {
         }
     };
 
-    public WalkmanMenu(int id, Inventory inventory, InteractionHand hand) {
+    public WalkmanMenu(int id, Inventory inventory, int slotIndex) {
         super(ModMenus.WALKMAN.get(), id);
         this.player = inventory.player;
-        this.hand = hand;
+        this.slotIndex = slotIndex;
         load();
 
         addSlot(new Slot(cassette, 0, 80, 20) {
@@ -69,7 +69,7 @@ public class WalkmanMenu extends AbstractContainerMenu {
 
     /** The slot that holds this walkman cannot be picked up while the menu is open. */
     private Slot guard(Inventory inventory, int index, int x, int y) {
-        boolean holder = hand == InteractionHand.MAIN_HAND ? index == inventory.selected : false;
+        boolean holder = index == slotIndex;
         return new Slot(inventory, index, x, y) {
             @Override
             public boolean mayPickup(Player p) {
@@ -84,7 +84,7 @@ public class WalkmanMenu extends AbstractContainerMenu {
     }
 
     public ItemStack walkman() {
-        return player.getItemInHand(hand);
+        return player.getInventory().getItem(slotIndex);
     }
 
     private void load() {
@@ -132,7 +132,13 @@ public class WalkmanMenu extends AbstractContainerMenu {
     @Override
     public boolean clickMenuButton(Player p, int id) {
         ItemStack stack = walkman();
-        if (!(stack.getItem() instanceof WalkmanItem) || !hasCassette()) return false;
+        if (!(stack.getItem() instanceof WalkmanItem)) return false;
+        if (id == SPEAKER) {
+            boolean on = !WalkmanItem.isSpeaker(stack);
+            if (on) stack.getOrCreateTag().putBoolean(WalkmanItem.SPEAKER, true); else if (stack.hasTag()) stack.getTag().remove(WalkmanItem.SPEAKER);
+            return true;
+        }
+        if (!hasCassette()) return false;
         CompoundTag tag = stack.getOrCreateTag();
         long now = p.level().getGameTime();
         long pos = WalkmanItem.position(stack, now);

@@ -13,6 +13,7 @@ import net.minecraft.world.entity.player.Inventory;
 public class WalkmanScreen extends AbstractContainerScreen<WalkmanMenu> {
 
     private Button playButton;
+    private Button speakerButton;
 
     public WalkmanScreen(WalkmanMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
@@ -32,6 +33,10 @@ public class WalkmanScreen extends AbstractContainerScreen<WalkmanMenu> {
         addButton(x + 114, y, 22, WalkmanMenu.FORWARD, Component.translatable("screen.kiko.walkman.forward"));
         addButton(x + 138, y, 30, WalkmanMenu.NEXT, Component.translatable("screen.kiko.walkman.next"));
         addButton(x + 64, y + 22, 48, WalkmanMenu.STOP, Component.translatable("screen.kiko.walkman.stop"));
+        speakerButton = addRenderableWidget(Button.builder(Component.empty(), b -> {
+            if (minecraft != null && minecraft.gameMode != null) minecraft.gameMode.handleInventoryButtonClick(menu.containerId, WalkmanMenu.SPEAKER);
+        }).bounds(x + 8, y + 22, 52, 18).build());
+        addRenderableWidget(new VolumeSlider(x + 116, y + 22, 52, 18));
     }
 
     private Button addButton(int x, int y, int w, int id, Component label) {
@@ -48,10 +53,14 @@ public class WalkmanScreen extends AbstractContainerScreen<WalkmanMenu> {
         boolean has = menu.hasCassette();
         boolean playing = WalkmanItem.isPlaying(menu.walkman());
         for (var w : renderables) {
-            if (w instanceof Button b) b.active = has;
+            if (w instanceof Button b && b != speakerButton) b.active = has;
         }
         if (playButton != null) {
             playButton.setMessage(Component.translatable(playing ? "screen.kiko.walkman.pause" : "screen.kiko.walkman.play"));
+        }
+        if (speakerButton != null) {
+            speakerButton.setMessage(Component.translatable(WalkmanItem.isSpeaker(menu.walkman())
+                    ? "screen.kiko.walkman.speaker_on" : "screen.kiko.walkman.speaker_off"));
         }
         super.render(g, mouseX, mouseY, partialTick);
         renderTooltip(g, mouseX, mouseY);
@@ -73,5 +82,29 @@ public class WalkmanScreen extends AbstractContainerScreen<WalkmanMenu> {
         g.fill(x, y, x + 18, y + 18, 0xFF373737);
         g.fill(x + 1, y + 1, x + 18, y + 18, 0xFFFFFFFF);
         g.fill(x + 1, y + 1, x + 17, y + 17, 0xFF8B8B8B);
+    }
+
+    @Override
+    public void removed() {
+        super.removed();
+        WalkmanVolume.save();
+    }
+
+    /** Volume of the music, only for you. */
+    private static final class VolumeSlider extends net.minecraft.client.gui.components.AbstractSliderButton {
+        VolumeSlider(int x, int y, int w, int h) {
+            super(x, y, w, h, Component.empty(), WalkmanVolume.get());
+            updateMessage();
+        }
+
+        @Override
+        protected void updateMessage() {
+            setMessage(Component.translatable("screen.kiko.walkman.volume", Math.round(value * 100)));
+        }
+
+        @Override
+        protected void applyValue() {
+            WalkmanVolume.set((float) value);
+        }
     }
 }

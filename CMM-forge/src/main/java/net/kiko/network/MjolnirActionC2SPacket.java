@@ -15,6 +15,7 @@ public class MjolnirActionC2SPacket {
     public static final byte START_FLIGHT = 1;
     public static final byte STOP_FLIGHT = 2;
     public static final byte LIGHTNING = 3;
+    public static final byte OPEN_WALKMAN = 4;
 
     private final byte action;
 
@@ -40,6 +41,7 @@ public class MjolnirActionC2SPacket {
             case START_FLIGHT -> MjolnirFlight.start(player);
             case STOP_FLIGHT -> MjolnirFlight.stop(player);
             case LIGHTNING -> MjolnirCall.lightning(player);
+            case OPEN_WALKMAN -> net.kiko.item.WalkmanItem.openFromKey(player);
             default -> {
             }
         }

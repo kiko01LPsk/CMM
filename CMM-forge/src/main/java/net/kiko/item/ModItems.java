@@ -454,6 +454,73 @@ public class ModItems {
                             new CassetteItem.Track("cassettes/awesome_mix_vol1_11.mp3", "O-o-h Child", 3881),
                             new CassetteItem.Track("cassettes/awesome_mix_vol1_12.mp3", "Ain't No Mountain High Enough", 2982))));
 
+    public static final RegistryObject<Item> CASSETTE_AWESOME_MIX_VOL_2 = ITEMS.register("cassette_awesome_mix_vol_2",
+            () -> new CassetteItem(new Item.Properties(), "Various artists",
+                    java.util.List.of(
+                            new CassetteItem.Track("cassettes/awesome_mix_vol2_01.mp3", "Mr. Blue Sky", 6072),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol2_02.mp3", "Fox on the Run", 4024),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol2_03.mp3", "Lake Shore Drive", 4707),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol2_04.mp3", "The Chain", 5347),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol2_05.mp3", "Bring It on Home to Me", 3254),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol2_06.mp3", "Southern Nights", 3603),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol2_07.mp3", "My Sweet Lord", 5629),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol2_08.mp3", "Brandy (You're a Fine Girl)", 3671),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol2_09.mp3", "Come a Little Bit Closer", 3337),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol2_10.mp3", "Wham Bam Shang-A-Lang", 4247),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol2_11.mp3", "Surrender", 5079),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol2_12.mp3", "Father and Son", 4383),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol2_13.mp3", "Flash Light", 5383),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol2_14.mp3", "Guardians Inferno", 3940))));
+
+    public static final RegistryObject<Item> CASSETTE_BRAINROT_MIX = ITEMS.register("cassette_brainrot_mix",
+            () -> new CassetteItem(new Item.Properties(), "Various artists",
+                    java.util.List.of(
+                            new CassetteItem.Track("cassettes/brainrot_mix_01.mp3", "Bombardino Crocodilo", 3091),
+                            new CassetteItem.Track("cassettes/brainrot_mix_02.mp3", "Brainrot Gigachads Choir", 1750),
+                            new CassetteItem.Track("cassettes/brainrot_mix_03.mp3", "Bomboclat Wallahi", 2484),
+                            new CassetteItem.Track("cassettes/brainrot_mix_04.mp3", "KFC Pigeon Song", 2806))));
+
+    public static final RegistryObject<Item> CASSETTE_COSMIC_MIX_VOL_1 = ITEMS.register("cassette_cosmic_mix_vol_1",
+            () -> new CassetteItem(new Item.Properties(), "Various artists",
+                    java.util.List.of(
+                            new CassetteItem.Track("cassettes/cosmic_mix_vol1_01.mp3", "Hooked on a Feeling", 3462),
+                            new CassetteItem.Track("cassettes/cosmic_mix_vol1_02.mp3", "Rocky Mountain Way", 6322),
+                            new CassetteItem.Track("cassettes/cosmic_mix_vol1_03.mp3", "Don't Stop Me Now", 4202),
+                            new CassetteItem.Track("cassettes/cosmic_mix_vol1_04.mp3", "Drift Away", 4742),
+                            new CassetteItem.Track("cassettes/cosmic_mix_vol1_05.mp3", "So You Are a Star", 4562),
+                            new CassetteItem.Track("cassettes/cosmic_mix_vol1_06.mp3", "The Boys Are Back in Town", 5362),
+                            new CassetteItem.Track("cassettes/cosmic_mix_vol1_07.mp3", "Walk Away", 4282),
+                            new CassetteItem.Track("cassettes/cosmic_mix_vol1_08.mp3", "Funk #49", 4722),
+                            new CassetteItem.Track("cassettes/cosmic_mix_vol1_09.mp3", "Shake Your Groove Thing", 6662),
+                            new CassetteItem.Track("cassettes/cosmic_mix_vol1_10.mp3", "I Will Survive", 9621),
+                            new CassetteItem.Track("cassettes/cosmic_mix_vol1_11.mp3", "Funk Funk", 5742),
+                            new CassetteItem.Track("cassettes/cosmic_mix_vol1_12.mp3", "Joy to the World", 4382))));
+
+    public static final RegistryObject<Item> CASSETTE_AWESOME_MIX_VOL_3 = ITEMS.register("cassette_awesome_mix_vol_3",
+            () -> new CassetteItem(new Item.Properties(), "Various artists",
+                    java.util.List.of(
+                            new CassetteItem.Track("cassettes/awesome_mix_vol3_01.mp3", "Creep (Acoustic)", 5177),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol3_02.mp3", "Crazy on You", 5873),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol3_03.mp3", "Since You Been Gone", 3946),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol3_04.mp3", "In the Meantime", 5994),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol3_05.mp3", "Reasons", 5989),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol3_06.mp3", "Do You Realize??", 4267),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol3_07.mp3", "We Care a Lot", 4875),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol3_08.mp3", "Koinu no Carnival (Minute Waltz)", 3812),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol3_09.mp3", "I'm Always Chasing Rainbows", 2570),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol3_10.mp3", "San Francisco", 3461),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol3_11.mp3", "Poor Girl", 3478),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol3_12.mp3", "This Is the Day", 5944),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol3_13.mp3", "No Sleep till Brooklyn", 4940),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol3_14.mp3", "Dog Days Are Over", 5058),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol3_15.mp3", "I Will Dare", 3988),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol3_16.mp3", "Come and Get Your Love (Single Version)", 4122),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol3_17.mp3", "Badlands", 4851))));
+
+    /** Wear it in the chest slot and the player is completely invisible. */
+    public static final RegistryObject<Item> ONE_RING = ITEMS.register("one_ring",
+            () -> new net.kiko.ring.OneRingItem(new Item.Properties().stacksTo(1).rarity(net.minecraft.world.item.Rarity.EPIC).fireResistant()));
+
     public static final RegistryObject<CreativeModeTab> KIKO_GROUP = CREATIVE_TABS.register("kiko_group",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemgroup.kiko.kiko_group"))
@@ -493,6 +560,11 @@ public class ModItems {
                         output.accept(WALKMAN.get());
                         output.accept(CASSETTE_MAN_WHO_SOLD_THE_WORLD.get());
                         output.accept(CASSETTE_AWESOME_MIX_VOL_1.get());
+                        output.accept(CASSETTE_AWESOME_MIX_VOL_2.get());
+                        output.accept(CASSETTE_BRAINROT_MIX.get());
+                        output.accept(CASSETTE_COSMIC_MIX_VOL_1.get());
+                        output.accept(CASSETTE_AWESOME_MIX_VOL_3.get());
+                        output.accept(ONE_RING.get());
                         output.accept(M870.get());
                         output.accept(M16.get());
                         output.accept(RPG_7.get());

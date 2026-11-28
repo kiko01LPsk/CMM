@@ -42,6 +42,7 @@ public final class ClientModEvents {
         event.register(net.kiko.client.sunglasses.SonicSunglassesClient.USE);
         event.register(net.kiko.client.morph.MorphRenderer.RESET);
         event.register(SniperScope.AIM);
+        event.register(net.kiko.client.walkman.WalkmanPlayer.OPEN);
     }
 
     @SubscribeEvent
