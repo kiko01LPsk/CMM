@@ -34,7 +34,9 @@ public class MjolnirActionC2SPacket {
         ServerPlayer player = ctx.get().getSender();
         if (player == null) return;
         switch (msg.action) {
-            case CALL -> MjolnirCall.call(player);
+            case CALL -> {
+                if (!net.kiko.trident.GodspearCall.call(player)) MjolnirCall.call(player);
+            }
             case START_FLIGHT -> MjolnirFlight.start(player);
             case STOP_FLIGHT -> MjolnirFlight.stop(player);
             case LIGHTNING -> MjolnirCall.lightning(player);

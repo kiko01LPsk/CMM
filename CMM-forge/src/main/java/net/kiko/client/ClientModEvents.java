@@ -117,6 +117,7 @@ public final class ClientModEvents {
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
+        net.kiko.client.phone.PhoneArmPoses.init();
         event.enqueueWork(() -> {
             net.minecraft.client.gui.screens.MenuScreens.register(net.kiko.walkman.ModMenus.WALKMAN.get(),
                     net.kiko.client.walkman.WalkmanScreen::new);

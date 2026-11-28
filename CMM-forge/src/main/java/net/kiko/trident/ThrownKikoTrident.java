@@ -29,6 +29,8 @@ public class ThrownKikoTrident extends AbstractArrow {
 
     private static final EntityDataAccessor<Byte> ID_LOYALTY = SynchedEntityData.defineId(ThrownKikoTrident.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> ID_FOIL = SynchedEntityData.defineId(ThrownKikoTrident.class, EntityDataSerializers.BOOLEAN);
+    /** Godspear only: the owner called it, so it flies back even though it is stuck in the ground. */
+    private static final EntityDataAccessor<Boolean> ID_RECALL = SynchedEntityData.defineId(ThrownKikoTrident.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<ItemStack> ID_STACK = SynchedEntityData.defineId(ThrownKikoTrident.class, EntityDataSerializers.ITEM_STACK);
 
     private ItemStack tridentItem = new ItemStack(Items.TRIDENT);
@@ -54,6 +56,7 @@ public class ThrownKikoTrident extends AbstractArrow {
         super.defineSynchedData();
         this.entityData.define(ID_LOYALTY, (byte) 0);
         this.entityData.define(ID_FOIL, false);
+        this.entityData.define(ID_RECALL, false);
         this.entityData.define(ID_STACK, new ItemStack(Items.TRIDENT));
     }
 
@@ -62,9 +65,25 @@ public class ThrownKikoTrident extends AbstractArrow {
         return this.entityData.get(ID_STACK);
     }
 
+    public boolean isGodspear() {
+        return this.entityData.get(ID_STACK).getItem() instanceof GodspearItem;
+    }
+
+    public boolean isRecalled() {
+        return this.entityData.get(ID_RECALL);
+    }
+
+    /** The owner calls it: a Godspear stuck in the ground pulls free and flies back. */
+    public void recall() {
+        this.entityData.set(ID_RECALL, true);
+    }
+
     @Override
     public void tick() {
-        if (this.inGroundTime > 4) {
+        if (isGodspear()) {
+            // it stays stuck in the ground until its owner calls it (hitting a mob still sends it straight back)
+            if (isRecalled()) this.dealtDamage = true;
+        } else if (this.inGroundTime > 4) {
             this.dealtDamage = true;
         }
         Entity owner = this.getOwner();
@@ -179,7 +198,10 @@ public class ThrownKikoTrident extends AbstractArrow {
             this.tridentItem = ItemStack.of(tag.getCompound("Trident"));
         }
         this.dealtDamage = tag.getBoolean("DealtDamage");
-        this.entityData.set(ID_LOYALTY, (byte) EnchantmentHelper.getLoyalty(this.tridentItem));
+        int loyalty = EnchantmentHelper.getLoyalty(this.tridentItem);
+        if (this.tridentItem.getItem() instanceof GodspearItem) loyalty = Math.max(loyalty, GodspearItem.LOYALTY);
+        this.entityData.set(ID_LOYALTY, (byte) loyalty);
+        this.entityData.set(ID_RECALL, tag.getBoolean("Recalled"));
         this.entityData.set(ID_FOIL, this.tridentItem.hasFoil());
         this.entityData.set(ID_STACK, this.tridentItem.copy());
     }
@@ -189,6 +211,7 @@ public class ThrownKikoTrident extends AbstractArrow {
         super.addAdditionalSaveData(tag);
         tag.put("Trident", this.tridentItem.save(new CompoundTag()));
         tag.putBoolean("DealtDamage", this.dealtDamage);
+        tag.putBoolean("Recalled", isRecalled());
     }
 
     @Override

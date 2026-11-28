@@ -43,6 +43,12 @@ public final class PhoneArmPoses {
 
     private PhoneArmPoses() {}
 
+    /**
+     * Touching this class creates the new arm poses. It has to happen while the game starts: if they are created later
+     * (the first time you use the phone), the game's arm switch has already been built without them and crashes.
+     */
+    public static void init() {}
+
     private static ModelPart part(HumanoidModel<?> model, HumanoidArm arm) {
         return arm == HumanoidArm.RIGHT ? model.rightArm : model.leftArm;
     }
