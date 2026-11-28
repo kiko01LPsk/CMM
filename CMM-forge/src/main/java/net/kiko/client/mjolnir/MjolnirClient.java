@@ -61,6 +61,10 @@ public final class MjolnirClient {
             if (e instanceof net.kiko.mjolnir.ThrownMjolnir hammer && hammer.isCalled() && hammer.getOwner() != null) {
                 CALLING.add(hammer.getOwner().getUUID());
             }
+            // a called Godspear: the owner raises the arm the same way
+            if (e instanceof net.kiko.trident.ThrownKikoTrident spear && spear.isGodspear() && spear.isRecalled() && spear.getOwner() != null) {
+                CALLING.add(spear.getOwner().getUUID());
+            }
         }
     }
 
