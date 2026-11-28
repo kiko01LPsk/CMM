@@ -517,6 +517,9 @@ public class ModItems {
                             new CassetteItem.Track("cassettes/awesome_mix_vol3_16.mp3", "Come and Get Your Love (Single Version)", 4122),
                             new CassetteItem.Track("cassettes/awesome_mix_vol3_17.mp3", "Badlands", 4851))));
 
+    public static final RegistryObject<Item> NECKLACE_SATANOVA = ITEMS.register("necklace_satanova",
+            () -> new NecklaceItem(new Item.Properties().stacksTo(1)));
+
     /** Wear it in the chest slot and the player is completely invisible. */
     public static final RegistryObject<Item> ONE_RING = ITEMS.register("one_ring",
             () -> new net.kiko.ring.OneRingItem(new Item.Properties().stacksTo(1).rarity(net.minecraft.world.item.Rarity.EPIC).fireResistant()));
@@ -565,6 +568,7 @@ public class ModItems {
                         output.accept(CASSETTE_COSMIC_MIX_VOL_1.get());
                         output.accept(CASSETTE_AWESOME_MIX_VOL_3.get());
                         output.accept(ONE_RING.get());
+                        output.accept(NECKLACE_SATANOVA.get());
                         output.accept(M870.get());
                         output.accept(M16.get());
                         output.accept(RPG_7.get());
