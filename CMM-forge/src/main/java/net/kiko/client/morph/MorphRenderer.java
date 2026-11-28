@@ -37,9 +37,35 @@ public final class MorphRenderer {
 
     private MorphRenderer() {}
 
+    private static Map<ResourceLocation, net.minecraft.client.renderer.texture.AbstractTexture> textureMapCache;
+    private static boolean textureMapFailed;
+
+    /** The texture manager's own path -> texture map (found by type, so it works with any field naming). */
+    @SuppressWarnings("unchecked")
+    private static Map<ResourceLocation, net.minecraft.client.renderer.texture.AbstractTexture> textureMap() {
+        if (textureMapCache != null || textureMapFailed) return textureMapCache;
+        try {
+            Object tm = Minecraft.getInstance().getTextureManager();
+            for (java.lang.reflect.Field f : tm.getClass().getDeclaredFields()) {
+                if (!Map.class.isAssignableFrom(f.getType())) continue;
+                f.setAccessible(true);
+                Map<?, ?> m = (Map<?, ?>) f.get(tm);
+                if (m != null && !m.isEmpty() && m.values().iterator().next() instanceof net.minecraft.client.renderer.texture.AbstractTexture) {
+                    textureMapCache = (Map<ResourceLocation, net.minecraft.client.renderer.texture.AbstractTexture>) m;
+                    return textureMapCache;
+                }
+            }
+        } catch (Throwable t) {
+            // fall through
+        }
+        textureMapFailed = true;
+        return null;
+    }
+
     public static void clear() {
         DUMMIES.clear();
         ClientMorphStore.clear();
+        ClientMorphSkins.clear();
     }
 
     private static Dummy dummyFor(AbstractClientPlayer player, String id) {
@@ -48,12 +74,20 @@ public final class MorphRenderer {
         d = new Dummy();
         d.id = id;
         try {
-            boolean baby = id.endsWith("#baby");
-            String plain = baby ? id.substring(0, id.length() - 5) : id;
+            String rest = id;
+            java.util.UUID mobUuid = null;
+            int at = rest.indexOf('@');
+            if (at >= 0) {
+                try { mobUuid = java.util.UUID.fromString(rest.substring(at + 1)); } catch (IllegalArgumentException ignored) { }
+                rest = rest.substring(0, at);
+            }
+            boolean baby = rest.endsWith("#baby");
+            String plain = baby ? rest.substring(0, rest.length() - 5) : rest;
             EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(plain));
             Entity e = type == null ? null : type.create(player.level());
             if (e instanceof LivingEntity living) {
                 d.entity = living;
+                if (mobUuid != null) living.setUUID(mobUuid); // resource packs pick skin variants from the UUID
                 if (baby && living instanceof net.minecraft.world.entity.Mob mob) mob.setBaby(true);
             }
         } catch (Throwable t) {
@@ -109,15 +143,32 @@ public final class MorphRenderer {
         m.hurtDuration = player.hurtDuration;
         m.deathTime = player.deathTime;
         m.setInvisible(player.isInvisible());
-        m.setCustomName(player.getDisplayName());
-        m.setCustomNameVisible(player != Minecraft.getInstance().player);
+        m.setCustomNameVisible(false); // no nametag while morphed
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             m.setItemSlot(slot, player.getItemBySlot(slot));
         }
 
         float yaw = Mth.rotLerp(partialTick, player.yBodyRotO, player.yBodyRot);
-        Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(m)
-                .render(m, yaw, partialTick, poseStack, buffer, packedLight);
+        @SuppressWarnings({"unchecked", "rawtypes"})
+        net.minecraft.client.renderer.entity.EntityRenderer<LivingEntity> renderer =
+                (net.minecraft.client.renderer.entity.EntityRenderer) Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(m);
+        net.minecraft.client.renderer.texture.DynamicTexture custom = ClientMorphSkins.get(player.getUUID());
+        Map<ResourceLocation, net.minecraft.client.renderer.texture.AbstractTexture> textures = custom == null ? null : textureMap();
+        if (textures == null) {
+            renderer.render(m, yaw, partialTick, poseStack, buffer, packedLight);
+            return true;
+        }
+        // Custom skin: put it in place of the mob's normal texture just while this one mob is drawn (drawn straight away, not batched).
+        ResourceLocation loc = renderer.getTextureLocation(m);
+        net.minecraft.client.renderer.texture.AbstractTexture original = textures.get(loc);
+        textures.put(loc, custom);
+        try {
+            MultiBufferSource.BufferSource own = MultiBufferSource.immediate(new com.mojang.blaze3d.vertex.BufferBuilder(2048));
+            renderer.render(m, yaw, partialTick, poseStack, own, packedLight);
+            own.endBatch();
+        } finally {
+            if (original != null) textures.put(loc, original); else textures.remove(loc);
+        }
         return true;
     }
 }

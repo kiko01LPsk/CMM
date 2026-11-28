@@ -108,6 +108,9 @@ public class ModBlocks {
     public static final RegistryObject<Block> ORANGE_PORTAL = block("orange_portal",
             () -> new OrangePortalBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.0F).sound(SoundType.GLASS)
                     .lightLevel(state -> 10)));
+    public static final RegistryObject<Block> BLUE_PORTAL = block("blue_portal",
+            () -> new OrangePortalBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.0F).sound(SoundType.GLASS)
+                    .lightLevel(state -> 10)));
     public static final RegistryObject<Block> DISPLAY_CASE_TALL_WOOD = block("display_case_tall_wood",
             () -> new DisplayCaseTallBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.5F).sound(SoundType.GLASS)));
     public static final RegistryObject<Block> DISPLAY_CASE_TALL_STONE = block("display_case_tall_stone",

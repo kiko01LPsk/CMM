@@ -60,6 +60,12 @@ public final class VideoManager {
         return player;
     }
 
+    /** The "Sync sound" button: reload the sound of the screen this controller runs, lined up with the picture. */
+    static void resyncAudio(Level level, BlockPos controller) {
+        VideoPlayer p = PLAYERS.get(key(level, controller));
+        if (p != null) p.resyncAudio();
+    }
+
     /** Client tick: close players nobody has drawn for a while. */
     public static void tick() {
         Minecraft mc = Minecraft.getInstance();

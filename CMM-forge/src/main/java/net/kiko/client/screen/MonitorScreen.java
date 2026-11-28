@@ -97,6 +97,8 @@ public class MonitorScreen extends Screen {
                 .bounds(cx - 150, top + 122, 96, 20).build());
         addRenderableWidget(Button.builder(Component.literal("Done"), b -> onClose())
                 .bounds(cx - 48, top + 122, 96, 20).build());
+        addRenderableWidget(Button.builder(Component.literal("Sync sound"), b -> syncSound())
+                .bounds(cx + 54, top + 122, 96, 20).build());
     }
 
     /** A picked file is stored as a file: address; show the plain path in the box. */
@@ -134,6 +136,19 @@ public class MonitorScreen extends Screen {
         if (url.isEmpty()) return;
         message = "";
         ModNetwork.CHANNEL.sendToServer(new MonitorSetC2SPacket(pos, url, MonitorSetC2SPacket.PLAY, 0, loop, volume));
+    }
+
+    /** Sound out of step? Holds the picture, reloads the sound at the picture's spot, then starts both again. Only for you. */
+    private void syncSound() {
+        MonitorBlockEntity be = be();
+        Minecraft mc = Minecraft.getInstance();
+        if (be == null || mc.level == null || !be.isPlaying() || be.isPaused()) {
+            message = "Sync sound works while a video is playing.";
+            return;
+        }
+        message = "Syncing sound: the picture waits until the sound is loaded.";
+        net.kiko.screen.ScreenGroup group = be.group();
+        VideoManager.resyncAudio(mc.level, group == null ? pos : group.controller);
     }
 
     private void togglePause() {

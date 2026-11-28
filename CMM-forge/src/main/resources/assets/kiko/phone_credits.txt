@@ -1,0 +1,2 @@
+Phone model, textures and arm poses are adapted from MineDevice 2.0.1 by Cat Lab_ Design and NotNiceKun,
+licensed PolyForm Noncommercial 1.0.0 (https://polyformproject.org/licenses/noncommercial/1.0.0). Noncommercial use only.

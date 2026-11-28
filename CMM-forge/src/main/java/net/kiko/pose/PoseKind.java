@@ -15,7 +15,11 @@ public enum PoseKind {
     CROSSBOW_HOLD,
     SPYGLASS,
     HORN,
-    BRUSH;
+    BRUSH,
+    PHONE_BROWSE,
+    PHONE_CALL,
+    PHONE_SELFIE,
+    PHONE_SPEAKER;
 
     public static PoseKind byId(int id) {
         PoseKind[] values = values();

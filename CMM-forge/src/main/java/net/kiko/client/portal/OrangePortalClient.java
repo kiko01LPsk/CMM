@@ -33,7 +33,7 @@ public final class OrangePortalClient {
         BlockState state = null;
         for (BlockPos p : new BlockPos[]{feet, head}) {
             BlockState s = mc.level.getBlockState(p);
-            if (s.is(ModBlocks.ORANGE_PORTAL.get())) { found = p; state = s; break; }
+            if (s.is(ModBlocks.ORANGE_PORTAL.get()) || s.is(ModBlocks.BLUE_PORTAL.get())) { found = p; state = s; break; }
         }
         if (found == null) return;
         boolean alongX = state.getValue(OrangePortalBlock.FACING).getAxis() == Direction.Axis.X;

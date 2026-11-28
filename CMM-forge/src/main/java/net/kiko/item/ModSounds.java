@@ -22,9 +22,10 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> SHIELD_THROW = register("shield_throw");
     public static final RegistryObject<SoundEvent> MJOLNIR_THROW = register("mjolnir_throw");
     public static final RegistryObject<SoundEvent> MJOLNIR_SPIN = register("mjolnir_spin");
+    public static final RegistryObject<SoundEvent> WALKMAN_INSERT = register("walkman_insert");
+    public static final RegistryObject<SoundEvent> WALKMAN_EJECT = register("walkman_eject");
     public static final RegistryObject<SoundEvent> MJOLNIR_DROP = register("mjolnir_drop");
 
-    public static final RegistryObject<SoundEvent> WALKMAN_SONG = register("walkman_song");
     public static final RegistryObject<SoundEvent> GUITAR_SONG = register("guitar_song");
 
     private static RegistryObject<SoundEvent> register(String name) {

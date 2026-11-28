@@ -100,6 +100,16 @@ public final class ModNetwork {
                 .encoder(MorphS2CPacket::toBytes)
                 .consumerMainThread(MorphS2CPacket::handle)
                 .add();
+        CHANNEL.messageBuilder(MorphSkinS2CPacket.class, id++, NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(MorphSkinS2CPacket::new)
+                .encoder(MorphSkinS2CPacket::toBytes)
+                .consumerMainThread(MorphSkinS2CPacket::handle)
+                .add();
+        CHANNEL.messageBuilder(MorphSkinC2SPacket.class, id++, NetworkDirection.PLAY_TO_SERVER)
+                .decoder(MorphSkinC2SPacket::new)
+                .encoder(MorphSkinC2SPacket::toBytes)
+                .consumerMainThread(MorphSkinC2SPacket::handle)
+                .add();
         CHANNEL.messageBuilder(MorphResetC2SPacket.class, id++, NetworkDirection.PLAY_TO_SERVER)
                 .decoder(MorphResetC2SPacket::new)
                 .encoder(MorphResetC2SPacket::toBytes)

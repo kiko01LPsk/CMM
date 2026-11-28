@@ -41,16 +41,6 @@
       "kiko:mjolnir_drop"
     ]
   },
-  "walkman_song": {
-    "subtitle": "subtitles.kiko.walkman_song",
-    "sounds": [
-      {
-        "name": "kiko:walkman_song",
-        "stream": true,
-        "attenuation_distance": 12
-      }
-    ]
-  },
   "guitar_song": {
     "subtitle": "subtitles.kiko.guitar_song",
     "sounds": [
@@ -65,6 +55,18 @@
     "subtitle": "subtitles.kiko.shield_throw",
     "sounds": [
       "kiko:shield_throw"
+    ]
+  },
+  "walkman_insert": {
+    "subtitle": "subtitles.kiko.walkman_insert",
+    "sounds": [
+      "kiko:walkman_insert"
+    ]
+  },
+  "walkman_eject": {
+    "subtitle": "subtitles.kiko.walkman_eject",
+    "sounds": [
+      "kiko:walkman_eject"
     ]
   }
 }

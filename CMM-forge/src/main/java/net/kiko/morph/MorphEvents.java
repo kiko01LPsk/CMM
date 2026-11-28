@@ -17,6 +17,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public final class MorphEvents {
 
     private static final String TAG = "kiko_morph";
+    private static final String SKIN_TAG = "kiko_morph_skin";
 
     private MorphEvents() {}
 
@@ -25,11 +26,11 @@ public final class MorphEvents {
         return player.getPersistentData().getString(TAG);
     }
 
-    /** A baby target is stored as "id#baby" so the morph is drawn as the baby variant. */
+    /** A baby target is stored as "id#baby@uuid": baby flag for the baby variant, and the clicked mob's UUID so resource-pack skin variants (picked by UUID) match. */
     public static void set(ServerPlayer player, net.minecraft.world.entity.LivingEntity target) {
         var key = ForgeRegistries.ENTITY_TYPES.getKey(target.getType());
         if (key == null) return;
-        apply(player, key + (target.isBaby() ? "#baby" : ""));
+        apply(player, key + (target.isBaby() ? "#baby" : "") + "@" + target.getUUID());
     }
 
     public static void clear(ServerPlayer player) {
@@ -37,10 +38,36 @@ public final class MorphEvents {
     }
 
     private static void apply(ServerPlayer player, String id) {
+        boolean hadSkin = player.getPersistentData().contains(SKIN_TAG);
+        player.getPersistentData().remove(SKIN_TAG); // a new morph starts with the normal skin
         if (id.isEmpty()) player.getPersistentData().remove(TAG);
         else player.getPersistentData().putString(TAG, id);
         ModNetwork.CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player),
                 new MorphS2CPacket(player.getUUID(), id));
+        if (hadSkin) {
+            ModNetwork.CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player),
+                    new net.kiko.network.MorphSkinS2CPacket(player.getUUID(), new byte[0]));
+        }
+    }
+
+    /** Custom skin PNG of the current morph (null = normal skin). */
+    public static void setSkin(ServerPlayer player, byte[] png) {
+        if (png == null || png.length == 0) {
+            player.getPersistentData().remove(SKIN_TAG);
+            png = new byte[0];
+        } else {
+            player.getPersistentData().putByteArray(SKIN_TAG, png);
+        }
+        final byte[] data = png;
+        ModNetwork.CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player),
+                new net.kiko.network.MorphSkinS2CPacket(player.getUUID(), data));
+    }
+
+    private static void sendSkin(ServerPlayer owner, java.util.function.Supplier<PacketDistributor.PacketTarget> target) {
+        if (owner.getPersistentData().contains(SKIN_TAG)) {
+            ModNetwork.CHANNEL.send(target.get(), new net.kiko.network.MorphSkinS2CPacket(
+                    owner.getUUID(), owner.getPersistentData().getByteArray(SKIN_TAG)));
+        }
     }
 
     /**
@@ -68,6 +95,7 @@ public final class MorphEvents {
         if (event.getEntity() instanceof ServerPlayer player && !get(player).isEmpty()) {
             ModNetwork.CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player),
                     new MorphS2CPacket(player.getUUID(), get(player)));
+            sendSkin(player, () -> PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player));
         }
     }
 
@@ -76,6 +104,7 @@ public final class MorphEvents {
         if (event.getEntity() instanceof ServerPlayer player && !get(player).isEmpty()) {
             ModNetwork.CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player),
                     new MorphS2CPacket(player.getUUID(), get(player)));
+            sendSkin(player, () -> PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player));
         }
     }
 
@@ -85,6 +114,7 @@ public final class MorphEvents {
                 && !get(target).isEmpty()) {
             ModNetwork.CHANNEL.send(PacketDistributor.PLAYER.with(() -> viewer),
                     new MorphS2CPacket(target.getUUID(), get(target)));
+            sendSkin(target, () -> PacketDistributor.PLAYER.with(() -> viewer));
         }
     }
 }

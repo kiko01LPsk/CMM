@@ -10,17 +10,18 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 
-/** A plastic chair that only kiko01LPsk can throw: hold right click like a trident and let go. */
+/** A plastic chair that only kiko01LPsk and JustScorpy can throw: hold right click like a trident and let go. */
 public class PlasticChairItem extends Item {
 
-    public static final String THROWER = "kiko01LPsk";
+    public static final java.util.List<String> THROWERS = java.util.List.of("kiko01LPsk", "JustScorpy");
 
     public PlasticChairItem(Properties properties) {
         super(properties);
     }
 
     public static boolean canThrow(Player player) {
-        return THROWER.equalsIgnoreCase(player.getGameProfile().getName());
+        String name = player.getGameProfile().getName();
+        return THROWERS.stream().anyMatch(name::equalsIgnoreCase);
     }
 
     @Override
@@ -38,7 +39,7 @@ public class PlasticChairItem extends Item {
         ItemStack stack = player.getItemInHand(hand);
         if (!canThrow(player)) {
             if (!level.isClientSide) {
-                player.displayClientMessage(Component.literal("Only " + THROWER + " can throw this chair."), true);
+                player.displayClientMessage(Component.literal("Only " + String.join(" and ", THROWERS) + " can throw this chair."), true);
             }
             return InteractionResultHolder.fail(stack);
         }

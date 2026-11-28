@@ -73,6 +73,9 @@ public final class ClientModEvents {
     public static void onItemColors(net.minecraftforge.client.event.RegisterColorHandlersEvent.Item event) {
         event.register((stack, tint) -> 0x8A0A0A, ModBlocks.BLOOD_DUST.get().asItem());
         event.register((stack, tint) -> 0xFF2A2A, ModBlocks.GLOWING_BLOOD_DUST.get().asItem());
+        // phone body colour (dye it with dyes like leather armour)
+        event.register((stack, tint) -> tint == 0 ? 0xFF000000 | ((net.kiko.item.PhoneItem) stack.getItem()).getColor(stack) : 0xFFFFFFFF,
+                ModItems.PHONE.get());
     }
 
     @SubscribeEvent
@@ -115,7 +118,22 @@ public final class ClientModEvents {
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
+            net.minecraft.client.gui.screens.MenuScreens.register(net.kiko.walkman.ModMenus.WALKMAN.get(),
+                    net.kiko.client.walkman.WalkmanScreen::new);
             net.kiko.screen.video.VideoTools.init(net.minecraft.client.Minecraft.getInstance().gameDirectory.toPath());
+            // Phone: which model to show while the arm is raised (0 off, 1 screen on, 2 call, 3 selfie)
+            ItemProperties.register(ModItems.PHONE.get(), new ResourceLocation(KikoMod.MOD_ID, "pose"), (stack, level, entity, seed) -> {
+                if (!(entity instanceof net.minecraft.world.entity.player.Player p)) return 0.0F;
+                net.kiko.pose.PoseState st = p == net.minecraft.client.Minecraft.getInstance().player
+                        ? PoseBindings.localState() : net.kiko.pose.ClientPoseStore.get(p.getUUID());
+                net.kiko.pose.PoseKind k = st.right() != net.kiko.pose.PoseKind.NONE ? st.right() : st.left();
+                return switch (k) {
+                    case PHONE_BROWSE, PHONE_SPEAKER -> 1.0F;
+                    case PHONE_CALL -> 2.0F;
+                    case PHONE_SELFIE -> 3.0F;
+                    default -> 0.0F;
+                };
+            });
             // Compass: points at world spawn (or the lodestone) like the vanilla one.
             ItemProperties.register(ModItems.COMPASS.get(), new ResourceLocation("angle"),
                     new net.minecraft.client.renderer.item.CompassItemPropertyFunction((level, stack, entity) -> {

@@ -354,6 +354,9 @@ public class ModItems {
     public static final RegistryObject<Item> CIRCULAR_SAW_AXE = ITEMS.register("circular_saw_axe",
             () -> new net.minecraft.world.item.AxeItem(net.minecraft.world.item.Tiers.IRON, 5.0F, -3.1F, new Item.Properties()));
 
+    public static final RegistryObject<Item> PHONE = ITEMS.register("phone",
+            () -> new PhoneItem(new Item.Properties().stacksTo(1)));
+
     public static final RegistryObject<Item> MOUSE_EARS = ITEMS.register("mouse_ears",
             () -> new MouseEarsItem(new Item.Properties()));
     public static final RegistryObject<Item> MONOCLE = ITEMS.register("monocle",
@@ -431,6 +434,10 @@ public class ModItems {
     public static final RegistryObject<Item> WALKMAN = ITEMS.register("walkman",
             () -> new WalkmanItem(new Item.Properties().stacksTo(1)));
 
+    public static final RegistryObject<Item> CASSETTE_MAN_WHO_SOLD_THE_WORLD = ITEMS.register("cassette_man_who_sold_the_world",
+            () -> new CassetteItem(new Item.Properties(), "Midge Ure",
+                    java.util.List.of(new CassetteItem.Track("cassettes/man_who_sold_the_world.mp3", "The Man Who Sold the World", 6878))));
+
     public static final RegistryObject<CreativeModeTab> KIKO_GROUP = CREATIVE_TABS.register("kiko_group",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemgroup.kiko.kiko_group"))
@@ -468,6 +475,7 @@ public class ModItems {
                         output.accept(CAMERA.get());
                         output.accept(MJOLNIR.get());
                         output.accept(WALKMAN.get());
+                        output.accept(CASSETTE_MAN_WHO_SOLD_THE_WORLD.get());
                         output.accept(M870.get());
                         output.accept(M16.get());
                         output.accept(RPG_7.get());
@@ -502,6 +510,7 @@ public class ModItems {
                         output.accept(CENT_QUARTER.get());
                         output.accept(PESO.get());
                         output.accept(net.kiko.block.ModBlocks.ORANGE_PORTAL.get());
+                        output.accept(net.kiko.block.ModBlocks.BLUE_PORTAL.get());
                         output.accept(net.kiko.block.ModBlocks.DISPLAY_CASE_TALL_WOOD.get());
                         output.accept(net.kiko.block.ModBlocks.DISPLAY_CASE_TALL_STONE.get());
                         output.accept(net.kiko.block.ModBlocks.DISPLAY_CASE_TALL_DARK.get());
@@ -568,8 +577,10 @@ public class ModItems {
                         output.accept(SPEAR_IRON.get());
                         output.accept(SPEAR_GOLD.get());
                         output.accept(SPEAR_NETHERITE.get());
+                        output.accept(GODSPEAR.get());
                         output.accept(MONOCLE.get());
                         output.accept(MOUSE_EARS.get());
+                        output.accept(PHONE.get());
                         output.accept(PIPE_WRENCH.get());
                         output.accept(SLEDGEHAMMER.get());
                         output.accept(FIRE_AXE.get());

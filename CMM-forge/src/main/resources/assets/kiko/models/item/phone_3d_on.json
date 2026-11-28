@@ -1,0 +1,7 @@
+{
+	"parent": "kiko:item/phone_3d",
+	"textures": {
+		"front": "kiko:item/phone_on",
+		"particle": "kiko:item/phone_on"
+	}
+}

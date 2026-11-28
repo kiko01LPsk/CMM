@@ -52,6 +52,8 @@ final class VideoPlayer {
     private boolean hasPicture;
     private boolean triedStart;
     private volatile boolean paused;
+    /** Sync sound: the picture is held while the sound is loaded again at the picture's position. */
+    private volatile boolean resyncHold;
     private volatile boolean waiting;
     private volatile double pausedAt;
     private int seq;
@@ -209,7 +211,60 @@ final class VideoPlayer {
         }
     }
 
+    /**
+     * "Sync sound": freezes the picture, reloads the sound at the position the picture is at, and starts both again
+     * together as soon as the new sound is loaded. Only affects this player's own screen view and sound.
+     */
+    void resyncAudio() {
+        VideoStream v = video;
+        if (v == null || failed || finished || paused || waiting || resyncHold || !v.hasFrame()) return;
+        final double pos = v.positionSeconds();
+        final boolean seek = streamSeeks;
+        final int gen = generation;
+        resyncHold = true;
+        v.setSuspended(true);
+        VideoAudio oldAudio = audio;
+        AudioStream oldProcess = audioProcess;
+        audio = null;
+        audioProcess = null;
+        if (oldAudio != null) oldAudio.shutdown();
+        if (oldProcess != null) oldProcess.close();
+        setStatus("Syncing sound...");
+        Thread worker = new Thread(() -> {
+            AudioStream a = null;
+            VideoAudio t = null;
+            try {
+                String ffmpeg = VideoTools.ffmpeg(this::setStatus);
+                MediaResolver.Media media = MediaResolver.resolve(url, 720, this::setStatus);
+                a = new AudioStream(ffmpeg, media.audioUrl(), seek ? pos : 0.0D, seek);
+                t = new VideoAudio(a.pcm());
+                t.baseSeconds = seek && pos > 0.5D ? pos : 0.0D;
+                if (!seek && pos > 0.5D) t.targetBytes = ((long) (pos * AudioStream.RATE)) * 4L;
+                t.start();
+                if (closed || gen != generation) {
+                    t.shutdown();
+                    a.close();
+                    return;
+                }
+                audioProcess = a;
+                audio = t;
+                setStatus("");
+            } catch (Exception e) {
+                KikoMod.LOGGER.warn("Monitor could not reload the sound: {}", e.toString());
+                if (t != null) t.shutdown();
+                if (a != null) a.close();
+                setStatus("");
+                resyncHold = false; // give up: the picture just carries on
+                VideoStream held = video;
+                if (held != null) held.setSuspended(false);
+            }
+        }, "CMM sound resync");
+        worker.setDaemon(true);
+        worker.start();
+    }
+
     private void stopStreams() {
+        resyncHold = false;
         suspendedStreams = false;
         VideoStream v = video;
         VideoAudio au = audio;
@@ -266,7 +321,16 @@ final class VideoPlayer {
                 v = null;
             }
         }
-        if (v != null) {
+        if (v != null && resyncHold) {
+            VideoAudio fresh = audio;
+            if (fresh != null && fresh.primed) {
+                // the new sound is loaded: picture and sound start together
+                resyncHold = false;
+                v.setSuspended(false);
+                fresh.go = true;
+            }
+        }
+        if (v != null && !resyncHold) {
             VideoAudio au = audio;
             if (au != null && v.hasFrame() && !v.skipping() && !suspendedStreams) au.go = true;
             if (v.ended() && !failed) {

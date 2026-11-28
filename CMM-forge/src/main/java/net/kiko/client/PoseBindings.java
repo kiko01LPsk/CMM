@@ -71,6 +71,7 @@ public final class PoseBindings {
     public static void clear() {
         active = null;
         aimPose = PoseState.NONE;
+        phonePose = PoseState.NONE;
     }
 
     /** Set by the sniper rifle while aiming: the main arm is raised in the bow pose (unless a pose key is active). */
@@ -82,9 +83,20 @@ public final class PoseBindings {
         ModNetwork.CHANNEL.sendToServer(new PoseC2SPacket(localState()));
     }
 
+    /** Set by the phone: the arm holding the phone (unless a pose key or sniper aiming is active). */
+    private static PoseState phonePose = PoseState.NONE;
+
+    public static void setPhonePose(PoseState pose) {
+        if (phonePose.equals(pose)) return;
+        phonePose = pose;
+        ModNetwork.CHANNEL.sendToServer(new PoseC2SPacket(localState()));
+    }
+
+    public static PoseState currentPhonePose() { return phonePose; }
+
     public static PoseState localState() {
         if (active != null) return new PoseState(active.right(), active.left());
-        return aimPose;
+        return aimPose.isNone() ? phonePose : aimPose;
     }
 
     public static ArmPose toArmPose(PoseKind kind) {
@@ -98,6 +110,10 @@ public final class PoseBindings {
             case SPYGLASS -> ArmPose.SPYGLASS;
             case HORN -> ArmPose.TOOT_HORN;
             case BRUSH -> ArmPose.BRUSH;
+            case PHONE_BROWSE -> net.kiko.client.phone.PhoneArmPoses.BROWSE;
+            case PHONE_CALL -> net.kiko.client.phone.PhoneArmPoses.CALL;
+            case PHONE_SELFIE -> net.kiko.client.phone.PhoneArmPoses.SELFIE;
+            case PHONE_SPEAKER -> net.kiko.client.phone.PhoneArmPoses.SPEAKER;
             case NONE -> ArmPose.EMPTY;
         };
     }

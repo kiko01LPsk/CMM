@@ -29,6 +29,8 @@ final class VideoAudio extends Thread {
     private long bytesRead;
     private boolean loggedPlay;
     volatile boolean flush;
+    /** True once the first sound is queued and ready to play (used when the sound is reloaded to line up with the picture). */
+    volatile boolean primed;
     volatile float gain;
     volatile float relX, relY, relZ;
 
@@ -100,6 +102,7 @@ final class VideoAudio extends Thread {
                 AL10.alSource3f(source, AL10.AL_POSITION, relX, relY, relZ);
                 int state = AL10.alGetSourcei(source, AL10.AL_SOURCE_STATE);
                 int queued = AL10.alGetSourcei(source, AL10.AL_BUFFERS_QUEUED);
+                if (queued > 0) primed = true;
                 if (go && state != AL10.AL_PLAYING && queued > 0) { AL10.alSourcePlay(source); if (!loggedPlay) { loggedPlay = true; KikoMod.LOGGER.info("Monitor sound: playing"); } }
                 if (!go) loggedPlay = false;
                 if (!go && state == AL10.AL_PLAYING) AL10.alSourcePause(source);

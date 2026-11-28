@@ -24,6 +24,7 @@ public class KikoMod {
 
         ModBlocks.register(modEventBus);
         ModItems.register(modEventBus);
+        net.kiko.walkman.ModMenus.register(modEventBus);
         ModPaintings.register(modEventBus);
         ModSounds.register(modEventBus);
         ModEntities.register(modEventBus);

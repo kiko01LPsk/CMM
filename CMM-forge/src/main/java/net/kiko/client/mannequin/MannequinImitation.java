@@ -134,8 +134,7 @@ public final class MannequinImitation {
         m.setYRot(yaw);
         m.yRotO = yaw;
         m.setInvisible(player.isInvisible());
-        m.setCustomName(player.getDisplayName());
-        m.setCustomNameVisible(player != Minecraft.getInstance().player);
+        m.setCustomNameVisible(false); // no nametag while imitating a mannequin
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             m.setItemSlot(slot, player.getItemBySlot(slot));
         }

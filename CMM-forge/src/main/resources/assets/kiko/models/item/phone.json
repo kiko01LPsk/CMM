@@ -1,0 +1,23 @@
+{
+  "parent": "kiko:item/phone_3d",
+  "overrides": [
+    {
+      "predicate": {
+        "kiko:pose": 1.0
+      },
+      "model": "kiko:item/phone_3d_on"
+    },
+    {
+      "predicate": {
+        "kiko:pose": 2.0
+      },
+      "model": "kiko:item/phone_3d_call"
+    },
+    {
+      "predicate": {
+        "kiko:pose": 3.0
+      },
+      "model": "kiko:item/phone_3d_camera"
+    }
+  ]
+}

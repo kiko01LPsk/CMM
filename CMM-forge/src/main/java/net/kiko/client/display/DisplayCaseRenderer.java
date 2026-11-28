@@ -38,7 +38,7 @@ public class DisplayCaseRenderer implements BlockEntityRenderer<DisplayCaseBlock
             poseStack.scale(0.7F, 0.7F, 0.7F);
         } else {
             poseStack.translate(0.5, block.getItemY(), 0.5);
-            float time = be.getLevel().getGameTime() + partialTick;
+            float time = net.minecraft.Util.getMillis() / 50.0F; // own clock: the server world time may not tick smoothly on the client
             poseStack.mulPose(Axis.YP.rotationDegrees(time * 2.0F));
             poseStack.scale(block.getItemScale(), block.getItemScale(), block.getItemScale());
             lit = LevelRenderer.getLightColor(be.getLevel(), be.getBlockPos().above());
