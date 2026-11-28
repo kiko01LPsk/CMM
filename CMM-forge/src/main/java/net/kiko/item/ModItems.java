@@ -438,6 +438,22 @@ public class ModItems {
             () -> new CassetteItem(new Item.Properties(), "Midge Ure",
                     java.util.List.of(new CassetteItem.Track("cassettes/man_who_sold_the_world.mp3", "The Man Who Sold the World", 6878))));
 
+    public static final RegistryObject<Item> CASSETTE_AWESOME_MIX_VOL_1 = ITEMS.register("cassette_awesome_mix_vol_1",
+            () -> new CassetteItem(new Item.Properties(), "Various artists",
+                    java.util.List.of(
+                            new CassetteItem.Track("cassettes/awesome_mix_vol1_01.mp3", "Hooked on a Feeling", 3455),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol1_02.mp3", "Go All the Way", 4024),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol1_03.mp3", "Spirit in the Sky", 4845),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol1_04.mp3", "Moonage Daydream", 5624),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol1_05.mp3", "Fooled Around and Fell in Love", 5512),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol1_06.mp3", "I'm Not in Love", 7268),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol1_07.mp3", "I Want You Back", 3578),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol1_08.mp3", "Come and Get Your Love", 4134),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol1_09.mp3", "Cherry Bomb", 2759),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol1_10.mp3", "Escape (The Piña Colada Song)", 5545),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol1_11.mp3", "O-o-h Child", 3881),
+                            new CassetteItem.Track("cassettes/awesome_mix_vol1_12.mp3", "Ain't No Mountain High Enough", 2982))));
+
     public static final RegistryObject<CreativeModeTab> KIKO_GROUP = CREATIVE_TABS.register("kiko_group",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemgroup.kiko.kiko_group"))
@@ -476,6 +492,7 @@ public class ModItems {
                         output.accept(MJOLNIR.get());
                         output.accept(WALKMAN.get());
                         output.accept(CASSETTE_MAN_WHO_SOLD_THE_WORLD.get());
+                        output.accept(CASSETTE_AWESOME_MIX_VOL_1.get());
                         output.accept(M870.get());
                         output.accept(M16.get());
                         output.accept(RPG_7.get());

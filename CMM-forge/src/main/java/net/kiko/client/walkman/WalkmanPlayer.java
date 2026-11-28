@@ -50,19 +50,20 @@ public final class WalkmanPlayer {
         ItemStack cassette = WalkmanItem.cassette(walkman);
         if (!(cassette.getItem() instanceof CassetteItem item) || item.tracks().isEmpty()) { stop(); return; }
 
-        List<CassetteItem.Track> tracks = item.tracks();
-        int trackIndex = Math.floorMod(walkman.getTag().getInt(WalkmanItem.TRACK), tracks.size());
-        CassetteItem.Track track = tracks.get(trackIndex);
         long pos = WalkmanItem.position(walkman, mc.level.getGameTime());
-        if (pos >= track.ticks()) { stop(); return; }
+        if (pos >= item.totalTicks()) { stop(); return; }
+        int trackIndex = item.trackAt(pos);
+        CassetteItem.Track track = item.tracks().get(trackIndex);
+        long inTrack = pos - item.startOf(trackIndex);
 
         // the sound only restarts when something other than the passing of time changed
+        // (a song that ends simply hands over to the next one: the key contains the song number)
         String key = trackIndex + "|" + walkman.getTag().getInt(WalkmanItem.POSITION) + "|" + walkman.getTag().getLong(WalkmanItem.SINCE)
                 + "|" + track.file();
         if (session == null || !key.equals(sessionKey)) {
             stop();
             sessionKey = key;
-            session = new Session(track.file(), pos / 20.0D);
+            session = new Session(track.file(), inTrack / 20.0D);
             session.start();
         }
         float master = mc.options.getSoundSourceVolume(SoundSource.MASTER) * mc.options.getSoundSourceVolume(SoundSource.RECORDS);

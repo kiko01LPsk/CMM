@@ -1,2 +1,3 @@
 Cassette models and textures: "3D Cassette Tapes" resource pack by MentalHydnellum (used as a model/texture base, credit only).
 Song file: "The Man Who Sold the World" - Midge Ure (copyright Chrysalis). Supplied by the mod author for their own use; do not publish the mod with it without permission.
+"Awesome Mix Vol. 1" cassette: the songs are commercial recordings (Guardians of the Galaxy soundtrack) supplied by the mod author for their own use; do not publish the mod with them without permission.

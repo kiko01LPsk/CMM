@@ -137,22 +137,25 @@ public class WalkmanMenu extends AbstractContainerMenu {
         long now = p.level().getGameTime();
         long pos = WalkmanItem.position(stack, now);
         boolean playing = WalkmanItem.isPlaying(stack);
-        java.util.List<net.kiko.item.CassetteItem.Track> tracks = cassette.getItem(0).getItem() instanceof net.kiko.item.CassetteItem c
-                ? c.tracks() : java.util.List.of();
-        if (tracks.isEmpty()) return false;
-        int track = Math.floorMod(tag.getInt(WalkmanItem.TRACK), tracks.size());
-        long length = tracks.get(track).ticks();
-        if (pos >= length) { pos = 0; }
+        if (!(cassette.getItem(0).getItem() instanceof net.kiko.item.CassetteItem tape) || tape.tracks().isEmpty()) return false;
+        // Position counts ticks from the start of the whole tape; the song is worked out from it
+        long total = tape.totalTicks();
+        if (pos >= total) pos = 0;
+        int track = tape.trackAt(pos);
         switch (id) {
             case PLAY_PAUSE -> playing = !playing;
             case STOP -> { playing = false; pos = 0; }
             case BACK -> pos = Math.max(0, pos - SEEK_TICKS);
-            case FORWARD -> pos = Math.min(length - 1, pos + SEEK_TICKS);
-            case NEXT -> { track = (track + 1) % tracks.size(); pos = 0; }
-            case PREVIOUS -> { track = (track - 1 + tracks.size()) % tracks.size(); pos = 0; }
+            case FORWARD -> pos = Math.min(total - 1, pos + SEEK_TICKS);
+            case NEXT -> { pos = tape.startOf((track + 1) % tape.tracks().size()); }
+            case PREVIOUS -> {
+                // first press goes to the start of this song, a quick second press to the song before
+                if (pos - tape.startOf(track) > 60) pos = tape.startOf(track);
+                else pos = tape.startOf((track - 1 + tape.tracks().size()) % tape.tracks().size());
+            }
             default -> { return false; }
         }
-        tag.putInt(WalkmanItem.TRACK, track);
+        tag.remove(WalkmanItem.TRACK);
         tag.putInt(WalkmanItem.POSITION, (int) pos);
         tag.putLong(WalkmanItem.SINCE, now);
         WalkmanItem.setPlaying(stack, playing);
